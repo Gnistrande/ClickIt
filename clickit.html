@@ -3,10 +3,16 @@
 <head> 
 	<meta charset="UTF-8" />
 	<title>Phaser - Making your first game, part 1</title>
-	<script type="text/javascript" src="js/phaser.min.js"></script>
+	<script type="text/javascript" src="../phaser/build/phaser.min.js"></script>
     <style type="text/css">
         body {
             margin: 0;
+        }
+        canvas {
+        	display: block;
+        	margin: auto;
+        	margin-top: 20px;
+        	color: skyblue;
         }
     </style>
 </head>
@@ -14,11 +20,63 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, render: render });
 
 
+var circle;
+var arrayCircles;
+
+
+
+var items = [[1, 2, 3, 4, 5, 6, 7, 8],
+			[9, 10, 11, 12, 13, 14, 15, 16],
+			[17, 18, 19, 20, 21, 22, 23, 24],
+			[25, 26, 27, 28, 29, 30, 31, 32],
+			[33, 34, 35, 36, 37, 38, 39, 40]];
+
+//alert(items[0][1]); // 1
+
+
+function preload(){
+	game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
+}
+
+var button;
+
+
+function create() {
+
+    circle = new Phaser.Circle(game.world.centerX, 100,64);
+
+    button = game.add.button(game.world.centerX - 95, 400, 'button', actionOnClick, this, 2, 1, 0);
+
+    button.onInputOver.add(over, this);
+    button.onInputOut.add(out, this);
+
+}
+
+function over() {
+    console.log('button over');
+}
+
+function out() {
+    console.log('button out');
+}
+
+function actionOnClick () {
+
+    background.visible =! background.visible;
+
+}
+
+function render () {
+
+    game.debug.geom(circle,'#cfffff');
+
+}
 
 </script>
+
 
 </body>
 </html>
