@@ -23,55 +23,56 @@
 var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, render: render });
 
 
-var circle;
-var arrayCircles;
-
-
 
 var items = [[1, 2, 3, 4, 5, 6, 7, 8],
 			[9, 10, 11, 12, 13, 14, 15, 16],
 			[17, 18, 19, 20, 21, 22, 23, 24],
 			[25, 26, 27, 28, 29, 30, 31, 32],
-			[33, 34, 35, 36, 37, 38, 39, 40]];
+			[33, 34, 35, 36, 37, 38, 39, 40],
+			[41, 42, 43, 44, 45, 46, 47, 48],
+			[49, 50, 51, 52, 53, 54, 55, 56],
+			[57, 58, 59, 60, 61, 62, 63, 64]];
 
 //alert(items[0][1]); // 1
 
 
 function preload(){
-	game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
+	game.load.image('star', '../phaser_tutorial_02/assets/star.png');
+	game.load.image('diamond', '../phaser_tutorial_02/assets/diamond.png');
 }
 
-var button;
 
 
 function create() {
+    //  Here we'll create 8 times 8 of buttons evenly spaced apart
+    for (var i = 0; i < 8; i++)
+    {
+    	for (var j=0; j < 8; j++)
+    	{
+    		//  Create a star inside of the 'game' group, with the image 'star'.
+    		var image;
+    		if(items[i][j]%2 ==0){
+    			image = 'star';
+    		}
+    		// Or the image diamond
+    		else{
+    			image = 'diamond';
+    		}
 
-    circle = new Phaser.Circle(game.world.centerX, 100,64);
-
-    button = game.add.button(game.world.centerX - 95, 400, 'button', actionOnClick, this, 2, 1, 0);
-
-    button.onInputOver.add(over, this);
-    button.onInputOut.add(out, this);
+        	var button = game.add.button(i * 70, j * 70, image, actionOnClick, this);
+    	}
+        
+    }
 
 }
 
-function over() {
-    console.log('button over');
-}
+function actionOnClick (button) {
 
-function out() {
-    console.log('button out');
-}
-
-function actionOnClick () {
-
-    background.visible =! background.visible;
-
+    button.kill();
+    console.log("actionOnClick has been called!");
 }
 
 function render () {
-
-    game.debug.geom(circle,'#cfffff');
 
 }
 
