@@ -29,6 +29,8 @@ var items = [];
 function preload(){
 	game.load.image('star', '../phaser_tutorial_02/assets/star.png');
 	game.load.image('diamond', '../phaser_tutorial_02/assets/diamond.png');
+	game.load.image('firstaid', '../phaser_tutorial_02/assets/firstaid.png');
+	game.load.image('agnes', '../phaser_tutorial_02/assets/agnes.jpg', 20, 20);
 }
 
 
@@ -38,36 +40,58 @@ function create() {
     //  Here we'll create 8 times 8 of buttons evenly spaced apart
     for (var i = 0; i < 8; i++)
     {
+    	items[i] = [];
     	for (var j=0; j < 8; j++)
     	{
-    		//  Create a star inside of the 'game' group, with the image 'star'.
-    		var image;
-    		if(items[i][j]%2 ==0){
-    			image = 'star';
-    		}
-    		// Or the image diamond
-    		else{
-    			image = 'diamond';
-    		}
+    		//Assign random values to a 8X8 matrix
+    		items[i][j] = Math.floor((Math.random() * 4) + 1);
 
+    		var image = assignColor(items[i][j]);
+
+    		//  Create a button inside of the 'game' group, with the an image decided above.
         	var button = game.add.button(i * 70, j * 70, image, actionOnClick, this);
     	}
         
     }
+}
 
-    //Assign random values to a 8X8 matrix
-    for(var i=0; i<8; i++) {
-        items[i] = [];
-        for(var j=0; j<8; j++) {
-            items[i][j] = Math.floor((Math.random() * 4) + 1);
-        }
-    }
+function assignColor(number){
+	var image;
+	if(number == 1){
+		image = 'star';
+	}
+	// Or the image diamond
+	else if(number == 2){
+		image = 'diamond';
+	}
+	else if(number == 3){
+		image = 'firstaid';
+	}
+	else if(number == 4){
+		image = 'agnes';
+	}
+	return image;
 }
 
 function actionOnClick (button) {
 
-    button.kill();
+    //button.kill();
+
     console.log("actionOnClick has been called!");
+    console.log("button.x = " + button.x/70);
+    console.log("button.y = " + button.y/70);
+    var numberI = button.x/70;
+    var numberJ = button.y/70;
+    var buttonPosition = items[numberI][numberJ] + 1;
+    console.log("buttonPosition = " + buttonPosition);
+    if(buttonPosition == 5){
+    	buttonPosition = 1;
+    }
+    button.assignColor(buttonPosition);
+}
+
+function updateButton(){
+	
 }
 
 function render () {
