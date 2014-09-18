@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-	<title>Phaser - Making your first game, part 1</title>
+	<title>ClickIt - the game</title>
 	<script type="text/javascript" src="../phaser/build/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -12,7 +12,6 @@
         	display: block;
         	margin: auto;
         	margin-top: 20px;
-        	color: skyblue;
         }
     </style>
 </head>
@@ -20,10 +19,10 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, render: render });
+var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, render: render });
 
 
-var circle;
+var button;
 var items = [];
 
 function preload(){
@@ -31,27 +30,27 @@ function preload(){
 	game.load.image('diamond', 'assets/diamond.png');
 	game.load.image('firstaid', 'assets/firstaid.png');
 	game.load.image('agnes', 'assets/agnes.jpg', 20, 20);
+
+	game.stage.backgroundColor = '#ffffff';
+	//game.stage.border = '#000000';
 }
 
 
 
 function create() {
-
     //  Here we'll create 8 times 8 of buttons evenly spaced apart
-    for (var i = 0; i < 8; i++)
-    {
+    for (var i = 0; i < 8; i++){
     	items[i] = [];
-    	for (var j=0; j < 8; j++)
-    	{
+    	for (var j = 0; j < 8; j++){
     		//Assign random values to a 8X8 matrix
     		items[i][j] = Math.floor((Math.random() * 4) + 1);
 
     		var image = assignColor(items[i][j]);
 
     		//  Create a button inside of the 'game' group, with the an image decided above.
+        	//buttons = game.add.button(i * 70, j * 70, image);
         	var button = game.add.button(i * 70, j * 70, image, actionOnClick, this);
-    	}
-        
+    	} 
     }
 }
 
@@ -73,26 +72,28 @@ function assignColor(number){
 	return image;
 }
 
-function actionOnClick (button) {
 
-    //button.kill();
+function actionOnClick (clickedButton) {
+	//Retrieving the buttons number in items[][]
+    var numberI = clickedButton.x/70;
+    var numberJ = clickedButton.y/70;
+    var currentButtonImage = items[numberI][numberJ] + 1;
 
-    console.log("actionOnClick has been called!");
-    console.log("button.x = " + button.x/70);
-    console.log("button.y = " + button.y/70);
-    var numberI = button.x/70;
-    var numberJ = button.y/70;
-    var buttonPosition = items[numberI][numberJ] + 1;
-    console.log("buttonPosition = " + buttonPosition);
-    if(buttonPosition == 5){
-    	buttonPosition = 1;
+    //If out of bounds, change to first picture
+    if(currentButtonImage == 5){
+    	currentButtonImage = 1;
     }
-    button.assignColor(buttonPosition);
+
+    //Retrieve new image string
+    var newButtonImage = assignColor(currentButtonImage);
+
+    //Change buttons texture to the new image string
+    clickedButton.loadTexture(newButtonImage);
+
+    //Update items[][] (neede for future use)
+    items[numberI][numberJ] = currentButtonImage;
 }
 
-function updateButton(){
-
-}
 
 function render () {
 
