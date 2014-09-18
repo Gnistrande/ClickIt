@@ -26,10 +26,10 @@ var button;
 var items = [];
 
 function preload(){
-	game.load.image('star', 'assets/star.png');
-	game.load.image('diamond', 'assets/diamond.png');
-	game.load.image('firstaid', 'assets/firstaid.png');
-	game.load.image('agnes', 'assets/agnes.jpg', 20, 20);
+	game.load.image('pink', 'assets/pinkdot.png');
+	game.load.image('green', 'assets/greendot.png');
+	game.load.image('blue', 'assets/bluedot.png');
+	game.load.image('yellow', 'assets/yellowdot.png');
 
 	game.stage.backgroundColor = '#ffffff';
 	//game.stage.border = '#000000';
@@ -57,17 +57,17 @@ function create() {
 function assignColor(number){
 	var image;
 	if(number == 1){
-		image = 'star';
+		image = 'pink';
 	}
 	// Or the image diamond
 	else if(number == 2){
-		image = 'diamond';
+		image = 'green';
 	}
 	else if(number == 3){
-		image = 'firstaid';
+		image = 'blue';
 	}
 	else if(number == 4){
-		image = 'agnes';
+		image = 'yellow';
 	}
 	return image;
 }
