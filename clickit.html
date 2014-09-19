@@ -89,7 +89,7 @@ function changeColorInGame(key){
 
 function actionOnClick (clickedButton) {
     //Retrieve new image string
-    var newButtonImage = assignColorInGame(clickedButton.key);
+    var newButtonImage = changeColorInGame(clickedButton.key);
 
     //Change buttons texture to the new image string
     clickedButton.loadTexture(newButtonImage);
