@@ -19,11 +19,14 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, render: render });
+var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 
 var buttons = [];
 var delta = 70;
+var goalMatrix = [];
+//This variable tells wheter all changes have been made so an update of the buttons on the screen can occur or not.
+var findChange = false;
 
 function preload(){
 	game.load.image('pink', 'assets/pinkdot.png');
@@ -38,6 +41,7 @@ function create() {
     //  Here we'll create 8 times 8 of buttons evenly spaced apart
     for (var i = 0; i < 8; i++){
         buttons[i] = [];
+        goalMatrix[i] = [];
     	for (var j = 0; j < 8; j++){
     		//Assign random values to a 8X8 matrix
     		var number = Math.floor((Math.random() * 4) + 1);
@@ -46,6 +50,7 @@ function create() {
 
     		//  Create a button inside of the 'game' group, with the an image decided above.
         	buttons[i][j] = game.add.button(i * delta, j * delta, image, actionOnClick, this);
+            goalMatrix[i][j] = false;
     	} 
     }
 }
@@ -84,6 +89,24 @@ function changeColorInGame(key){
         image = 'yellow';
     }
     return image;
+}
+
+
+function getColorInt(colorString){
+	var colorInt;
+	if(colorString == 'pink'){
+        colorInt = 1;
+    }
+    else if(colorString == 'green'){
+    	colorInt = 2;
+    }
+    else if(colorString == 'blue'){
+    	colorInt = 3;
+    }
+    else if(colorString == 'yellow'){
+    	colorInt = 4;
+    }
+    return colorInt;
 }
 
 
@@ -135,8 +158,48 @@ function actionOnClick (clickedButton) {
     }
 }
 
-function render () {
+function findGoalInRow(){
+    console.log("findFourInRow()");
+	var goal = 0;
+	var currentColor;
+    var goalTracker;
 
+	for (var row = 0; row < 8; row++){
+
+        goalMatrix = [false, false, false, false, false, false, false, false];
+        currentColor = getColorInt(button[row][0].key);
+
+		for(var col = 1; col < 7; col++){
+
+            var nextColor = getColorInt(button[row][col].key);
+			if(currentColor ===  nextColor){
+				goal++;
+                console.log("goal++");
+			}
+            else{
+                goal = 0;
+                console.log("goal = 0");
+            }
+            if(goal == 6){
+                console.log("TRUEEEEE! row = " + row);
+                goalMatrix = [true, true, true, true, true, true, true, true];
+                
+            }
+			currentColor = nextColor;
+		}
+        goal = 0;
+	}
+}
+
+function findGoalInColumn(){
+	var goal = 0;
+}
+
+function update() {
+    if(findChange === true){
+        findGoalInRow();
+    }
+    //findGoalInRow();
 }
 
 </script>
