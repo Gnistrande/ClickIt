@@ -88,11 +88,29 @@ function changeColorInGame(key){
 
 
 function actionOnClick (clickedButton) {
+
+    var numberI = clickedButton.x/delta;
+    var numberJ = clickedButton.y/delta;
+    
+    var buttonTop = button[numberI][numberJ-1];
+    var buttonBottom = button[numberI][numberJ+1];
+    var buttonLeft = button[numberI-1][numberJ];
+    var buttonRight = button[numberI+1][numberJ];
+
     //Retrieve new image string
     var newButtonImage = changeColorInGame(clickedButton.key);
+    var newButtonTopImage = changeColorInGame(buttonTop.key);
+    var newButtonBottomImage = changeColorInGame(buttonBottom.key);
+    var newButtonLeftImage = changeColorInGame(buttonLeft.key);
+    var newButtonRightImage = changeColorInGame(buttonRight.key);
 
     //Change buttons texture to the new image string
     clickedButton.loadTexture(newButtonImage);
+    button[numberI][numberJ-1].loadTexture(newButtonTopImage);
+    button[numberI][numberJ+1].loadTexture(newButtonBottomImage);
+    button[numberI-1][numberJ].loadTexture(newButtonLeftImage);
+    button[numberI+1][numberJ].loadTexture(newButtonRightImage);
+
 }
 
 function render () {
