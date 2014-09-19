@@ -22,7 +22,7 @@
 var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, render: render });
 
 
-var button = [];
+var buttons = [];
 var delta = 70;
 
 function preload(){
@@ -37,7 +37,7 @@ function preload(){
 function create() {
     //  Here we'll create 8 times 8 of buttons evenly spaced apart
     for (var i = 0; i < 8; i++){
-        button[i] = [];
+        buttons[i] = [];
     	for (var j = 0; j < 8; j++){
     		//Assign random values to a 8X8 matrix
     		var number = Math.floor((Math.random() * 4) + 1);
@@ -45,7 +45,7 @@ function create() {
     		var image = assignFirstColor(number);
 
     		//  Create a button inside of the 'game' group, with the an image decided above.
-        	button[i][j] = game.add.button(i * delta, j * delta, image, actionOnClick, this);
+        	buttons[i][j] = game.add.button(i * delta, j * delta, image, actionOnClick, this);
     	} 
     }
 }
@@ -88,29 +88,51 @@ function changeColorInGame(key){
 
 
 function actionOnClick (clickedButton) {
-
+    //Check for position I and J in buttons
     var numberI = clickedButton.x/delta;
     var numberJ = clickedButton.y/delta;
-    
-    var buttonTop = button[numberI][numberJ-1];
-    var buttonBottom = button[numberI][numberJ+1];
-    var buttonLeft = button[numberI-1][numberJ];
-    var buttonRight = button[numberI+1][numberJ];
 
-    //Retrieve new image string
+    //Change color on the button that was clicked
     var newButtonImage = changeColorInGame(clickedButton.key);
-    var newButtonTopImage = changeColorInGame(buttonTop.key);
-    var newButtonBottomImage = changeColorInGame(buttonBottom.key);
-    var newButtonLeftImage = changeColorInGame(buttonLeft.key);
-    var newButtonRightImage = changeColorInGame(buttonRight.key);
-
-    //Change buttons texture to the new image string
     clickedButton.loadTexture(newButtonImage);
-    button[numberI][numberJ-1].loadTexture(newButtonTopImage);
-    button[numberI][numberJ+1].loadTexture(newButtonBottomImage);
-    button[numberI-1][numberJ].loadTexture(newButtonLeftImage);
-    button[numberI+1][numberJ].loadTexture(newButtonRightImage);
 
+    //Check if the pressed button is on the edge
+    if(numberI==7){
+        var buttonLeft = buttons[numberI-1][numberJ];
+        var newButtonLeftImage = changeColorInGame(buttonLeft.key);
+        buttons[numberI-1][numberJ].loadTexture(newButtonLeftImage);
+    }
+    else if(numberI==0){
+        var buttonRight = buttons[numberI+1][numberJ];
+        var newButtonRightImage = changeColorInGame(buttonRight.key);
+        buttons[numberI+1][numberJ].loadTexture(newButtonRightImage);
+    }
+    else{
+        var buttonLeft = buttons[numberI-1][numberJ];
+        var buttonRight = buttons[numberI+1][numberJ];
+        var newButtonLeftImage = changeColorInGame(buttonLeft.key);
+        var newButtonRightImage = changeColorInGame(buttonRight.key);
+        buttons[numberI-1][numberJ].loadTexture(newButtonLeftImage);
+        buttons[numberI+1][numberJ].loadTexture(newButtonRightImage);
+    }
+    if(numberJ==7){
+        var buttonTop = buttons[numberI][numberJ-1];
+        var newButtonTopImage = changeColorInGame(buttonTop.key);
+        buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
+    }
+    else if(numberJ==0){
+        var buttonBottom = buttons[numberI][numberJ+1];
+        var newButtonBottomImage = changeColorInGame(buttonBottom.key);
+        buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
+    }
+    else{
+        var buttonTop = buttons[numberI][numberJ-1];
+        var buttonBottom = buttons[numberI][numberJ+1];
+        var newButtonTopImage = changeColorInGame(buttonTop.key);
+        var newButtonBottomImage = changeColorInGame(buttonBottom.key);
+        buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
+        buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
+    }
 }
 
 function render () {
