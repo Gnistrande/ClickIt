@@ -22,9 +22,8 @@
 var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, render: render });
 
 
-var button;
+var button = [];
 var delta = 70;
-var items = [];
 
 function preload(){
 	game.load.image('pink', 'assets/pinkdot.png');
@@ -35,30 +34,28 @@ function preload(){
 	game.stage.backgroundColor = '#ffffff';
 }
 
-
-
 function create() {
     //  Here we'll create 8 times 8 of buttons evenly spaced apart
     for (var i = 0; i < 8; i++){
-    	items[i] = [];
+        button[i] = [];
     	for (var j = 0; j < 8; j++){
     		//Assign random values to a 8X8 matrix
-    		items[i][j] = Math.floor((Math.random() * 4) + 1);
+    		var number = Math.floor((Math.random() * 4) + 1);
 
-    		var image = assignColor(items[i][j]);
+    		var image = assignFirstColor(number);
 
     		//  Create a button inside of the 'game' group, with the an image decided above.
-        	var button = game.add.button(i * delta, j * delta, image, actionOnClick, this);
+        	button[i][j] = game.add.button(i * delta, j * delta, image, actionOnClick, this);
     	} 
     }
 }
 
-function assignColor(number){
+//Assign color from number
+function assignFirstColor(number){
 	var image;
 	if(number == 1){
 		image = 'pink';
 	}
-	// Or the image diamond
 	else if(number == 2){
 		image = 'green';
 	}
@@ -71,35 +68,37 @@ function assignColor(number){
 	return image;
 }
 
+//Assign color from string
+function assignColorInGame(key){
+    var image;
+    if(key == 'yellow'){
+        image = 'pink';
+    }
+    else if(key == 'pink'){
+        image = 'green';
+    }
+    else if(key == 'green'){
+        image = 'blue';
+    }
+    else if(key == 'blue'){
+        image = 'yellow';
+    }
+    return image;
+}
+
 
 function actionOnClick (clickedButton) {
-	//Retrieving the buttons number in items[][]
-    var numberI = clickedButton.x/delta;
-    var numberJ = clickedButton.y/delta;
-    var currentButtonImage = items[numberI][numberJ] + 1;
-
-    //If out of bounds, change to first picture
-    if(currentButtonImage == 5){
-    	currentButtonImage = 1;
-    }
-
     //Retrieve new image string
-    var newButtonImage = assignColor(currentButtonImage);
+    var newButtonImage = assignColorInGame(clickedButton.key);
 
     //Change buttons texture to the new image string
     clickedButton.loadTexture(newButtonImage);
-
-    //Update items[][] (neede for future use)
-    items[numberI][numberJ] = currentButtonImage;
 }
-
 
 function render () {
 
 }
 
 </script>
-
-
 </body>
 </html>
