@@ -23,6 +23,7 @@ var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create
 
 
 var button;
+var delta = 70;
 var items = [];
 
 function preload(){
@@ -32,7 +33,6 @@ function preload(){
 	game.load.image('yellow', 'assets/yellowdot.png');
 
 	game.stage.backgroundColor = '#ffffff';
-	//game.stage.border = '#000000';
 }
 
 
@@ -48,8 +48,7 @@ function create() {
     		var image = assignColor(items[i][j]);
 
     		//  Create a button inside of the 'game' group, with the an image decided above.
-        	//buttons = game.add.button(i * 70, j * 70, image);
-        	var button = game.add.button(i * 70, j * 70, image, actionOnClick, this);
+        	var button = game.add.button(i * delta, j * delta, image, actionOnClick, this);
     	} 
     }
 }
@@ -75,8 +74,8 @@ function assignColor(number){
 
 function actionOnClick (clickedButton) {
 	//Retrieving the buttons number in items[][]
-    var numberI = clickedButton.x/70;
-    var numberJ = clickedButton.y/70;
+    var numberI = clickedButton.x/delta;
+    var numberJ = clickedButton.y/delta;
     var currentButtonImage = items[numberI][numberJ] + 1;
 
     //If out of bounds, change to first picture
