@@ -11,7 +11,7 @@
         canvas {
         	display: block;
         	margin: auto;
-        	margin-top: 20px;
+        	margin-top: 30px;
         }
     </style>
 </head>
@@ -19,8 +19,9 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(800, 700, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var sideBar;
 
+var game = new Phaser.Game(520, 520, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var buttons = [];
 var delta = 70;
@@ -36,7 +37,7 @@ function preload(){
 	game.load.image('blue', 'assets/bluedot.png');
 	game.load.image('yellow', 'assets/yellowdot.png');
 
-	game.stage.backgroundColor = '#ffffff';
+	game.stage.backgroundColor = '#eeeeee';
 }
 
 function create() {
@@ -56,7 +57,7 @@ function create() {
     	} 
     }
 
-    moves = game.add.text(540, 10, 'Moves: 0', { fontSize: '16px', fill: '#000' });
+    moves = game.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 }
 
 //Assign color from number
@@ -125,7 +126,6 @@ function actionOnClick (clickedButton) {
 
     //  Add counter for number of moves
     move += 1;
-    moves.text = 'Moves: ' + move;
 
     //Check if the pressed button is on the edge
     if(numberI==7){
@@ -208,7 +208,7 @@ function update() {
         findGoalInRow();
     }
     //findGoalInRow();
-    
+
     //Update number of moves
     moves.text = 'Moves: ' + move;
 }
