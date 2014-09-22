@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 700, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 
 var buttons = [];
@@ -27,6 +27,8 @@ var delta = 70;
 var goalMatrix = [];
 //This variable tells wheter all changes have been made so an update of the buttons on the screen can occur or not.
 var findChange = false;
+var moves;
+var move = 0;
 
 function preload(){
 	game.load.image('pink', 'assets/pinkdot.png');
@@ -53,6 +55,8 @@ function create() {
             goalMatrix[i][j] = false;
     	} 
     }
+
+    moves = game.add.text(540, 10, 'Moves: 0', { fontSize: '16px', fill: '#000' });
 }
 
 //Assign color from number
@@ -118,6 +122,10 @@ function actionOnClick (clickedButton) {
     //Change color on the button that was clicked
     var newButtonImage = changeColorInGame(clickedButton.key);
     clickedButton.loadTexture(newButtonImage);
+
+    //  Add counter for number of moves
+    move += 1;
+    moves.text = 'Moves: ' + move;
 
     //Check if the pressed button is on the edge
     if(numberI==7){
@@ -200,6 +208,9 @@ function update() {
         findGoalInRow();
     }
     //findGoalInRow();
+    
+    //Update number of moves
+    moves.text = 'Moves: ' + move;
 }
 
 </script>
