@@ -164,40 +164,48 @@ function actionOnClick (clickedButton) {
         buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
         buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
     }
+
+
+    findGoalInRow();
 }
 
 function findGoalInRow(){
-    console.log("findFourInRow()");
-	var goal = 0;
+    //console.log("findFGoalInRow()");
+	var goal_1 = 1;
+    var goal_2 = 1;
 	var currentColor;
     var goalTracker;
 
 	for (var row = 0; row < 8; row++){
+        //goalMatrix = [false, false, false, false, false, false, false, false];
+        currentColor = getColorInt(buttons[row][0].key);
 
-        goalMatrix = [false, false, false, false, false, false, false, false];
-        currentColor = getColorInt(button[row][0].key);
-
-		for(var col = 1; col < 7; col++){
-
-            var nextColor = getColorInt(button[row][col].key);
+		for(var col = 1; col < 8; col++){
+            var nextColor = getColorInt(buttons[row][col].key);
 			if(currentColor ===  nextColor){
-				goal++;
-                console.log("goal++");
+				goal_1++;
+                console.log("goal++ och goal = " + goal_1 );
 			}
-            else{
-                goal = 0;
-                console.log("goal = 0");
+            else if(currentColor != nextColor){
+                goal_1 = 1;
+                console.log("reset goal = 1");
             }
-            if(goal == 6){
+            if(goal_1 === 4){
                 console.log("TRUEEEEE! row = " + row);
-                goalMatrix = [true, true, true, true, true, true, true, true];
+                buttons[row][col].kill();
+                buttons[row][col-1].kill();
+                buttons[row][col-2].kill();
+                buttons[row][col-3].kill();
+                //goalMatrix = [true, true, true, true, true, true, true, true];
+                goal_1 = 1;
                 
             }
 			currentColor = nextColor;
 		}
-        goal = 0;
+        goal_1 = 1;
 	}
 }
+
 
 function findGoalInColumn(){
 	var goal = 0;
