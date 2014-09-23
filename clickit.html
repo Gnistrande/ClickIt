@@ -166,9 +166,63 @@ function actionOnClick (clickedButton) {
     }
 
 
-    findGoalInRow();
+    findChainInRow();
 }
 
+
+function findChainInRow(){
+    // 1. För varje rad
+    for(var row = 0; row < 8; row++){
+        console.log("Row " + row);
+
+        // Counting how long chain has been found. If chain > 4 no need to check 4 & 5 and 6 & 7.
+        var  chain = 1;
+
+        // 2. Kolla om färg på plats 2 & 3 är samma
+        var color_1 = getColorInt(buttons[1][row].key);
+        var color_2 = getColorInt(buttons[2][row].key);
+
+        // 2.a Om samma
+        if(color_1 === color_2){
+            chain++;
+            console.log(+ color_1 + " ?= " + color_2);
+            console.log("chain = " + chain);
+            console.log("They are the same color!");
+            //Kolla vänster och höger .... 
+        }
+        else{
+            var color_3 = getColorInt(buttons[3][row].key);
+            var color_4 = getColorInt(buttons[4][row].key);
+        }
+        
+        // 3. Kolla om färg på plats 4 & 5 är samma
+        if(color_3 === color_4 && chain < 4){
+            console.log("Steg 3. Chain = " + chain);
+            console.log(+ color_3 + " ?= " + color_4);
+            console.log("They are the same!");
+        }
+        else{
+            var color_5 = getColorInt(buttons[5][row].key);
+            var color_6 = getColorInt(buttons[5][row].key);
+        }
+
+        // 4 . Kolla om färg på plats 6 & 7 är samma
+        if(color_5 === color_6){
+
+        }
+
+
+        console.log("\n");
+
+    }
+
+    
+
+    // 5. Börja om från 1.
+}
+
+
+/*
 function findGoalInRow(){
     //console.log("findFGoalInRow()");
 	var goal_1 = 1;
@@ -205,6 +259,23 @@ function findGoalInRow(){
         goal_1 = 1;
 	}
 }
+*/
+
+/*
+function checkForWinner(symbol){
+    for(var a = 0; a < 4; a++){
+        if((buttons[winningCombinations[a][0]].key === symbol) 
+            && (content[winningCombinations[a][1]] === symbol) 
+            && (content[winningCombinations[a][2]] === symbol)){
+
+            return true;
+        }
+    }
+    return false;
+}
+*/
+
+
 
 
 function findGoalInColumn(){
@@ -212,9 +283,7 @@ function findGoalInColumn(){
 }
 
 function update() {
-    if(findChange === true){
-        findGoalInRow();
-    }
+
     //findGoalInRow();
 
     //Update number of moves
