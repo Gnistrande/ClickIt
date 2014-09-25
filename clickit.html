@@ -169,144 +169,55 @@ function actionOnClick (clickedButton) {
     findChainInRow();
 }
 
-
 function findChainInRow(){
     // 1. För varje rad
     for(var row = 0; row < 8; row++){
-        console.log("Row " + row);
+        var middle_chain = 2;
+        var left_chain = 1;
+        var right_chain = 1;
 
-        // Counting how long chain has been found. If chain > 4 no need to check 4 & 5 and 6 & 7.
-        var  chain = 1;
+        var left_k = 2
+        var right_k = 5;
 
-        // 2. Kolla om färg på plats 2 & 3 är samma
-        var color_1 = getColorInt(buttons[1][row].key);
-        var color_2 = getColorInt(buttons[2][row].key);
-
-        // 2.a Om samma
-        if(color_1 === color_2){
-            chain++;
-            console.log("Steg 1.");
-            console.log(+ color_1 + " ?= " + color_2);
-            console.log("chain = " + chain);
-            console.log("They are the same color!");
-            //Kolla vänster  
-            if(getColorInt(buttons[0][row].key) === color_1){
-                chain++;
-                console.log("First color is also the same!");
-                console.log("Chain now = " + chain);
-            }
-
-            // och höger ....
-            var k = 3;
-            while( k < 8 && color_1 === getColorInt(buttons[k][row].key)){
-                k++;
-                chain++;
-                console.log("chain = " + chain);
-            }
-        }
-
+        // Hämta mitten. 
         var color_3 = getColorInt(buttons[3][row].key);
         var color_4 = getColorInt(buttons[4][row].key);
-        
-        // 3. Kolla om färg på plats 4 & 5 är samma
-        if(color_3 === color_4 && chain < 4){
-            chain = 2;
-            console.log("Steg 3.");
-            console.log("Chain = " + chain);
-            // Kolla åt höger också
-            var k = 5;
-            while( k < 8 && color_3 === getColorInt(buttons[k][row].key)){
-                k++;
-                chain++;
-                console.log("chain = " + chain);
+
+        //Om samma kolla åt vänster och höger med while-loop
+        if(color_3 === color_4){
+            while(left_k >= 0 && getColorInt(buttons[left_k][row].key) == color_3){
+                left_k--;
+                middle_chain++;
+            }
+            while(right_k < 8 && getColorInt(buttons[right_k][row].key) == color_3){
+                right_k++;
+                middle_chain++;
             }
         }
-
-        var color_5 = getColorInt(buttons[5][row].key);
-        var color_6 = getColorInt(buttons[6][row].key);
-
-        // 4 . Kolla om färg på plats 6 & 7 är samma
-        if(color_5 === color_6 && chain < 5){
-            chain = 2;
-            console.log("Steg 5.");
-            console.log("Chain = " + chain);
-            if(color_5 === getColorInt(buttons[4][row].key)){
-                chain++;
-                console.log("Chain = " + chain);
+        //Om olika,  och while-loopa vänster
+        else{
+            //hämta först vänster färg (alltså button[3][row]) och while-loopa
+            while(left_k >= 0 && getColorInt(buttons[left_k][row].key) == color_3){
+                left_k--;
+                left_chain++;
             }
-            if(color_5 === getColorInt(buttons[7][row].key)){
-                chain++;
-                console.log("Chain = " + chain);
+            //och sen högra
+            while(right_k < 8 && getColorInt(buttons[right_k][row].key) == color_4){
+                right_k++;
+                right_chain++;
             }
-        }
-        console.log("\n");
-    }
-}
-
-
-/*
-function findGoalInRow(){
-    //console.log("findFGoalInRow()");
-	var goal_1 = 1;
-    var goal_2 = 1;
-	var currentColor;
-    var goalTracker;
-
-	for (var row = 0; row < 8; row++){
-        //goalMatrix = [false, false, false, false, false, false, false, false];
-        currentColor = getColorInt(buttons[row][0].key);
-
-		for(var col = 1; col < 8; col++){
-            var nextColor = getColorInt(buttons[row][col].key);
-			if(currentColor ===  nextColor){
-				goal_1++;
-                console.log("goal++ och goal = " + goal_1 );
-			}
-            else if(currentColor != nextColor){
-                goal_1 = 1;
-                console.log("reset goal = 1");
-            }
-            if(goal_1 === 4){
-                console.log("TRUEEEEE! row = " + row);
-                buttons[row][col].kill();
-                buttons[row][col-1].kill();
-                buttons[row][col-2].kill();
-                buttons[row][col-3].kill();
-                //goalMatrix = [true, true, true, true, true, true, true, true];
-                goal_1 = 1;
-                
-            }
-			currentColor = nextColor;
-		}
-        goal_1 = 1;
-	}
-}
-*/
-
-/*
-function checkForWinner(symbol){
-    for(var a = 0; a < 4; a++){
-        if((buttons[winningCombinations[a][0]].key === symbol) 
-            && (content[winningCombinations[a][1]] === symbol) 
-            && (content[winningCombinations[a][2]] === symbol)){
-
-            return true;
         }
     }
-    return false;
 }
-*/
 
 
 
+function findChainInCol(){
 
-function findGoalInColumn(){
-	var goal = 0;
 }
 
 function update() {
 
-    //findGoalInRow();
 
     //Update number of moves
     moves.text = 'Moves: ' + move;
