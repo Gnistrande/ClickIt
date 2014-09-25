@@ -8,23 +8,31 @@
         body {
             margin: 0;
         }
+        #header{
+            margin: auto;
+            margin-top: 10px;
+            height: 100px;
+            background: url('assets/orderofcolors.png') no-repeat top center;
+        }
         canvas {
         	display: block;
         	margin: auto;
-        	margin-top: 30px;
+        	margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
+<div id="header"></div>
+
 <script type="text/javascript">
 
 var sideBar;
 
-var game = new Phaser.Game(520, 520, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(450, 450, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var buttons = [];
-var delta = 70;
+var delta = 60;
 var goalMatrix = [];
 //This variable tells wheter all changes have been made so an update of the buttons on the screen can occur or not.
 var findChange = false;
@@ -82,15 +90,15 @@ function assignFirstColor(number){
 function changeColorInGame(key){
     var image;
     if(key == 'yellow'){
-        image = 'pink';
-    }
-    else if(key == 'pink'){
-        image = 'green';
-    }
-    else if(key == 'green'){
         image = 'blue';
     }
     else if(key == 'blue'){
+        image = 'green';
+    }
+    else if(key == 'green'){
+        image = 'pink';
+    }
+    else if(key == 'pink'){
         image = 'yellow';
     }
     return image;
