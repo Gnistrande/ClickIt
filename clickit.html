@@ -185,40 +185,62 @@ function findChainInRow(){
         // 2.a Om samma
         if(color_1 === color_2){
             chain++;
+            console.log("Steg 1.");
             console.log(+ color_1 + " ?= " + color_2);
             console.log("chain = " + chain);
             console.log("They are the same color!");
-            //Kolla vänster och höger .... 
+            //Kolla vänster  
+            if(getColorInt(buttons[0][row].key) === color_1){
+                chain++;
+                console.log("First color is also the same!");
+                console.log("Chain now = " + chain);
+            }
+
+            // och höger ....
+            var k = 3;
+            while( k < 8 && color_1 === getColorInt(buttons[k][row].key)){
+                k++;
+                chain++;
+                console.log("chain = " + chain);
+            }
         }
-        else{
-            var color_3 = getColorInt(buttons[3][row].key);
-            var color_4 = getColorInt(buttons[4][row].key);
-        }
+
+        var color_3 = getColorInt(buttons[3][row].key);
+        var color_4 = getColorInt(buttons[4][row].key);
         
         // 3. Kolla om färg på plats 4 & 5 är samma
         if(color_3 === color_4 && chain < 4){
-            console.log("Steg 3. Chain = " + chain);
-            console.log(+ color_3 + " ?= " + color_4);
-            console.log("They are the same!");
+            chain = 2;
+            console.log("Steg 3.");
+            console.log("Chain = " + chain);
+            // Kolla åt höger också
+            var k = 5;
+            while( k < 8 && color_3 === getColorInt(buttons[k][row].key)){
+                k++;
+                chain++;
+                console.log("chain = " + chain);
+            }
         }
-        else{
-            var color_5 = getColorInt(buttons[5][row].key);
-            var color_6 = getColorInt(buttons[5][row].key);
-        }
+
+        var color_5 = getColorInt(buttons[5][row].key);
+        var color_6 = getColorInt(buttons[6][row].key);
 
         // 4 . Kolla om färg på plats 6 & 7 är samma
-        if(color_5 === color_6){
-
+        if(color_5 === color_6 && chain < 5){
+            chain = 2;
+            console.log("Steg 5.");
+            console.log("Chain = " + chain);
+            if(color_5 === getColorInt(buttons[4][row].key)){
+                chain++;
+                console.log("Chain = " + chain);
+            }
+            if(color_5 === getColorInt(buttons[7][row].key)){
+                chain++;
+                console.log("Chain = " + chain);
+            }
         }
-
-
         console.log("\n");
-
     }
-
-    
-
-    // 5. Börja om från 1.
 }
 
 
