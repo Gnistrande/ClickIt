@@ -175,7 +175,11 @@ function actionOnClick (clickedButton) {
 
 
     findChainInRow();
+    findChainInCol();
 }
+
+
+
 
 function findChainInRow(){
     // 1. För varje rad
@@ -183,11 +187,10 @@ function findChainInRow(){
         var middle_chain = 2;
         var left_chain = 1;
         var right_chain = 1;
-
         var left_k = 2
         var right_k = 5;
 
-        // Hämta mitten. 
+        // Hämta mitten-färgerna. 
         var color_3 = getColorInt(buttons[3][row].key);
         var color_4 = getColorInt(buttons[4][row].key);
 
@@ -202,9 +205,9 @@ function findChainInRow(){
                 middle_chain++;
             }
         }
-        //Om olika,  och while-loopa vänster
+        //Om olika
         else{
-            //hämta först vänster färg (alltså button[3][row]) och while-loopa
+            //hämta först vänster färg och while-loopa
             while(left_k >= 0 && getColorInt(buttons[left_k][row].key) == color_3){
                 left_k--;
                 left_chain++;
@@ -215,21 +218,63 @@ function findChainInRow(){
                 right_chain++;
             }
         }
+        if( middle_chain > 3 ||right_chain> 3|| left_chain > 3 ){
+            console.log("We have a chain! Row = " + row);
+        }
+    }
+}
+
+function findChainInCol(){
+    // 1. För varje rad
+    for(var col = 0; col < 8; col++){
+        var middle_chain = 2;
+        var upper_chain = 1;
+        var lower_chain = 1;
+        var upper_k = 2
+        var lower_k = 5;
+
+        // Hämta mitten-färgerna. 
+        var color_3 = getColorInt(buttons[col][3].key);
+        var color_4 = getColorInt(buttons[col][4].key);
+
+        //Om samma kolla uppåt och neråt med while-loop
+        if(color_3 === color_4){
+            while(upper_k >= 0 && getColorInt(buttons[col][upper_k].key) == color_3){
+                upper_k--;
+                middle_chain++;
+            }
+            while(lower_k < 8 && getColorInt(buttons[col][lower_k].key) == color_3){
+                lower_k++;
+                middle_chain++;
+            }
+        }
+        //Om olika
+        else{
+            //hämta först vänster färg och while-loopa
+            while(upper_k >= 0 && getColorInt(buttons[col][upper_k].key) == color_3){
+                upper_k--;
+                upper_chain++;
+            }
+            //och sen högra
+            while(lower_k < 8 && getColorInt(buttons[col][lower_k].key) == color_4){
+                lower_k++;
+                lower_chain++;
+            }
+        }
+        if( middle_chain > 3 || upper_chain > 3|| lower_chain > 3 ){
+            console.log("We have a chain! Col = " + col);
+        }
     }
 }
 
 
 
-function findChainInCol(){
-
-}
-
 function update() {
-
-
     //Update number of moves
     moves.text = 'Moves: ' + move;
 }
+
+
 
 </script>
 </body>
