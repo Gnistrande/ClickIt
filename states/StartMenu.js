@@ -1,6 +1,8 @@
 ClickIt.StartMenu = function(game) {
-  this.startBG;
-  this.startPrompt;
+  this.buttonStart;
+  this.buttonLevelOne;
+  this.buttonLevelTwo;
+  this.buttonLevelThree;
 }
 
 ClickIt.StartMenu.prototype = {
@@ -11,9 +13,13 @@ ClickIt.StartMenu.prototype = {
     this.load.image('yellow', 'assets/yellowdot.png');
   },
   create: function() {
-    startBG = this.add.image(0, 0, 'titlescreen');
-    startBG.inputEnabled = true;
-    startBG.events.onInputDown.addOnce(this.startGame, this);
+    buttonStart = this.add.button(this.world.centerX, 70, 'pink', this.startGame, this);
+    buttonLevelOne = this.add.button(this.world.centerX, 140, 'green', this.startGame, this);
+    buttonLevelOne.inputEnabled = false;
+    buttonLevelTwo = this.add.button(this.world.centerX, 210, 'blue', this.startGame, this);
+    buttonLevelTwo.inputEnabled = false;
+    buttonLevelThree = this.add.button(this.world.centerX, 280, 'yellow', this.startGame, this);
+    buttonLevelThree.inputEnabled = false;
   },
 
   startGame: function(pointer) {

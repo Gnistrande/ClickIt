@@ -3,12 +3,15 @@ ClickIt.Game = function(game) {
 	this.delta;
 	this.move=0;
 	this.moves;
+	this.buttonBack;
 }
 
 ClickIt.Game.prototype = {
 	create: function() {
 		this.buttons = [];
 		this.delta = 70;
+
+		this.buttonBack = this.add.button(50, 50, 'pink', this.backToMenu, this);
 		
 		//  Here we'll create 8 times 8 of buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
@@ -20,7 +23,7 @@ ClickIt.Game.prototype = {
 	    		var image = this.assignFirstColor(number);
 
 	    		//  Create a button inside of the 'game' group, with the an image decided above.
-	        	this.buttons[i][j] = this.add.button(i * this.delta, j * this.delta, image, this.actionOnClick, this);
+	        	this.buttons[i][j] = this.add.button(i * this.delta+150, j * this.delta+10, image, this.actionOnClick, this);
 	    	} 
     	}
     	this.moves = this.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
@@ -63,10 +66,9 @@ ClickIt.Game.prototype = {
 	},
 
 	actionOnClick: function(clickedButton) {
-		console.log("action on click!");
 		//Check for position I and J in buttons
-		var numberI = clickedButton.x/this.delta;
-	    var numberJ = clickedButton.y/this.delta;
+		var numberI = (clickedButton.x-150)/this.delta;
+	    var numberJ = (clickedButton.y-10)/this.delta;
 
 	    //Change color on the button that was clicked
 	    var newButtonImage = this.changeColorInGame(clickedButton.key);
@@ -129,7 +131,11 @@ ClickIt.Game.prototype = {
 	    	colorInt = 4;
 	    }
 	    return colorInt;
-		},
+	},
+
+	backToMenu: function(pointer) {
+		this.state.start('StartMenu');
+	},
 
 	update: function() {
 		//Update number of moves
