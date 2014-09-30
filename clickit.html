@@ -273,9 +273,11 @@ function findChainInRow(){
 function findChainInCol(){
     // 1. För varje rad
     for(var col = 0; col < 8; col++){
+
         var middle_chain = 2;
         var upper_chain = 1;
         var lower_chain = 1;
+
         var upper_k = 2
         var lower_k = 5;
 
@@ -285,11 +287,11 @@ function findChainInCol(){
 
         //Om samma kolla uppåt och neråt med while-loop
         if(color_3 === color_4){
-            while(upper_k >= 0 && getColorInt(buttons[col][upper_k].key) == color_3){
+            while(upper_k != -1 && getColorInt(buttons[col][upper_k].key) == color_3){
                 upper_k--;
                 middle_chain++;
             }
-            while(lower_k < 8 && getColorInt(buttons[col][lower_k].key) == color_3){
+            while(lower_k != 8 && getColorInt(buttons[col][lower_k].key) == color_3){
                 lower_k++;
                 middle_chain++;
             }
@@ -307,8 +309,42 @@ function findChainInCol(){
                 lower_chain++;
             }
         }
-        if( middle_chain > 3 || upper_chain > 3|| lower_chain > 3 ){
-            console.log("We have a chain! Col = " + col);
+        if( middle_chain > 3){
+            console.log("We have a middle_chain! Col = " + col);
+            chainMatrix[col][3] = true;
+            chainMatrix[col][4] = true;
+
+            //Adjust both variables since while-loops above changes them one too much.
+            lower_k++;
+            upper_k--;
+
+            // Add chain to chainMatrix[][]
+            // First up from upper_k (can be 0, 1, 2) -> 2
+            while(upper_k != 3){
+                chainMatrix[col][upper_k] = true;
+                upper_k++;
+            }
+            // And then down from lower_k (can be 7, 6, 5) -> 5
+            while(lower_k != 4){
+                chainMatrix[col][lower_k] = true;
+                lower_k--;
+            }
+        }
+        if( upper_chain > 3){
+            console.log("We have an upper_chain! Col = " + col);
+
+            chainMatrix[col][0] = true;
+            chainMatrix[col][1] = true;
+            chainMatrix[col][2] = true;
+            chainMatrix[col][3] = true;
+        }
+        if( lower_chain > 3){
+            console.log("We have a lower_chain! Col = " + col);
+
+            chainMatrix[col][4] = true;
+            chainMatrix[col][5] = true;
+            chainMatrix[col][6] = true;
+            chainMatrix[col][7] = true;
         }
     }
 }
