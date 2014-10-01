@@ -177,6 +177,8 @@ function actionOnClick (clickedButton) {
         buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
     }
 
+    rearrangeButtons();
+
     //printChainMatrix();
 
     //findChainInRow();
@@ -226,7 +228,7 @@ function findChainInRow(){
         }
         //We have a left chain (pos 0, 1, 2, 3 have same color)
         if( left_chain > 3 ){
-            console.log("We have a left_chain! Row = " + row)
+            //console.log("We have a left_chain! Row = " + row)
 
             //Add chain to chainMatrix[][].
             chainMatrix[0][row] = true;
@@ -236,7 +238,7 @@ function findChainInRow(){
         }
         //We have a right chain (pos 4, 5, 6, 7 have same color)
         if( right_chain > 3 ){
-            console.log("We have a right_chain! Row = " + row);
+            //console.log("We have a right_chain! Row = " + row);
 
             //Add chain to chainMatrix[][].
             chainMatrix[4][row] = true;
@@ -246,7 +248,7 @@ function findChainInRow(){
         }
         //We have a chain somewhere in the middle, possibly entire row.
         if( middle_chain > 3 ){
-            console.log("We have a middle_chain! Row = " + row);
+            //console.log("We have a middle_chain! Row = " + row);
 
             chainMatrix[3][row] = true;
             chainMatrix[4][row] = true;
@@ -275,11 +277,11 @@ function findChainInCol(){
     for(var col = 0; col < 8; col++){
 
         var middle_chain = 2;
-        var upper_chain = 1;
-        var lower_chain = 1;
+        var top_chain = 1; // top
+        var bottom_chain = 1; // bottom
 
-        var upper_k = 2
-        var lower_k = 5;
+        var top_k = 2
+        var bottom_k = 5;
 
         // Hämta mitten-färgerna. 
         var color_3 = getColorInt(buttons[col][3].key);
@@ -287,60 +289,59 @@ function findChainInCol(){
 
         //Om samma kolla uppåt och neråt med while-loop
         if(color_3 === color_4){
-            while(upper_k != -1 && getColorInt(buttons[col][upper_k].key) == color_3){
-                upper_k--;
+            while(top_k != -1 && getColorInt(buttons[col][top_k].key) == color_3){
+                top_k--;
                 middle_chain++;
             }
-            while(lower_k != 8 && getColorInt(buttons[col][lower_k].key) == color_3){
-                lower_k++;
+            while(bottom_k != 8 && getColorInt(buttons[col][bottom_k].key) == color_3){
+                bottom_k++;
                 middle_chain++;
             }
         }
         //Om olika
         else{
-            //hämta först vänster färg och while-loopa
-            while(upper_k >= 0 && getColorInt(buttons[col][upper_k].key) == color_3){
-                upper_k--;
-                upper_chain++;
+            //hämta först färgen över och while-loopa uppåt
+            while(top_k >= 0 && getColorInt(buttons[col][top_k].key) == color_3){
+                top_k--;
+                top_chain++;
             }
-            //och sen högra
-            while(lower_k < 8 && getColorInt(buttons[col][lower_k].key) == color_4){
-                lower_k++;
-                lower_chain++;
+            //och sen färgen under och while-loopa neråt
+            while(bottom_k < 8 && getColorInt(buttons[col][bottom_k].key) == color_4){
+                bottom_k++;
+                bottom_chain++;
             }
         }
+
+
+
+
         if( middle_chain > 3){
-            console.log("We have a middle_chain! Col = " + col);
             chainMatrix[col][3] = true;
             chainMatrix[col][4] = true;
 
             //Adjust both variables since while-loops above changes them one too much.
-            lower_k++;
-            upper_k--;
+            bottom_k--;
+            top_k++;
 
             // Add chain to chainMatrix[][]
-            // First up from upper_k (can be 0, 1, 2) -> 2
-            while(upper_k != 3){
-                chainMatrix[col][upper_k] = true;
-                upper_k++;
+            // First up from top_k (can be 0, 1, 2) -> 2
+            while(top_k != 3){
+                chainMatrix[col][top_k] = true;
+                top_k++;
             }
-            // And then down from lower_k (can be 7, 6, 5) -> 5
-            while(lower_k != 4){
-                chainMatrix[col][lower_k] = true;
-                lower_k--;
+            // And then down from bottom_k (can be 7, 6, 5) -> 5
+            while(bottom_k != 4){
+                chainMatrix[col][bottom_k] = true;
+                bottom_k--;
             }
         }
-        if( upper_chain > 3){
-            console.log("We have an upper_chain! Col = " + col);
-
+        if( top_chain > 3){
             chainMatrix[col][0] = true;
             chainMatrix[col][1] = true;
             chainMatrix[col][2] = true;
             chainMatrix[col][3] = true;
         }
-        if( lower_chain > 3){
-            console.log("We have a lower_chain! Col = " + col);
-
+        if( bottom_chain > 3){
             chainMatrix[col][4] = true;
             chainMatrix[col][5] = true;
             chainMatrix[col][6] = true;
@@ -354,7 +355,78 @@ function findChainInCol(){
 //Använda sig av assignFirstColor eller changeColorInGame?
 //Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
 function rearrangeButtons(){
-    console.log("rearrangeButtons() ! ");
+    console.log("\nrearrangeButtons() ! ");
+
+    //var temp = 'pink';
+    //buttons[0][0].loadTexture(temp);
+
+        //OBS
+        //OBS
+        // chainMatrix[][] fungerar ej här
+    console.log("chainMatrix[1][1] = " + chainMatrix[1][1]);
+    console.log("buttons[1][1] = " + buttons[1][1].key);
+    //Loop through board
+/*
+    for(var row = 7; row >= 0; row--){
+        for(var col = 7; col >= 0; col--){
+
+            //If chain is found, swap color...
+            if(row > 0 && chainMatrix[col][row] === true){
+
+                console.log("\nRow: " + row + " and col: " + col);
+
+                var strCol = buttons[col][row-1].key;
+                console.log("strCol = " + strCol);
+
+                var newButtonImage = changeColorInGame(strCol);
+                console.log("newButtonImage = " + newButtonImage);
+
+                buttons[col][row].loadTexture(newButtonImage);
+                break;
+            }
+        }
+    }
+*/
+
+    //Om denna cirkel är del av chain = true
+    if(chainMatrix[0][1] === 'true'){
+
+        console.log("[0][1]");
+
+        //Hämta den ovanförs färg
+        var strCol = buttons[0][0].key;
+        console.log("strCol = " + strCol);
+
+        //Sätt denna cirkel till den ovanförs färg
+        //buttons[0][1].loadTexture(strCol);
+        buttons[0][1].kill();
+    }
+    if(chainMatrix[1][1] === true){
+        console.log("[1][1]");
+
+        //Hämta den ovanförs färg
+        var strCol = buttons[1][0].key;
+        console.log("strCol = " + strCol);
+
+        //Sätt denna cirkel till den ovanförs färg
+        //buttons[1][1].loadTexture(strCol);
+        buttons[1][1].kill();
+    }
+    if(chainMatrix[2][1] === true){
+        console.log("[2][1]");
+
+        //Hämta den ovanförs färg
+        var strCol = buttons[2][0].key;
+        console.log("strCol = " + strCol);
+
+        //Sätt denna cirkel till den ovanförs färg
+        //buttons[2][1].loadTexture(strCol);
+        buttons[2][1].kill();
+    }
+
+    console.log("buttons[0][0] = " + buttons[0][0].key);
+
+    console.log("buttons[0][1] = " + buttons[0][1].key);
 }
 
 
@@ -372,6 +444,7 @@ function update() {
         //rearrangeButtons();
     //}
 
+    //rearrangeButtons();
 
     //Update number of moves
     moves.text = 'Moves: ' + move;
