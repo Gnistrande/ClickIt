@@ -181,8 +181,6 @@ function actionOnClick (clickedButton) {
     findChainInCol();
 
     rearrangeButtons();
-
-    //printChainMatrix();
 }
 
 
@@ -368,6 +366,9 @@ function rearrangeButtons(){
                 var image = assignFirstColor(number);
                 //Change color on button
                 buttons[col][row].loadTexture(image);
+
+                //Set chainMatrix to false
+                chainMatrix[col][row] = false;
             }
 
             //If chain is found anywhere else, 
@@ -375,74 +376,33 @@ function rearrangeButtons(){
                 //swap color with the button above
                 var strCol = buttons[col][row-1].key;
                 buttons[col][row].loadTexture(strCol);
+
+                //Swap false / true
+                //Get aboves
+                var aboveBool = chainMatrix[col][row-1];
+                chainMatrix[col][row] = aboveBool;
             }
         }
     }
-
-//alert("Hej hej");
-/*
-    //Om denna cirkel är del av chain = true
-    if(chainMatrix[0][1] === 'true'){
-
-        console.log("[0][1]");
-
-        //Hämta den ovanförs färg
-        var strCol = buttons[0][0].key;
-        console.log("strCol = " + strCol);
-
-        //Sätt denna cirkel till den ovanförs färg
-        buttons[0][1].loadTexture(strCol);
-    }
-    if(chainMatrix[1][1] === true){
-        console.log("[1][1]");
-
-        //Hämta den ovanförs färg
-        var strCol = buttons[1][0].key;
-        console.log("strCol = " + strCol);
-
-        //Sätt denna cirkel till den ovanförs färg
-        buttons[1][1].loadTexture(strCol);
-    }
-    if(chainMatrix[2][1] === true){
-        console.log("[2][1]");
-
-        //Hämta den ovanförs färg
-        var strCol = buttons[2][0].key;
-        console.log("strCol = " + strCol);
-
-        //Sätt denna cirkel till den ovanförs färg
-        buttons[2][1].loadTexture(strCol);
-    }
-*/
-
 }
 
 
 function printChainMatrix(){
-
-}
-
-
-function update() {
-    //var chain_row = findChainInRow();
-    //var chain_col = findChainInCol();
-
-    //Om != -1 så finns minst EN chain, kan finnas många, så ska rearrangeButtons() kallas på
-    //if(chain_row !== -1 || chain_col !== -1){
-        //rearrangeButtons();
-    //}
-
-    //rearrangeButtons();
-
-    //Update number of moves
-    moves.text = 'Moves: ' + move;
-
     for(var row = 0; row < 8; row ++){
         for(var col = 0; col < 8; col++){
             //Update chainText
             chainText[col][row].text = 'Ch: ' + chainMatrix[col][row];
         }
     }
+}
+
+
+function update() {
+
+    //Update number of moves
+    moves.text = 'Moves: ' + move;
+
+    printChainMatrix();
 
 }
 
