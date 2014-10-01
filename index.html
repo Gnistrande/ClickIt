@@ -8,6 +8,10 @@
     <script src="states/Preloader.js"></script>
     <script src="states/StartMenu.js"></script>
     <script src="states/Game.js"></script>
+    <script src="states/LevelOne.js"></script>
+    <script src="states/LevelTwo.js"></script>
+    <script src="states/LevelThree.js"></script>
+
     <style type="text/css">
         body {
             margin: 0;
@@ -37,6 +41,10 @@
             game.state.add('Preloader', ClickIt.Preloader);
             game.state.add('StartMenu', ClickIt.StartMenu);
             game.state.add('Game', ClickIt.Game);
+            game.state.add('LevelOne', ClickIt.LevelOne);
+            game.state.add('LevelTwo', ClickIt.LevelTwo);
+            game.state.add('LevelThree', ClickIt.LevelThree);
+             
             game.state.start('Boot');
         }
     </script>

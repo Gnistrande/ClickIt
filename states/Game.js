@@ -8,7 +8,7 @@ ClickIt.Game = function(game) {
 	this.chainText;
 	this.moveX;
 	this.moveY;
-}
+};
 
 ClickIt.Game.prototype = {
 	create: function() {
