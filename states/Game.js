@@ -130,6 +130,10 @@ ClickIt.Game.prototype = {
 	        this.buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
 	        this.buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
 	    }
+	    this.findChainInRow();
+	    this.findChainInCol();
+
+	    this.rearrangeButtons();
 	},
 
 	getColorInt: function(colorString) {
@@ -189,7 +193,7 @@ ClickIt.Game.prototype = {
 	        }
 	        //We have a left chain (pos 0, 1, 2, 3 have same color)
 	        if( left_chain > 3 ){
-	            console.log("We have a left_chain! Row = " + row)
+	            //console.log("We have a left_chain! Row = " + row)
 
 	            //Add chain to chainMatrix[][].
 	            this.chainMatrix[0][row] = true;
@@ -199,7 +203,7 @@ ClickIt.Game.prototype = {
 	        }
 	        //We have a right chain (pos 4, 5, 6, 7 have same color)
 	        if( right_chain > 3 ){
-	            console.log("We have a right_chain! Row = " + row);
+	            //console.log("We have a right_chain! Row = " + row);
 
 	            //Add chain to chainMatrix[][].
 	            this.chainMatrix[4][row] = true;
@@ -209,7 +213,7 @@ ClickIt.Game.prototype = {
 	        }
 	        //We have a chain somewhere in the middle, possibly entire row.
 	        if( middle_chain > 3 ){
-	            console.log("We have a middle_chain! Row = " + row);
+	            //console.log("We have a middle_chain! Row = " + row);
 
 	            this.chainMatrix[3][row] = true;
 	            this.chainMatrix[4][row] = true;
@@ -238,11 +242,11 @@ ClickIt.Game.prototype = {
 	    for(var col = 0; col < 8; col++){
 
 	        var middle_chain = 2;
-	        var upper_chain = 1;
-	        var lower_chain = 1;
+	        var top_chain = 1; // top
+	        var bottom_chain = 1; // bottom
 
-	        var upper_k = 2
-	        var lower_k = 5;
+	        var top_k = 2
+	        var bottom_k = 5;
 
 	        // Hämta mitten-färgerna. 
 	        var color_3 = this.getColorInt(this.buttons[col][3].key);
@@ -250,60 +254,55 @@ ClickIt.Game.prototype = {
 
 	        //Om samma kolla uppåt och neråt med while-loop
 	        if(color_3 === color_4){
-	            while(upper_k != -1 && this.getColorInt(this.buttons[col][upper_k].key) == color_3){
-	                upper_k--;
+	            while(top_k != -1 && this.getColorInt(this.buttons[col][top_k].key) == color_3){
+	                top_k--;
 	                middle_chain++;
 	            }
-	            while(lower_k != 8 && this.getColorInt(this.buttons[col][lower_k].key) == color_3){
-	                lower_k++;
+	            while(bottom_k != 8 && this.getColorInt(this.buttons[col][bottom_k].key) == color_3){
+	                bottom_k++;
 	                middle_chain++;
 	            }
 	        }
 	        //Om olika
 	        else{
-	            //hämta först vänster färg och while-loopa
-	            while(upper_k >= 0 && this.getColorInt(this.buttons[col][upper_k].key) == color_3){
-	                upper_k--;
-	                upper_chain++;
+	            //hämta först färgen över och while-loopa uppåt
+	            while(top_k >= 0 && this.getColorInt(this.buttons[col][top_k].key) == color_3){
+	                top_k--;
+	                top_chain++;
 	            }
-	            //och sen högra
-	            while(lower_k < 8 && this.getColorInt(this.buttons[col][lower_k].key) == color_4){
-	                lower_k++;
-	                lower_chain++;
+	            //och sen färgen under och while-loopa neråt
+	            while(bottom_k < 8 && this.getColorInt(this.buttons[col][bottom_k].key) == color_4){
+	                bottom_k++;
+	                bottom_chain++;
 	            }
 	        }
+
 	        if( middle_chain > 3){
-	            console.log("We have a middle_chain! Col = " + col);
 	            this.chainMatrix[col][3] = true;
 	            this.chainMatrix[col][4] = true;
-
 	            //Adjust both variables since while-loops above changes them one too much.
-	            lower_k++;
-	            upper_k--;
+	            bottom_k--;
+	            top_k++;
 
 	            // Add chain to chainMatrix[][]
-	            // First up from upper_k (can be 0, 1, 2) -> 2
-	            while(upper_k != 3){
-	                this.chainMatrix[col][upper_k] = true;
-	                upper_k++;
+	            // First up from top_k (can be 0, 1, 2) -> 2
+	            while(top_k != 3){
+	                this.chainMatrix[col][top_k] = true;
+	                top_k++;
 	            }
-	            // And then down from lower_k (can be 7, 6, 5) -> 5
-	            while(lower_k != 4){
-	                this.chainMatrix[col][lower_k] = true;
-	                lower_k--;
+	            // And then down from bottom_k (can be 7, 6, 5) -> 5
+	            while(bottom_k != 4){
+	                this.chainMatrix[col][bottom_k] = true;
+	                bottom_k--;
 	            }
 	        }
-	        if( upper_chain > 3){
-	            console.log("We have an upper_chain! Col = " + col);
-
+	        if( top_chain > 3){
 	            this.chainMatrix[col][0] = true;
 	            this.chainMatrix[col][1] = true;
 	            this.chainMatrix[col][2] = true;
 	            this.chainMatrix[col][3] = true;
 	        }
-	        if( lower_chain > 3){
-	            console.log("We have a lower_chain! Col = " + col);
-
+	        if( bottom_chain > 3){
 	            this.chainMatrix[col][4] = true;
 	            this.chainMatrix[col][5] = true;
 	            this.chainMatrix[col][6] = true;
@@ -316,9 +315,43 @@ ClickIt.Game.prototype = {
 		this.state.start('StartMenu');
 	},
 
+	// Utifrån chain(s) ska vissa knappar disablas och vissa ska arrangeras om. Buttons ovan (om det finns) ska ramla ner.
+	//Använda sig av assignFirstColor eller changeColorInGame?
+	//Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
+	rearrangeButtons: function() {
+	    console.log("\nrearrangeButtons() ! ");
+
+	    //var temp = 'pink';
+	    //buttons[0][0].loadTexture(temp);
+
+	    //Loop through board
+	    for(var row = 7; row >= 0; row--){
+	        for(var col = 7; col >= 0; col--){
+
+	            // If chain is found on top row,
+	            if(row === 0 && this.chainMatrix[col][row] === true){
+	                //Randomize a number between 1 - 4
+	                var number = Math.floor((Math.random() * 4) + 1);
+	                //Check what color that number motsvarar
+	                var image = this.assignFirstColor(number);
+	                //Change color on button
+	                this.buttons[col][row].loadTexture(image);
+	            }
+
+	            //If chain is found anywhere else, 
+	            if(row > 0 && this.chainMatrix[col][row] === true){
+	                //swap color with the button above
+	                var strCol = this.buttons[col][row-1].key;
+	                this.buttons[col][row].loadTexture(strCol);
+	            }
+	        }
+	    }
+	},
+
+
 	update: function() {
-		var chain_row = this.findChainInRow();
-    	var chain_col = this.findChainInCol();
+		//var chain_row = this.findChainInRow();
+    	//var chain_col = this.findChainInCol();
 
 		//Update number of moves
 		this.moves.text = 'Moves: ' + this.move;
