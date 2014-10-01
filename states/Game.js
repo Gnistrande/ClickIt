@@ -312,6 +312,9 @@ ClickIt.Game.prototype = {
 	},
 
 	backToMenu: function() {
+		this.preloadBar = null;
+		this.ready = false;
+		this.move=0;
 		this.state.start('StartMenu');
 	},
 
