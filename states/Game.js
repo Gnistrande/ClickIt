@@ -20,7 +20,7 @@ ClickIt.Game.prototype = {
 		this.moveX = 150;
 		this.moveY = 20;
 
-		this.buttonBack = this.add.button(50, 50, 'pink', this.backToMenu, this);
+		this.buttonBack = this.add.button(20, 50, 'backButton', this.backToMenu, this);
 
 		this.moves = this.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 		
@@ -42,7 +42,7 @@ ClickIt.Game.prototype = {
             	this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
 	    	} 
     	}
-    	
+    	var overlay = this.add.image(150, 0, 'arrowLeft');
 	},
 
 	//Assign color from number
