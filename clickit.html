@@ -177,12 +177,12 @@ function actionOnClick (clickedButton) {
         buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
     }
 
+    findChainInRow();
+    findChainInCol();
+
     rearrangeButtons();
 
     //printChainMatrix();
-
-    //findChainInRow();
-    //findChainInCol();
 }
 
 
@@ -312,13 +312,9 @@ function findChainInCol(){
             }
         }
 
-
-
-
         if( middle_chain > 3){
             chainMatrix[col][3] = true;
             chainMatrix[col][4] = true;
-
             //Adjust both variables since while-loops above changes them one too much.
             bottom_k--;
             top_k++;
@@ -360,34 +356,31 @@ function rearrangeButtons(){
     //var temp = 'pink';
     //buttons[0][0].loadTexture(temp);
 
-        //OBS
-        //OBS
-        // chainMatrix[][] fungerar ej här
-    console.log("chainMatrix[1][1] = " + chainMatrix[1][1]);
-    console.log("buttons[1][1] = " + buttons[1][1].key);
     //Loop through board
-/*
     for(var row = 7; row >= 0; row--){
         for(var col = 7; col >= 0; col--){
 
-            //If chain is found, swap color...
+            // If chain is found on top row,
+            if(row === 0 && chainMatrix[col][row] === true){
+                //Randomize a number between 1 - 4
+                var number = Math.floor((Math.random() * 4) + 1);
+                //Check what color that number motsvarar
+                var image = assignFirstColor(number);
+                //Change color on button
+                buttons[col][row].loadTexture(image);
+            }
+
+            //If chain is found anywhere else, 
             if(row > 0 && chainMatrix[col][row] === true){
-
-                console.log("\nRow: " + row + " and col: " + col);
-
+                //swap color with the button above
                 var strCol = buttons[col][row-1].key;
-                console.log("strCol = " + strCol);
-
-                var newButtonImage = changeColorInGame(strCol);
-                console.log("newButtonImage = " + newButtonImage);
-
-                buttons[col][row].loadTexture(newButtonImage);
-                break;
+                buttons[col][row].loadTexture(strCol);
             }
         }
     }
-*/
 
+//alert("Hej hej");
+/*
     //Om denna cirkel är del av chain = true
     if(chainMatrix[0][1] === 'true'){
 
@@ -398,8 +391,7 @@ function rearrangeButtons(){
         console.log("strCol = " + strCol);
 
         //Sätt denna cirkel till den ovanförs färg
-        //buttons[0][1].loadTexture(strCol);
-        buttons[0][1].kill();
+        buttons[0][1].loadTexture(strCol);
     }
     if(chainMatrix[1][1] === true){
         console.log("[1][1]");
@@ -409,8 +401,7 @@ function rearrangeButtons(){
         console.log("strCol = " + strCol);
 
         //Sätt denna cirkel till den ovanförs färg
-        //buttons[1][1].loadTexture(strCol);
-        buttons[1][1].kill();
+        buttons[1][1].loadTexture(strCol);
     }
     if(chainMatrix[2][1] === true){
         console.log("[2][1]");
@@ -420,13 +411,10 @@ function rearrangeButtons(){
         console.log("strCol = " + strCol);
 
         //Sätt denna cirkel till den ovanförs färg
-        //buttons[2][1].loadTexture(strCol);
-        buttons[2][1].kill();
+        buttons[2][1].loadTexture(strCol);
     }
+*/
 
-    console.log("buttons[0][0] = " + buttons[0][0].key);
-
-    console.log("buttons[0][1] = " + buttons[0][1].key);
 }
 
 
@@ -436,8 +424,8 @@ function printChainMatrix(){
 
 
 function update() {
-    var chain_row = findChainInRow();
-    var chain_col = findChainInCol();
+    //var chain_row = findChainInRow();
+    //var chain_col = findChainInCol();
 
     //Om != -1 så finns minst EN chain, kan finnas många, så ska rearrangeButtons() kallas på
     //if(chain_row !== -1 || chain_col !== -1){
