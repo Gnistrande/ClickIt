@@ -5,7 +5,7 @@ ClickIt.Boot = function(game){};
 ClickIt.Boot.prototype = {
 	preload: function() {
 		//this.load.image('titleImage', 'assets/agnes.jpg');
-		this.load.image('preloaderBar', 'images/loader_bar.png');
+		this.load.image('preloaderBar', 'assets/loader_bar.png');
 	},
 	//Random saker från tutorial
 	create: function() {
