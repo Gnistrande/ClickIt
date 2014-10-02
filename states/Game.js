@@ -1,14 +1,14 @@
 ClickIt.Game = function(game) {
 	this.buttons;
 	this.delta;
-	this.move=0;
+	this.move;
 	this.moves;
 	this.buttonBack;
 	this.chainMatrix;
 	this.chainText;
 	this.moveX;
 	this.moveY;
-}
+};
 
 ClickIt.Game.prototype = {
 	create: function() {
@@ -19,11 +19,18 @@ ClickIt.Game.prototype = {
 		this.delta = 70;
 		this.moveX = 150;
 		this.moveY = 20;
+		this.move = 0;
 
 		this.buttonBack = this.add.button(20, 50, 'backButton', this.backToMenu, this);
-
 		this.moves = this.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 		
+		this.createButtons();
+		//this.addBlocks();
+		
+    	//var overlay = this.add.image(150, 0, 'arrowLeft');
+	},
+
+	createButtons: function() {
 		//  Here we'll create 8 times 8 of buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
 	        this.buttons[i] = [];
@@ -42,7 +49,6 @@ ClickIt.Game.prototype = {
             	this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
 	    	} 
     	}
-    	var overlay = this.add.image(150, 0, 'arrowLeft');
 	},
 
 	//Assign color from number
