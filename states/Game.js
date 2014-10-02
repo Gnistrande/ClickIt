@@ -25,7 +25,7 @@ ClickIt.Game.prototype = {
 		this.moves = this.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 		
 		this.createButtons();
-		//this.addBlocks();
+		this.createLevel();
 		
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
 	},
@@ -83,6 +83,9 @@ ClickIt.Game.prototype = {
 	    }
 	    else if(key == 'pink'){
 	        image = 'yellow';
+	    }
+	    else {
+	    	image = key;
 	    }
 	    return image;
 	},

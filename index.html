@@ -11,6 +11,7 @@
     <script src="states/LevelOne.js"></script>
     <script src="states/LevelTwo.js"></script>
     <script src="states/LevelThree.js"></script>
+    <script src="states/InGameTutoring.js"></script>
 
     <style type="text/css">
         body {
@@ -44,6 +45,7 @@
             game.state.add('LevelOne', ClickIt.LevelOne);
             game.state.add('LevelTwo', ClickIt.LevelTwo);
             game.state.add('LevelThree', ClickIt.LevelThree);
+            game.state.add('InGameTutoring', ClickIt.InGameTutoring);
              
             game.state.start('Boot');
         }

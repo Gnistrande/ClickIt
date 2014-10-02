@@ -7,13 +7,13 @@ ClickIt.StartMenu = function(game) {
 
 ClickIt.StartMenu.prototype = {
   preload: function() {
-    this.load.image('arrowLeft', 'assets/arrowLeft.png');
+    /*this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('pink', 'assets/pinkdot.png');
     this.load.image('green', 'assets/greendot.png');
     this.load.image('blue', 'assets/bluedot.png');
     this.load.image('yellow', 'assets/yellowdot.png');
     this.load.image('backButton', 'assets/backButton.png');
-    this.load.image('agnes', 'assets/agnes.jpg')
+    this.load.image('agnes', 'assets/agnes.jpg')*/
   },
   create: function() {
     buttonStart = this.add.button(this.world.centerX-108, 70, 'startButton', this.startGame, this);
@@ -27,7 +27,7 @@ ClickIt.StartMenu.prototype = {
 
   startGame: function(pointer) {
     if(pointer==buttonStart) {
-      this.state.start('Game');
+      this.state.start('InGameTutoring');
     }
     else if(pointer==buttonLevelOne) {
       this.state.start('LevelOne');
