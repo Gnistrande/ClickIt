@@ -20,7 +20,7 @@ ClickIt.Preloader.prototype = {
     this.load.image('blue', 'assets/bluedot.png');
     this.load.image('yellow', 'assets/yellowdot.png');
     this.load.image('backButton', 'assets/backButton.png');
-    this.load.image('agnes', 'assets/agnes.jpg')
+    this.load.image('stone', 'assets/stone.png')
   },
 
   create: function() {
