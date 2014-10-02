@@ -13,6 +13,7 @@ ClickIt.StartMenu.prototype = {
     this.load.image('blue', 'assets/bluedot.png');
     this.load.image('yellow', 'assets/yellowdot.png');
     this.load.image('backButton', 'assets/backButton.png');
+    this.load.image('agnes', 'assets/agnes.jpg')
   },
   create: function() {
     buttonStart = this.add.button(this.world.centerX-108, 70, 'startButton', this.startGame, this);
@@ -25,7 +26,6 @@ ClickIt.StartMenu.prototype = {
   },
 
   startGame: function(pointer) {
-    console.log(pointer);
     if(pointer==buttonStart) {
       this.state.start('Game');
     }

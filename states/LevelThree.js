@@ -1,13 +1,4 @@
-ClickIt.LevelThree = function(game) {
- 
-};
+ClickIt.LevelThree = function(game) {};
 
-ClickIt.LevelThree.prototype = {
-	create: function() {
-		alert("LevelThree");
-	},
-
-	update: function() {
-
-	}
-};
+ClickIt.LevelThree.prototype = Object.create(ClickIt.Game.prototype);
+ClickIt.LevelThree.prototype.constructor = ClickIt.LevelThree;
