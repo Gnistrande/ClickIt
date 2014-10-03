@@ -333,46 +333,63 @@ ClickIt.Game.prototype = {
 	rearrangeButtons: function() {
 	    console.log("\nrearrangeButtons() ! ");
 
-	    //var temp = 'pink';
-	    //buttons[0][0].loadTexture(temp);
+	    var col = 7;
+	    while( col >= 0){
+	    	var row = 7;
+	    	while( row >= 0){
 
-	    //Loop through board
-	    for(var row = 7; row >= 0; row--){
-	        for(var col = 7; col >= 0; col--){
+	    		if( this.chainMatrix[col][row] === true){
+	    			var counterTrue = 1;
 
-	            // If chain is found on top row,
-	            if(row === 0 && this.chainMatrix[col][row] === true){
-	                //Randomize a number between 1 - 4
-	                var number = Math.floor((Math.random() * 4) + 1);
-	                //Check what color that number motsvarar
-	                var image = this.assignFirstColor(number);
-	                //Change color on button
-	                this.buttons[col][row].loadTexture(image);
-	            }
-
-	            //If chain is found anywhere else, 
-	            if(row > 0 && this.chainMatrix[col][row] === true){
-	                //swap color with the button above
-	                var strCol = this.buttons[col][row-1].key;
-	                this.buttons[col][row].loadTexture(strCol);
-	            }
-	        }
+	    			for(var i = row-1; i >= 0; i-- ){
+	    				if ( this.chainMatrix[col][i] === true){
+	    					counterTrue++;
+	    				}
+	    				else{
+	    					//Flytta ner färger enligt counterTrue
+	    					var newColor = this.buttons[col][ i ].key;
+	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
+	    					this.chainMatrix[col][ i + counterTrue ] = false;
+	    				}
+	    			}
+	    			counterTrue--;
+	    			while( counterTrue >= 0){
+	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
+	    				//var image = this.assignFirstColor(randomNumber);
+	    				var image = 'agnes';
+	    				this.buttons[col][counterTrue].loadTexture(image);
+	    				this.chainMatrix[col][counterTrue] = false;
+	    				counterTrue--;
+	    			}
+	    			row = -1;
+	    		}
+	    		else{
+	    			row--;
+	    		}
+	    	}
+	    	col--;
 	    }
+	},
+
+	printChainMatrix: function(){
+		for(var row = 0; row < 8; row ++){
+        	for(var col = 0; col < 8; col++){
+            //Update chainText
+            this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
+        	}
+    	}
 	},
 
 
 	update: function() {
-		//var chain_row = this.findChainInRow();
-    	//var chain_col = this.findChainInCol();
+		//this.findChainInRow();
+		//this.findChainInCol();
+
+		this.rearrangeButtons();
 
 		//Update number of moves
 		this.moves.text = 'Moves: ' + this.move;
 
-		for(var row = 0; row < 8; row ++){
-	        for(var col = 0; col < 8; col++){
-	            //Update chainText
-	            this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
-	        }
-    	}
+		this.printChainMatrix();
 	}
 };
