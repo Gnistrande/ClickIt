@@ -331,40 +331,41 @@ ClickIt.Game.prototype = {
 	    console.log("\nrearrangeButtons() ! ");
 
 	    var col = 7;
-	    while( col > 0){
+	    while( col >= 0){
 	    	var row = 7;
-	    	while( row > 0){
+	    	while( row >= 0){
 
 	    		if( this.chainMatrix[col][row] === true){
 	    			var counterTrue = 1;
 
-	    			for(var i = row-1; i > 0; i-- ){
+	    			for(var i = row-1; i >= 0; i-- ){
 	    				if ( this.chainMatrix[col][i] === true){
 	    					counterTrue++;
 	    				}
 	    				else{
 	    					//Flytta ner färger enligt counterTrue
-	    					var newColor = this.buttons[col][i-counterTrue].key;
-	    					this.buttons[col][i].loadTexture(newColor);
-	    					this.chainMatrix[col][i] = false;
-	    					i = 0;
+	    					var newColor = this.buttons[col][ i ].key;
+	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
+	    					this.chainMatrix[col][ i + counterTrue ] = false;
 	    				}
 	    			}
 	    			counterTrue--;
 	    			while( counterTrue >= 0){
 	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
-	    				var image = this.assignFirstColor(randomNumber);
+	    				//var image = this.assignFirstColor(randomNumber);
+	    				var image = 'agnes';
 	    				this.buttons[col][counterTrue].loadTexture(image);
 	    				this.chainMatrix[col][counterTrue] = false;
 	    				counterTrue--;
 	    			}
+	    			row = -1;
 	    		}
-	    		// Byta färg
-	    		row--;
+	    		else{
+	    			row--;
+	    		}
 	    	}
 	    	col--;
 	    }
-	   
 	},
 
 	printChainMatrix: function(){
