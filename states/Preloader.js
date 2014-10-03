@@ -14,13 +14,6 @@ ClickIt.Preloader.prototype = {
     this.load.image('levelOneImage', 'assets/levelOne.png');
     this.load.image('levelTwoImage', 'assets/levelTwo.png');
     this.load.image('levelThreeImage', 'assets/levelThree.png');
-    this.load.image('arrowLeft', 'assets/arrowLeft.png');
-    this.load.image('pink', 'assets/pinkdot.png');
-    this.load.image('green', 'assets/greendot.png');
-    this.load.image('blue', 'assets/bluedot.png');
-    this.load.image('yellow', 'assets/yellowdot.png');
-    this.load.image('backButton', 'assets/backButton.png');
-    this.load.image('stone', 'assets/stone.png')
   },
 
   create: function() {

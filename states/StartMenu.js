@@ -7,13 +7,13 @@ ClickIt.StartMenu = function(game) {
 
 ClickIt.StartMenu.prototype = {
   preload: function() {
-    /*this.load.image('arrowLeft', 'assets/arrowLeft.png');
+    this.load.image('arrowLeft', 'assets/arrowLeft.png');
     this.load.image('pink', 'assets/pinkdot.png');
     this.load.image('green', 'assets/greendot.png');
     this.load.image('blue', 'assets/bluedot.png');
     this.load.image('yellow', 'assets/yellowdot.png');
     this.load.image('backButton', 'assets/backButton.png');
-    this.load.image('agnes', 'assets/agnes.jpg')*/
+    this.load.image('stone', 'assets/stone.png');
   },
   create: function() {
     buttonStart = this.add.button(this.world.centerX-108, 70, 'startButton', this.startGame, this);
