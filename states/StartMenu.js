@@ -14,6 +14,7 @@ ClickIt.StartMenu.prototype = {
     this.load.image('yellow', 'assets/yellowdot.png');
     this.load.image('backButton', 'assets/backButton.png');
     this.load.image('stone', 'assets/stone.png');
+    this.load.image('agnes', 'assets/agnes.jpg');
   },
   create: function() {
     buttonStart = this.add.button(this.world.centerX-108, 70, 'startButton', this.startGame, this);
