@@ -8,22 +8,37 @@ ClickIt.StartMenu = function(game) {
 ClickIt.StartMenu.prototype = {
   preload: function() {
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
-    this.load.image('pink', 'assets/pinkdot.png');
-    this.load.image('green', 'assets/greendot.png');
-    this.load.image('blue', 'assets/bluedot.png');
-    this.load.image('yellow', 'assets/yellowdot.png');
+    this.load.spritesheet('pink', 'assets/pinkDot.png', 54, 44);
+    this.load.spritesheet('green', 'assets/greenDot.png', 54, 44);
+    this.load.spritesheet('blue', 'assets/blueDot.png', 54, 44);
+    this.load.spritesheet('yellow', 'assets/yellowDot.png', 54, 44);
     this.load.image('backButton', 'assets/backButton.png');
     this.load.image('stone', 'assets/stone.png');
     this.load.image('agnes', 'assets/agnes.jpg');
+
+
+    //this.load.script('gray', '../phaser/filters/Gray.js');
   },
   create: function() {
-    buttonStart = this.add.button(this.world.centerX-108, 70, 'startButton', this.startGame, this);
-    buttonLevelOne = this.add.button(this.world.centerX-108, 170, 'levelOneImage', this.startGame, this);
+    clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');
+    clickItLogo.scale.setTo(0.7, 0.7);
+
+  
+
+    buttonStart = this.add.button(this.world.centerX-115, 230, 'startButton', this.startGame, this, 1, 0, 2);
+    buttonStart.scale.setTo(0.9, 0.9);
+    buttonLevelOne = this.add.button(this.world.centerX-115, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
+    buttonLevelOne.scale.setTo(0.9, 0.9);
     //buttonLevelOne.inputEnabled = false;
-    buttonLevelTwo = this.add.button(this.world.centerX-108, 270, 'levelTwoImage', this.startGame, this);
+    buttonLevelTwo = this.add.button(this.world.centerX-115, 370, 'levelTwoImage', this.startGame, this, 1, 0, 2);
+    buttonLevelTwo.scale.setTo(0.9, 0.9);
     //buttonLevelTwo.inputEnabled = false;
-    buttonLevelThree = this.add.button(this.world.centerX-108, 370, 'levelThreeImage', this.startGame, this);
+    buttonLevelThree = this.add.button(this.world.centerX-115, 440, 'levelThreeImage', this.startGame, this, 1, 0, 2);
+    buttonLevelThree.scale.setTo(0.9, 0.9);
     //buttonLevelThree.inputEnabled = false;
+
+    //var gray = game.add.filter('Gray');
+    //clickItLogo.filters = [gray];
   },
 
   startGame: function(pointer) {

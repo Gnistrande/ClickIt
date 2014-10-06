@@ -14,7 +14,7 @@ ClickIt.Boot.prototype = {
 		this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
 		this.input.addPointer();
 
-		this.stage.backgroundColor = '#ddeeee';
+		this.stage.backgroundColor = '#ffffff';
 
 		this.state.start('Preloader');
 	}

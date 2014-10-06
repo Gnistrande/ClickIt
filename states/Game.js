@@ -8,6 +8,8 @@ ClickIt.Game = function(game) {
 	this.chainText;
 	this.moveX;
 	this.moveY;
+	this.cursors;
+	this.graph;
 };
 
 ClickIt.Game.prototype = {
@@ -26,8 +28,13 @@ ClickIt.Game.prototype = {
 		
 		this.createButtons();
 		this.createLevel();
+		this.graph = this.add.graphics(0, 0);
 		
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
+    	//var overlay = this.add.image(150, 0, 'logo');
+
+    	this.cursors = this.input.keyboard.createCursorKeys();
+    	
 	},
 
 	createButtons: function() {
@@ -43,7 +50,7 @@ ClickIt.Game.prototype = {
 	    		var image = this.assignFirstColor(number);
 
 	    		//  Create a button inside of the 'game' group, with the an image decided above.
-	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this);
+	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this, 1, 0, 2);
 
 	        	this.chainMatrix[i][j] = false;
             	this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
@@ -331,7 +338,7 @@ ClickIt.Game.prototype = {
 	//Använda sig av assignFirstColor eller changeColorInGame?
 	//Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
 	rearrangeButtons: function() {
-	    console.log("\nrearrangeButtons() ! ");
+	    //console.log("\nrearrangeButtons() ! ");
 
 	    var col = 7;
 	    while( col >= 0){
@@ -346,6 +353,14 @@ ClickIt.Game.prototype = {
 	    					counterTrue++;
 	    				}
 	    				else{
+	    					//Make buttons invisible
+	    					//this.buttons[col][i].visible = false;
+
+	    					//Call tweenButton
+	    					var temp_y = this.buttons[col][row].y;
+	    					var temp_x = this.buttons[col][row].x
+	    					this.tweenButton( this.buttons[col][i], 0, 0);
+
 	    					//Flytta ner färger enligt counterTrue
 	    					var newColor = this.buttons[col][ i ].key;
 	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
@@ -355,8 +370,8 @@ ClickIt.Game.prototype = {
 	    			counterTrue--;
 	    			while( counterTrue >= 0){
 	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
-	    				//var image = this.assignFirstColor(randomNumber);
-	    				var image = 'agnes';
+	    				var image = this.assignFirstColor(randomNumber);
+	    				//var image = 'agnes';
 	    				this.buttons[col][counterTrue].loadTexture(image);
 	    				this.chainMatrix[col][counterTrue] = false;
 	    				counterTrue--;
@@ -385,11 +400,85 @@ ClickIt.Game.prototype = {
 		//this.findChainInRow();
 		//this.findChainInCol();
 
+
+		if( this.input.activePointer.isDown ){
+			console.log("hej hej på dig");
+		}
+
+		if( this.input.mousePointer.mouseDownCallback ){
+			
+		}
+
+		//if( this.input.mousePointer.isDown ){
+			//console.log("down boy down");
+		//}
+		if( this.input.mousePointer.onTap){
+			console.log("down");
+		}
+
+		if( this.input.mousePointer.justReleased() ){
+			//console.log("mousepointer just released!");
+		}
+
+		if( this.chainMatrix[0][0] === true){
+			//console.log("heeeeej");
+			//this.buttons[0][0].animations.add('left');
+
+			//this.buttons[0][0].visible = (false);
+		}
+
+		if (this.cursors.down.isDown){
+        	//this.buttons[0][0].animations.play('left');
+        	this.tweenButton(this.buttons[0][0], 3, 3, 1);
+    	}
+		// Image.events.onKilled
+
+
 		this.rearrangeButtons();
 
 		//Update number of moves
 		this.moves.text = 'Moves: ' + this.move;
 
 		this.printChainMatrix();
-	}
+	},
+
+	// Function for animation of dots
+	// button - the dots to be moved down
+	// newPos - to where it should be moved
+	tweenButton: function (button, newPosX, newPosY) {
+
+		var tempCircle;
+
+		var green = 0xB6FFDB;
+		var pink = 0xFDCCEA;
+		var yellow = 0xFDFD7D;
+		var blue = 0xB8DBFF;
+
+		var color;
+
+		if(button.key == 'green'){
+			color = green;
+		}
+		else if(button.key == 'pink'){
+			color = pink;
+		}
+		else if(button.key == 'yellow'){
+			color = yellow;
+		}
+		else if(button.key == 'blue'){
+			color = blue;
+		}
+
+		// draw a circle
+		tempCircle = this.graph.beginFill(color, 1);
+    	tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
+
+    	// make button under the circle invisible
+		button.visible = false;
+
+		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
+
+		//button.visible = true;
+	} 
 };
+
