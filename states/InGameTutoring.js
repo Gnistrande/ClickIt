@@ -10,6 +10,7 @@ ClickIt.InGameTutoring.prototype = Object.create(ClickIt.Game.prototype);
 ClickIt.InGameTutoring.prototype.constructor = ClickIt.InGameTutoring;
 
 ClickIt.InGameTutoring.prototype.createLevel = function() {
+    console.log("InGameTutoring a.k.a level 0");
 };
 
 //The color you have to collect for this level
@@ -62,7 +63,7 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;

@@ -11,6 +11,7 @@ ClickIt.LevelTwo.prototype.constructor = ClickIt.LevelTwo;
 
 ClickIt.LevelTwo.prototype.createLevel = function() {
 	//alert("Level 2");
+	console.log("level 2");
 };
 
 //The color you have to collect for this level
@@ -63,7 +64,7 @@ ClickIt.LevelTwo.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;

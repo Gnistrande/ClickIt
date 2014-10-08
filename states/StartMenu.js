@@ -8,11 +8,14 @@ ClickIt.StartMenu = function(game) {
 ClickIt.StartMenu.prototype = {
   preload: function() {
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
-    this.load.spritesheet('pink', 'assets/pinkDots.png', 54, 44);
-    this.load.spritesheet('green', 'assets/greenDots.png', 54, 44);
-    this.load.spritesheet('blue', 'assets/blueDots.png', 54, 44);
-    this.load.spritesheet('yellow', 'assets/yellowDots.png', 54, 44);
-    this.load.image('backButton', 'assets/backButton.png');
+    this.load.spritesheet('pink', 'assets/dot_pink.png', 54, 44);
+    this.load.spritesheet('green', 'assets/dot_green.png', 54, 44);
+    this.load.spritesheet('blue', 'assets/dot_blue.png', 54, 44);
+    this.load.spritesheet('yellow', 'assets/dot_yellow.png', 54, 44);
+
+    this.load.spritesheet('backButton', 'assets/backButton_symbol.png', 70, 39);
+    this.load.spritesheet('nextButton', 'assets/nextButton_symbol.png', 70, 39);
+
     this.load.image('stone', 'assets/stone5.png');
     this.load.image('agnes', 'assets/agnes.jpg');
 
@@ -29,17 +32,27 @@ ClickIt.StartMenu.prototype = {
 
   
 
-    buttonStart = this.add.button(this.world.centerX-115, 230, 'startButton', this.startGame, this, 1, 0, 2);
-    buttonStart.scale.setTo(0.9, 0.9);
-    buttonLevelOne = this.add.button(this.world.centerX-115, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
-    buttonLevelOne.scale.setTo(0.9, 0.9);
+    buttonStart = this.add.button(this.world.centerX-110, 240, 'startButton', this.startGame, this, 1, 0, 2);
+    buttonStart.scale.setTo(0.8, 0.8);
+    buttonLevelOne = this.add.button(this.world.centerX-110, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
+    buttonLevelOne.scale.setTo(0.8, 0.8);
     //buttonLevelOne.inputEnabled = false;
-    buttonLevelTwo = this.add.button(this.world.centerX-115, 370, 'levelTwoImage', this.startGame, this, 1, 0, 2);
-    buttonLevelTwo.scale.setTo(0.9, 0.9);
+    buttonLevelTwo = this.add.button(this.world.centerX-110, 360, 'levelTwoImage', this.startGame, this, 1, 0, 2);
+    buttonLevelTwo.scale.setTo(0.8, 0.8);
     //buttonLevelTwo.inputEnabled = false;
-    buttonLevelThree = this.add.button(this.world.centerX-115, 440, 'levelThreeImage', this.startGame, this, 1, 0, 2);
-    buttonLevelThree.scale.setTo(0.9, 0.9);
+    buttonLevelThree = this.add.button(this.world.centerX-110, 420, 'levelThreeImage', this.startGame, this, 1, 0, 2);
+    buttonLevelThree.scale.setTo(0.8, 0.8);
     //buttonLevelThree.inputEnabled = false;
+
+    buttonLevelFour = this.add.button(this.world.centerX-110, 480, 'levelFourImage', this.startGame, this, 1, 0, 2);
+    buttonLevelFour.scale.setTo(0.8, 0.8);
+
+    // Do not do anything if button is clicked
+    buttonLevelFour.inputEnabled = false;
+    // Set low opacity to indicate button is not clickable
+    buttonLevelFour.alpha = 0.5;
+    // Set hover, normal and click to same frame
+    buttonLevelFour.setFrames(0, 0, 0, 0);
 
   },
 

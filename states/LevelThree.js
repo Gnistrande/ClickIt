@@ -62,7 +62,7 @@ ClickIt.LevelThree.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;

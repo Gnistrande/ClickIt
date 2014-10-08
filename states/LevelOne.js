@@ -12,6 +12,8 @@ ClickIt.LevelOne.prototype = Object.create(ClickIt.Game.prototype);
 ClickIt.LevelOne.prototype.constructor = ClickIt.LevelOne;
 
 ClickIt.LevelOne.prototype.createLevel = function() {
+	console.log("level 1");
+
 	//console.log(this.buttons[3][1].key);
 
 	/*this.buttons[3][1].loadTexture('stone');
@@ -76,7 +78,7 @@ ClickIt.LevelOne.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;

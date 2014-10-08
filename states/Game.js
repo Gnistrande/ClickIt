@@ -36,7 +36,7 @@ ClickIt.Game.prototype = {
 
 		this.winningBol = false;
 
-		this.buttonBack = this.add.button(20, 10, 'backButton', this.backToMenu, this);
+		this.buttonBack = this.add.button(20, 20, 'backButton', this.backToMenu, this, 1, 0, 2);
 
 		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 		this.removedColor = this.add.text(10, 110, 'Pink: 0', { font: '24px Arial', fill: '#000' });

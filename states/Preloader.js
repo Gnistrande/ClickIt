@@ -16,6 +16,7 @@ ClickIt.Preloader.prototype = {
     this.load.spritesheet('levelOneImage', 'assets/level_button_one.png', 240, 80);
     this.load.spritesheet('levelTwoImage', 'assets/level_button_two.png', 240, 80);
     this.load.spritesheet('levelThreeImage', 'assets/level_button_three.png', 240, 80);
+    this.load.spritesheet('levelFourImage', 'assets/level_button_four.png', 240, 80);
   },
 
   create: function() {
