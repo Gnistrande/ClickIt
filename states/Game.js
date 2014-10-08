@@ -31,19 +31,20 @@ ClickIt.Game.prototype = {
 		this.winningBol = false;
 
 		this.buttonBack = this.add.button(20, 10, 'backButton', this.backToMenu, this);
-
-		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
-		this.removedColor = this.add.text(10, 110, 'Pink: 0', { font: '24px Arial', fill: '#000' });
 		
 		this.createButtons();
-		this.createLevel();
 
 		//Gives the color of dots to collect, number of moves 
 		//and number of dots to collect for the level
 		this.levelColor = this.colorOfLevel();
 		this.numberOfMoves = this.movesOfLevel();
 		this.numberOfDots = this.dotsOfLevel();
+
+		this.createLevel(this.levelColor);
 		
+		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
+		this.removedColor = this.add.text(38, 110, ': 0/' + this.numberOfDots, { font: '24px Arial', fill: '#000' });
+
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
 	},
 
@@ -412,7 +413,7 @@ ClickIt.Game.prototype = {
 
 		//Update number of moves and removed dots of the right color
 		this.moves.text = 'Moves: ' + this.move;
-		this.removedColor.text = 'Pink: ' + this.removedDotsOfLevelColor;
+		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
 
 		this.printChainMatrix();
 

@@ -28,7 +28,7 @@ ClickIt.LevelOne.prototype.createLevel = function() {
 
 //The color you have to collect for this level
 ClickIt.LevelOne.prototype.colorOfLevel = function() {
-	this.levelColor = 'pink';
+	this.levelColor = 'green';
 	return this.levelColor;
 };
 
@@ -40,7 +40,7 @@ ClickIt.LevelOne.prototype.movesOfLevel = function() {
 
 //The number of dots you have to collect for this level
 ClickIt.LevelOne.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 15;
+	this.numberOfDots = 5;
 	return this.numberOfDots;
 };
 
