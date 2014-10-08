@@ -10,10 +10,12 @@ ClickIt.Preloader.prototype = {
   	this.preloadBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');
     this.preloadBar.anchor.setTo(0.5, 0.5);
     this.load.setPreloadSprite(this.preloadBar);
-    this.load.image('startButton', 'assets/startButton.png');
-    this.load.image('levelOneImage', 'assets/levelOne.png');
-    this.load.image('levelTwoImage', 'assets/levelTwo.png');
-    this.load.image('levelThreeImage', 'assets/levelThree.png');
+    this.load.image('logo', 'assets/ClickIt_with_dots.png');
+
+    this.load.spritesheet('startButton', 'assets/startButton.png', 240, 80);
+    this.load.spritesheet('levelOneImage', 'assets/levelOneButton.png', 240, 80);
+    this.load.spritesheet('levelTwoImage', 'assets/levelTwoButton.png', 240, 80);
+    this.load.spritesheet('levelThreeImage', 'assets/levelThreeButton.png', 240, 80);
   },
 
   create: function() {
