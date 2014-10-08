@@ -516,6 +516,8 @@ ClickIt.Game.prototype = {
 			color = blue;
 		}
 
+		//Detta är en kommentar!
+
 
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
