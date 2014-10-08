@@ -1,7 +1,6 @@
 ClickIt.Game = function(game) {
 	this.buttons;
 	this.delta;
-	this.move;
 	this.moves;
 	this.buttonBack;
 	this.chainMatrix;
@@ -19,6 +18,7 @@ ClickIt.Game = function(game) {
 	this.removedDotsOfLevelColor;
 	this.removedColor;
 	this.winningBol;
+	this.losingBol;
 
 };
 
@@ -31,10 +31,10 @@ ClickIt.Game.prototype = {
 		this.delta = 70;
 		this.moveX = 150;
 		this.moveY = 20;
-		this.move = 0;
 		this.removedDotsOfLevelColor = 0;
 
 		this.winningBol = false;
+		this.losingBol = false;
 
 		this.buttonBack = this.add.button(20, 10, 'backButton', this.backToMenu, this);
 		
@@ -45,6 +45,7 @@ ClickIt.Game.prototype = {
 		//Gives the color of dots to collect, number of moves 
 		//and number of dots to collect for the level
 		this.levelColor = this.colorOfLevel();
+		console.log(this.levelColor);
 		this.numberOfMoves = this.movesOfLevel();
 		this.numberOfDots = this.dotsOfLevel();
 
@@ -137,7 +138,7 @@ ClickIt.Game.prototype = {
 	    clickedButton.loadTexture(newButtonImage);
 
 	    //  Add counter for number of moves
-	    this.move += 1;
+	    this.numberOfMoves -= 1;
 
 	    //Check if the pressed button is on the edge
 	    if(numberI==7){
@@ -476,11 +477,18 @@ ClickIt.Game.prototype = {
 		this.rearrangeButtons();
 
 		//Update number of moves and removed dots of the right color
-		this.moves.text = 'Moves: ' + this.move;
+		this.moves.text = 'Moves: ' + this.numberOfMoves;
 		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
 
 		this.printChainMatrix();
 
+		if(this.losingBol == false){
+			if(this.numberOfMoves<=0){
+				//alert("You lost!");
+				this.losing();
+				this.losingBol = true;
+			}
+		}
 
 		if(this.winningBol == false){
 			//Check if you have removed enough dots i the right color
