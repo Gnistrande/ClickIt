@@ -27,8 +27,6 @@ ClickIt.StartMenu.prototype = {
     clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7);
 
-  
-
     buttonStart = this.add.button(this.world.centerX-115, 230, 'startButton', this.startGame, this, 1, 0, 2);
     buttonStart.scale.setTo(0.9, 0.9);
     buttonLevelOne = this.add.button(this.world.centerX-115, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);

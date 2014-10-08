@@ -4,14 +4,11 @@ ClickIt.LevelTwo = function(game) {
 	this.numberOfDots;
 	this.popup;
 	this.tween;
+	this.colorOfLevel;
 };
 
 ClickIt.LevelTwo.prototype = Object.create(ClickIt.Game.prototype);
 ClickIt.LevelTwo.prototype.constructor = ClickIt.LevelTwo;
-
-ClickIt.LevelTwo.prototype.createLevel = function() {
-	//alert("Level 2");
-};
 
 //The color you have to collect for this level
 ClickIt.LevelTwo.prototype.colorOfLevel = function() {
@@ -29,6 +26,10 @@ ClickIt.LevelTwo.prototype.movesOfLevel = function() {
 ClickIt.LevelTwo.prototype.dotsOfLevel = function() {
 	this.numberOfDots = 5;
 	return this.numberOfDots;
+};
+
+ClickIt.LevelTwo.prototype.createLevel = function(color) {
+	this.colorOfLevel = this.add.image(1, 109, color);
 };
 
 //Sends you to the next level

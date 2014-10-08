@@ -4,27 +4,13 @@ ClickIt.LevelOne = function(game) {
 	this.numberOfDots;
 	this.popup;
 	this.tween;
+	this.colorOfLevel;
 };
 
 ClickIt.LevelOne.prototype = Object.create(ClickIt.Game.prototype);
 
 //Kolla upp detta!
 ClickIt.LevelOne.prototype.constructor = ClickIt.LevelOne;
-
-ClickIt.LevelOne.prototype.createLevel = function() {
-	//console.log(this.buttons[3][1].key);
-
-	/*this.buttons[3][1].loadTexture('stone');
-	this.buttons[3][1].x =345;
-	this.buttons[3][1].y =75;
-	this.buttons[3][1].inputEnabled = false;
-
-	this.buttons[4][1].loadTexture('stone');
-	this.buttons[4][1].x =415;
-	this.buttons[4][1].y =75;
-	this.buttons[4][1].inputEnabled = false;*/
-	//alert("Level 1");	
-};
 
 //The color you have to collect for this level
 ClickIt.LevelOne.prototype.colorOfLevel = function() {
@@ -42,6 +28,10 @@ ClickIt.LevelOne.prototype.movesOfLevel = function() {
 ClickIt.LevelOne.prototype.dotsOfLevel = function() {
 	this.numberOfDots = 5;
 	return this.numberOfDots;
+};
+
+ClickIt.LevelOne.prototype.createLevel = function(color) {
+	this.colorOfLevel = this.add.image(1, 109, color);
 };
 
 //Sends you to the next level

@@ -4,7 +4,7 @@ ClickIt.InGameTutoring = function(game) {
 	this.numberOfDots;
 	this.popup;
 	this.tween;
-    this.colorOfLevelButton
+    this.colorOfLevel;
 };
 
 ClickIt.InGameTutoring.prototype = Object.create(ClickIt.Game.prototype);
@@ -12,8 +12,8 @@ ClickIt.InGameTutoring.prototype.constructor = ClickIt.InGameTutoring;
 
 //The color you have to collect for this level
 ClickIt.InGameTutoring.prototype.colorOfLevel = function() {
-	this.levelColor = 'pink';
-	return this.levelColor;
+	levelColor = 'yellow';
+	return levelColor;
 };
 
 //The number of moves you have for this level
@@ -29,10 +29,9 @@ ClickIt.InGameTutoring.prototype.dotsOfLevel = function() {
 };
 
 ClickIt.InGameTutoring.prototype.createLevel = function(color) {
-
-    this.colorOfLevelButton = this.add.button(10, 109, color);
-    this.colorOfLevelButton.inputEnabled = false;
-};
+    //Add dot with the color to collect for this level
+    this.colorOfLevel = this.add.image(1, 109, color);
+};    
 
 //Sends you to the next level
 ClickIt.InGameTutoring.prototype.nextLevel = function() {

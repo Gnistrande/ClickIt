@@ -51,7 +51,7 @@ ClickIt.Game.prototype = {
 		this.createLevel(this.levelColor);
 		
 		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
-		this.removedColor = this.add.text(38, 110, ': 0/' + this.numberOfDots, { font: '24px Arial', fill: '#000' });
+		this.removedColor = this.add.text(50, 115, ': 0/' + this.numberOfDots, { font: '28px Arial', fill: '#000' });
 
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
     	//var overlay = this.add.image(150, 0, 'logo');

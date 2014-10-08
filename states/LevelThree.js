@@ -4,17 +4,15 @@ ClickIt.LevelThree = function(game) {
 	this.numberOfDots;
 	this.popup;
 	this.tween;
+	this.colorOfLevel;
 };
 
 ClickIt.LevelThree.prototype = Object.create(ClickIt.Game.prototype);
 ClickIt.LevelThree.prototype.constructor = ClickIt.LevelThree;
 
-ClickIt.LevelThree.prototype.createLevel = function() {
-};
-
 //The color you have to collect for this level
 ClickIt.LevelThree.prototype.colorOfLevel = function() {
-	this.levelColor = 'pink';
+	this.levelColor = 'blue';
 	return this.levelColor;
 };
 
@@ -28,6 +26,10 @@ ClickIt.LevelThree.prototype.movesOfLevel = function() {
 ClickIt.LevelThree.prototype.dotsOfLevel = function() {
 	this.numberOfDots = 5;
 	return this.numberOfDots;
+};
+
+ClickIt.LevelThree.prototype.createLevel = function(color) {
+	this.colorOfLevel = this.add.image(1, 109, color);
 };
 
 //Sends you to the next level
