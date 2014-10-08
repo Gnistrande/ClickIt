@@ -8,13 +8,15 @@ ClickIt.StartMenu = function(game) {
 ClickIt.StartMenu.prototype = {
   preload: function() {
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
-    this.load.spritesheet('pink', 'assets/pinkDot.png', 54, 44);
-    this.load.spritesheet('green', 'assets/greenDot.png', 54, 44);
-    this.load.spritesheet('blue', 'assets/blueDot.png', 54, 44);
-    this.load.spritesheet('yellow', 'assets/yellowDot.png', 54, 44);
+    this.load.spritesheet('pink', 'assets/pinkDots.png', 54, 44);
+    this.load.spritesheet('green', 'assets/greenDots.png', 54, 44);
+    this.load.spritesheet('blue', 'assets/blueDots.png', 54, 44);
+    this.load.spritesheet('yellow', 'assets/yellowDots.png', 54, 44);
     this.load.image('backButton', 'assets/backButton.png');
     this.load.image('stone', 'assets/stone.png');
     this.load.image('agnes', 'assets/agnes.jpg');
+
+    this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 
     //this.load.script('gray', '../phaser/filters/Gray.js');
@@ -37,8 +39,6 @@ ClickIt.StartMenu.prototype = {
     buttonLevelThree.scale.setTo(0.9, 0.9);
     //buttonLevelThree.inputEnabled = false;
 
-    //var gray = game.add.filter('Gray');
-    //clickItLogo.filters = [gray];
   },
 
   startGame: function(pointer) {

@@ -10,6 +10,7 @@ ClickIt.Game = function(game) {
 	this.moveY;
 	this.cursors;
 	this.graph;
+	this.player;
 };
 
 ClickIt.Game.prototype = {
@@ -33,7 +34,11 @@ ClickIt.Game.prototype = {
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
     	//var overlay = this.add.image(150, 0, 'logo');
 
-    	this.cursors = this.input.keyboard.createCursorKeys();
+    	//this.cursors = this.input.keyboard.createCursorKeys();
+
+
+    	player = this.add.sprite(32, this.world.height - 350, 'dude');
+    	player.animations.add('left', [0, 1, 2, 3], 10, true);
     	
 	},
 
@@ -48,9 +53,12 @@ ClickIt.Game.prototype = {
 	    		var number = Math.floor((Math.random() * 4) + 1);
 
 	    		var image = this.assignFirstColor(number);
+	    		//var image = 'green';
 
-	    		//  Create a button inside of the 'game' group, with the an image decided above.
+	    		//  Create a button inside of the 'game' group, with the image decided above.
+	    		this.buttons[i][j] = this.add.sprite(image);
 	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this, 1, 0, 2);
+				this.buttons[i][j].animations.add('explode', [1, 2, 3], 5, true);
 
 	        	this.chainMatrix[i][j] = false;
             	this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
@@ -353,6 +361,11 @@ ClickIt.Game.prototype = {
 	    					counterTrue++;
 	    				}
 	    				else{
+	    					// Animate the chain by changing dot to frame 4 for a little while
+							//this.add.tween( this.buttons[col][row] ).to( {this.buttons[col][row].key: 3}, 500);
+							// onComplete
+							// chain()
+
 	    					//Make buttons invisible
 	    					//this.buttons[col][i].visible = false;
 
@@ -400,18 +413,20 @@ ClickIt.Game.prototype = {
 		//this.findChainInRow();
 		//this.findChainInCol();
 
-
+		//this.buttons[0][0].frame = 3;
+		
 		if( this.input.activePointer.isDown ){
 			console.log("hej hej på dig");
+
+			player.animations.play('left');
+			this.buttons[0][0].animations.play('explode');
+		}
+		else{
+			this.buttons[0][0].animations.stop('explode');
+        	player.frame = 4;
+        	//this.buttons[0][0].frame = 0;
 		}
 
-		if( this.input.mousePointer.mouseDownCallback ){
-			
-		}
-
-		//if( this.input.mousePointer.isDown ){
-			//console.log("down boy down");
-		//}
 		if( this.input.mousePointer.onTap){
 			console.log("down");
 		}
@@ -422,16 +437,8 @@ ClickIt.Game.prototype = {
 
 		if( this.chainMatrix[0][0] === true){
 			//console.log("heeeeej");
-			//this.buttons[0][0].animations.add('left');
-
 			//this.buttons[0][0].visible = (false);
 		}
-
-		if (this.cursors.down.isDown){
-        	//this.buttons[0][0].animations.play('left');
-        	this.tweenButton(this.buttons[0][0], 3, 3, 1);
-    	}
-		// Image.events.onKilled
 
 
 		this.rearrangeButtons();
@@ -446,7 +453,6 @@ ClickIt.Game.prototype = {
 	// button - the dots to be moved down
 	// newPos - to where it should be moved
 	tweenButton: function (button, newPosX, newPosY) {
-
 		var tempCircle;
 
 		var green = 0xB6FFDB;
@@ -469,6 +475,7 @@ ClickIt.Game.prototype = {
 			color = blue;
 		}
 
+
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
     	tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
@@ -476,8 +483,14 @@ ClickIt.Game.prototype = {
     	// make button under the circle invisible
 		button.visible = false;
 
+		// tween circle to new position
 		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
 
+		// tween buttons frame to frame 3
+		// works but I'd rather  get animation to work.
+		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 50, 5);
+
+		// make button visible again after the circle has been moved?
 		//button.visible = true;
 	} 
 };
