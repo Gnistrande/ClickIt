@@ -13,13 +13,15 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('blue', 'assets/blueDots.png', 54, 44);
     this.load.spritesheet('yellow', 'assets/yellowDots.png', 54, 44);
     this.load.image('backButton', 'assets/backButton.png');
-    this.load.image('stone', 'assets/stone.png');
+    this.load.image('stone', 'assets/stone5.png');
     this.load.image('agnes', 'assets/agnes.jpg');
 
     this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
-
     //this.load.script('gray', '../phaser/filters/Gray.js');
+
+    this.load.image('popup', 'assets/greyOverlay1.png');
+
   },
   create: function() {
     clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');

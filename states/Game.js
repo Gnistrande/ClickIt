@@ -8,9 +8,18 @@ ClickIt.Game = function(game) {
 	this.chainText;
 	this.moveX;
 	this.moveY;
+
 	this.cursors;
 	this.graph;
 	this.player;
+
+	this.levelColor;
+	this.numberOfMoves;
+	this.numberOfDots;
+	this.removedDotsOfLevelColor;
+	this.removedColor;
+	this.winningBol;
+
 };
 
 ClickIt.Game.prototype = {
@@ -23,13 +32,25 @@ ClickIt.Game.prototype = {
 		this.moveX = 150;
 		this.moveY = 20;
 		this.move = 0;
+		this.removedDotsOfLevelColor = 0;
 
-		this.buttonBack = this.add.button(20, 50, 'backButton', this.backToMenu, this);
-		this.moves = this.add.text(10, 10, 'Moves: 0', { font: '24px Arial', fill: '#000' });
+		this.winningBol = false;
+
+		this.buttonBack = this.add.button(20, 10, 'backButton', this.backToMenu, this);
+
+		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
+		this.removedColor = this.add.text(10, 110, 'Pink: 0', { font: '24px Arial', fill: '#000' });
 		
 		this.createButtons();
 		this.createLevel();
+
 		this.graph = this.add.graphics(0, 0);
+
+		//Gives the color of dots to collect, number of moves 
+		//and number of dots to collect for the level
+		this.levelColor = this.colorOfLevel();
+		this.numberOfMoves = this.movesOfLevel();
+		this.numberOfDots = this.dotsOfLevel();
 		
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
     	//var overlay = this.add.image(150, 0, 'logo');
@@ -374,6 +395,11 @@ ClickIt.Game.prototype = {
 	    					var temp_x = this.buttons[col][row].x
 	    					this.tweenButton( this.buttons[col][i], 0, 0);
 
+	    					//Check for the levels color
+	    					if(this.buttons[col][i+counterTrue].key==this.levelColor){
+	    						this.removedDotsOfLevelColor++;
+	    					}
+
 	    					//Flytta ner färger enligt counterTrue
 	    					var newColor = this.buttons[col][ i ].key;
 	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
@@ -385,6 +411,12 @@ ClickIt.Game.prototype = {
 	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
 	    				var image = this.assignFirstColor(randomNumber);
 	    				//var image = 'agnes';
+
+	    				//Check for the levels color
+	    				if(this.chainMatrix[col][counterTrue]==true && this.buttons[col][counterTrue].key==this.levelColor){
+	    						this.removedDotsOfLevelColor++;
+	    				}
+
 	    				this.buttons[col][counterTrue].loadTexture(image);
 	    				this.chainMatrix[col][counterTrue] = false;
 	    				counterTrue--;
@@ -407,7 +439,6 @@ ClickIt.Game.prototype = {
         	}
     	}
 	},
-
 
 	update: function() {
 		//this.findChainInRow();
@@ -443,10 +474,20 @@ ClickIt.Game.prototype = {
 
 		this.rearrangeButtons();
 
-		//Update number of moves
+		//Update number of moves and removed dots of the right color
 		this.moves.text = 'Moves: ' + this.move;
+		this.removedColor.text = 'Pink: ' + this.removedDotsOfLevelColor;
 
 		this.printChainMatrix();
+
+
+		if(this.winningBol == false){
+			//Check if you have removed enough dots i the right color
+			if(this.removedDotsOfLevelColor>=this.numberOfDots){
+				this.winning(this.removedDotsOfLevelColor);
+				this.winningBol = true;
+			}
+		}
 	},
 
 	// Function for animation of dots
