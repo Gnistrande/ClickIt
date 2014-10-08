@@ -23,37 +23,64 @@ ClickIt.InGameTutoring.prototype.movesOfLevel = function() {
 };
 
 ClickIt.InGameTutoring.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 15;
+	this.numberOfDots = 5;
 	return this.numberOfDots;
 };
 
 ClickIt.InGameTutoring.prototype.nextLevel = function() {
+    //Close popup
 	this.tween = this.add.tween(this.popup.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Elastic.In, true);
+    //Start next level
 	this.state.start('LevelOne');
 };
 
-ClickIt.InGameTutoring.prototype.winning = function() {
+ClickIt.InGameTutoring.prototype.backToMenu = function() {
+    this.preloadBar = null;
+    this.ready = false;
+    this.move=0;
+    this.state.start('StartMenu');
+};
+
+ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
+    //Create popup window
 	this.popup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
     this.popup.alpha = 0.8;
     this.popup.anchor.set(0.5);
     this.popup.inputEnabled = true;
 
-    //  Position the close button to the top-right of the popup sprite (minus 8px for spacing)
-    var pw = (this.popup.width / 2) - 30;
-    var ph = (this.popup.height / 2) - 8;
+    //The position of next level button
+    var nlw = (this.popup.width / 2) - 105;
+    var nlh = (this.popup.height / 2) - 60;
 
-    //  And click the close button to close it down again
-    var closeButton = this.make.sprite(pw, -ph, 'backButton');
-    closeButton.inputEnabled = true;
-    closeButton.input.priorityID = 1;
-    closeButton.input.useHandCursor = true;
-    closeButton.events.onInputDown.add(this.nextLevel, this);
+    //The position of the menu button
+    var mw = (this.popup.width / 2) - 30;
+    var mh = (this.popup.height / 2) - 60;
 
-    //  Add the "close button" to the popup window image
-    this.popup.addChild(closeButton);
+    //Next level button
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    nextLevelButton.inputEnabled = true;
+    nextLevelButton.input.priorityID = 1;
+    nextLevelButton.input.useHandCursor = true;
+    nextLevelButton.events.onInputDown.add(this.nextLevel, this);
 
-    //  Hide it awaiting a click
+    //Menu button
+    var menuButton = this.make.sprite(-mw, mh, 'backButton');
+    menuButton.inputEnabled = true;
+    menuButton.input.priorityID = 1;
+    menuButton.input.useHandCursor = true;
+    menuButton.events.onInputDown.add(this.backToMenu, this);
+
+    var winningText = this.make.text(-200, -100, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
+
+    //Add the buttons to the popup window image
+    this.popup.addChild(nextLevelButton);
+    this.popup.addChild(menuButton);
+    this.popup.addChild(winningText);
+
+    //Hide it awaiting a click
     this.popup.scale.set(0);
+
+    //Open popup
 	this.tween = this.add.tween(this.popup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
 };
 

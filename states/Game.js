@@ -419,7 +419,7 @@ ClickIt.Game.prototype = {
 		if(this.winningBol == false){
 			//Check if you have removed enough dots i the right color
 			if(this.removedDotsOfLevelColor>=this.numberOfDots){
-				this.winning();
+				this.winning(this.removedDotsOfLevelColor);
 				this.winningBol = true;
 			}
 		}
