@@ -26,21 +26,25 @@ ClickIt.LevelOne.prototype.createLevel = function() {
 	//alert("Level 1");	
 };
 
+//The color you have to collect for this level
 ClickIt.LevelOne.prototype.colorOfLevel = function() {
 	this.levelColor = 'pink';
 	return this.levelColor;
 };
 
+//The number of moves you have for this level
 ClickIt.LevelOne.prototype.movesOfLevel = function() {
 	this.numberOfMoves = 20;
 	return this.numberOfMoves;
 };
 
+//The number of dots you have to collect for this level
 ClickIt.LevelOne.prototype.dotsOfLevel = function() {
 	this.numberOfDots = 15;
 	return this.numberOfDots;
 };
 
+//Sends you to the next level
 ClickIt.LevelOne.prototype.nextLevel = function() {
     //Close popup
 	this.tween = this.add.tween(this.popup.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Elastic.In, true);
@@ -48,6 +52,7 @@ ClickIt.LevelOne.prototype.nextLevel = function() {
 	this.state.start('LevelTwo');
 };
 
+//Sends you to the menu
 ClickIt.LevelOne.prototype.backToMenu = function() {
     this.preloadBar = null;
     this.ready = false;

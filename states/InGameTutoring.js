@@ -12,21 +12,25 @@ ClickIt.InGameTutoring.prototype.constructor = ClickIt.InGameTutoring;
 ClickIt.InGameTutoring.prototype.createLevel = function() {
 };
 
+//The color you have to collect for this level
 ClickIt.InGameTutoring.prototype.colorOfLevel = function() {
 	this.levelColor = 'pink';
 	return this.levelColor;
 };
 
+//The number of moves you have for this level
 ClickIt.InGameTutoring.prototype.movesOfLevel = function() {
 	this.numberOfMoves = 20;
 	return this.numberOfMoves;
 };
 
+//The number of dots you have to collect for this level
 ClickIt.InGameTutoring.prototype.dotsOfLevel = function() {
 	this.numberOfDots = 5;
 	return this.numberOfDots;
 };
 
+//Sends you to the next level
 ClickIt.InGameTutoring.prototype.nextLevel = function() {
     //Close popup
 	this.tween = this.add.tween(this.popup.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Elastic.In, true);
@@ -34,6 +38,7 @@ ClickIt.InGameTutoring.prototype.nextLevel = function() {
 	this.state.start('LevelOne');
 };
 
+//Sends you to the menu
 ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.preloadBar = null;
     this.ready = false;
