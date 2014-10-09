@@ -4,7 +4,7 @@ ClickIt.LevelThree = function(game) {
 	this.numberOfDots;
 	this.popup;
 	this.tween;
-	this.colorOfLevel;
+	this.colorDot;
 };
 
 ClickIt.LevelThree.prototype = Object.create(ClickIt.Game.prototype);
@@ -28,8 +28,10 @@ ClickIt.LevelThree.prototype.dotsOfLevel = function() {
 	return this.numberOfDots;
 };
 
+//Creates the set up for this level
 ClickIt.LevelThree.prototype.createLevel = function(color) {
-	this.colorOfLevel = this.add.image(1, 109, color);
+	//Add dot with the color to collect for this level
+    this.colorDot = this.add.image(1, 109, color);
 };
 
 //Sends you to the next level
@@ -89,4 +91,39 @@ ClickIt.LevelThree.prototype.winning = function(removedDots) {
 
     //Open popup
 	this.tween = this.add.tween(this.popup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
+};
+
+ClickIt.LevelThree.prototype.losing = function() {
+    //Create popup window
+    this.losingPopup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
+    this.losingPopup.alpha = 0.8;
+    this.losingPopup.anchor.set(0.5);
+    this.losingPopup.inputEnabled = true;
+
+    //The position of next level button
+    var nlw = (this.losingPopup.width / 2) - 105;
+    var nlh = (this.losingPopup.height / 2) - 60;
+
+    //The position of the menu button
+    var mw = (this.losingPopup.width / 2) - 30;
+    var mh = (this.losingPopup.height / 2) - 60;
+
+    //Ok button brings you back to menu
+    var menuButton = this.make.sprite(-mw, mh, 'backButton');
+    menuButton.inputEnabled = true;
+    menuButton.input.priorityID = 1;
+    menuButton.input.useHandCursor = true;
+    menuButton.events.onInputDown.add(this.backToMenu, this);
+
+    var losingText = this.make.text(-200, -100, 'You lost!', { font: '36px Arial', fill: '#000' });
+
+    //Add the buttons to the popup window image
+    this.losingPopup.addChild(menuButton);
+    this.losingPopup.addChild(losingText);
+
+    //Hide it awaiting a click
+    this.losingPopup.scale.set(0);
+
+    //Open popup
+    this.tween = this.add.tween(this.losingPopup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
 };

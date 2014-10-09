@@ -12,7 +12,7 @@ ClickIt.Game = function(game) {
 	this.graph;
 	this.player;
 
-	this.levelColor;
+	this.levelGameColor;
 	this.numberOfMoves;
 	this.numberOfDots;
 	this.removedDotsOfLevelColor;
@@ -44,12 +44,11 @@ ClickIt.Game.prototype = {
 
 		//Gives the color of dots to collect, number of moves 
 		//and number of dots to collect for the level
-		this.levelColor = this.colorOfLevel();
-		console.log(this.levelColor);
+		this.levelGameColor = this.colorOfLevel();
 		this.numberOfMoves = this.movesOfLevel();
 		this.numberOfDots = this.dotsOfLevel();
 
-		this.createLevel(this.levelColor);
+		this.createLevel(this.levelGameColor);
 		
 		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
 		this.removedColor = this.add.text(50, 115, ': 0/' + this.numberOfDots, { font: '28px Arial', fill: '#000' });
@@ -483,8 +482,8 @@ ClickIt.Game.prototype = {
 		this.printChainMatrix();
 
 		if(this.losingBol == false){
+			//Check if you have any moves left
 			if(this.numberOfMoves<=0){
-				//alert("You lost!");
 				this.losing();
 				this.losingBol = true;
 			}
@@ -526,6 +525,7 @@ ClickIt.Game.prototype = {
 		}
 
 		//Detta är en kommentar!
+		//Vilken fin kommentar!
 
 
 		// draw a circle
