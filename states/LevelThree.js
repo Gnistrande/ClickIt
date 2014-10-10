@@ -66,14 +66,14 @@ ClickIt.LevelThree.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'backButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;
     nextLevelButton.events.onInputDown.add(this.nextLevel, this);
 
     //Menu button
-    var menuButton = this.make.sprite(-mw, mh, 'backButton');
+    var menuButton = this.make.sprite(-mw, mh, 'backButton_symbol');
     menuButton.inputEnabled = true;
     menuButton.input.priorityID = 1;
     menuButton.input.useHandCursor = true;

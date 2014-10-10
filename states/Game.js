@@ -1,4 +1,6 @@
 ClickIt.Game = function(game) {
+	this.colorOrderImage;
+
 	this.buttons;
 	this.delta;
 	this.moves;
@@ -8,7 +10,6 @@ ClickIt.Game = function(game) {
 	this.moveX;
 	this.moveY;
 
-	this.cursors;
 	this.graph;
 	this.player;
 
@@ -24,19 +25,29 @@ ClickIt.Game = function(game) {
 
 ClickIt.Game.prototype = {
 	create: function() {
+		//colorOrderImage = this.add.image(250, 0, 'colorOrderI');
+
 		this.buttons = [];
 		this.chainMatrix = [];
 		this.chainText = [];
 
-		this.delta = 70;
-		this.moveX = 150;
-		this.moveY = 20;
+		this.delta = 60;
+		this.moveX = 110;
+		this.moveY = 150;
+
 		this.removedDotsOfLevelColor = 0;
 
 		this.winningBol = false;
 		this.losingBol = false;
 
-		this.buttonBack = this.add.button(20, 10, 'backButton', this.backToMenu, this);
+		this.buttonBack = this.add.button(5, 50, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
+		this.buttonBack = this.add.button(-5, 10, 'backButton_text', this.backToMenu, this, 1, 0, 2);
+		this.buttonBack.scale.setTo(0.5, 0.5);
+
+		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
+
+		this.moves = this.add.text(120, 50, 'Moves: 0', { font: '20px Arial', fill: '#000' });
+		this.removedColor = this.add.text(510, 50, 'Pink: 0', { font: '20px Arial', fill: '#000' });
 		
 		this.createButtons();
 
@@ -55,9 +66,6 @@ ClickIt.Game.prototype = {
 
     	//var overlay = this.add.image(150, 0, 'arrowLeft');
     	//var overlay = this.add.image(150, 0, 'logo');
-
-    	//this.cursors = this.input.keyboard.createCursorKeys();
-
 
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -83,7 +91,7 @@ ClickIt.Game.prototype = {
 				this.buttons[i][j].animations.add('explode', [1, 2, 3], 5, true);
 
 	        	this.chainMatrix[i][j] = false;
-            	this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
+            	//this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
 	    	} 
     	}
 	},
@@ -481,7 +489,7 @@ ClickIt.Game.prototype = {
 		this.moves.text = 'Moves: ' + this.numberOfMoves;
 		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
 
-		this.printChainMatrix();
+		//this.printChainMatrix();
 
 		if(this.losingBol == false){
 			//Check if you have any moves left
