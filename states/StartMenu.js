@@ -14,11 +14,13 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('blue', 'assets/dot_blue.png', 54, 44);
     this.load.spritesheet('yellow', 'assets/dot_yellow.png', 54, 44);
 
-    this.load.spritesheet('backButton_symbol', 'assets/backButton_symbol.png', 70, 39);
-    this.load.spritesheet('backButton_text', 'assets/backButton_text.png', 240, 80);
-    this.load.spritesheet('nextButton', 'assets/nextButton_symbol.png', 70, 39);
+    this.load.spritesheet('backButton_symbol', 'assets/buttons/backButton_symbol.png', 70, 39);
+    this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
+    this.load.spritesheet('nextButton_symbol', 'assets/buttons/nextButton_symbol.png', 70, 39);
+    this.load.spritesheet('nextButton_text', 'assets/buttons/nextButton_text1.png', 204, 68);
+    this.load.spritesheet('menuButton', 'assets/buttons/menuButton.png', 204, 68);
 
-    this.load.image('colorOrderI', 'assets/orderofcolors.png');
+    this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
 
     this.load.image('stone', 'assets/stone5.png');
     this.load.image('agnes', 'assets/agnes.jpg');
@@ -27,7 +29,8 @@ ClickIt.StartMenu.prototype = {
 
     //this.load.script('gray', '../phaser/filters/Gray.js');
 
-    this.load.image('popup', 'assets/greyOverlay1.png');
+    //this.load.image('popup', 'assets/greyOverlay1.png');
+    this.load.image('popup', 'assets/Rectangle_1.png');
 
   },
   create: function() {

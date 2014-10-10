@@ -70,7 +70,7 @@ ClickIt.LevelOne.prototype.winning = function(removedDots) {
     this.popup.inputEnabled = true;
 
     //The position of next level button
-    var nlw = (this.popup.width / 2) - 105;
+    var nlw = (this.popup.width / 2) - 170;
     var nlh = (this.popup.height / 2) - 60;
 
     //The position of the menu button
@@ -78,14 +78,16 @@ ClickIt.LevelOne.prototype.winning = function(removedDots) {
     var mh = (this.popup.height / 2) - 60;
 
     //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton');
+    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton_text');
+    nextLevelButton.scale.setTo(0.8, 0.8);
     nextLevelButton.inputEnabled = true;
     nextLevelButton.input.priorityID = 1;
     nextLevelButton.input.useHandCursor = true;
     nextLevelButton.events.onInputDown.add(this.nextLevel, this);
 
     //Menu button
-    var menuButton = this.make.sprite(-mw, mh, 'backButton_symbol');
+    var menuButton = this.make.sprite(-mw, mh, 'menuButton');
+    menuButton.scale.setTo(0.8, 0.8);
     menuButton.inputEnabled = true;
     menuButton.input.priorityID = 1;
     menuButton.input.useHandCursor = true;

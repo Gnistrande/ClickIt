@@ -40,9 +40,7 @@ ClickIt.Game.prototype = {
 		this.winningBol = false;
 		this.losingBol = false;
 
-		this.buttonBack = this.add.button(5, 50, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
-		this.buttonBack = this.add.button(-5, 10, 'backButton_text', this.backToMenu, this, 1, 0, 2);
-		this.buttonBack.scale.setTo(0.5, 0.5);
+		this.buttonBack = this.add.button(5, 10, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
 
 		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
 		
@@ -58,8 +56,8 @@ ClickIt.Game.prototype = {
 
 		this.createLevel(this.levelGameColor);
 
-		this.moves = this.add.text(120, 50, 'Moves: 0', { font: '20px Arial', fill: '#000' });
-		this.removedColor = this.add.text(510, 50, 'Pink: 0', { font: '20px Arial', fill: '#000' });
+		this.moves = this.add.text(115, 50, 'Moves: 0', { font: '20px Chalkboard', fill: '#000' });
+		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });
 
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);

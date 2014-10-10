@@ -21,7 +21,7 @@
         canvas {
         	display: block;
         	margin: auto;
-        	margin-top: 20px;
+        	margin-top: 30px;
             border:1px solid black;
         }
         #gameContainer{
@@ -44,7 +44,7 @@
 
             
 
-            var game = new Phaser.Game(700, 570, Phaser.AUTO, 'gameContainer');
+            var game = new Phaser.Game(700, 650, Phaser.AUTO, 'gameContainer');
             game.state.add('Boot', ClickIt.Boot);
             game.state.add('Preloader', ClickIt.Preloader);
             game.state.add('StartMenu', ClickIt.StartMenu);
