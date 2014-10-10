@@ -114,23 +114,20 @@ ClickIt.LevelOne.prototype.losing = function() {
     this.losingPopup.anchor.set(0.5);
     this.losingPopup.inputEnabled = true;
 
-    //The position of next level button
-    var nlw = (this.losingPopup.width / 2) - 105;
-    var nlh = (this.losingPopup.height / 2) - 60;
-
-    //The position of the menu button
-    var mw = (this.losingPopup.width / 2) - 30;
-    var mh = (this.losingPopup.height / 2) - 60;
+    //The position of the ok button
+    var ow = (this.losingPopup.width / 2)-450;
+    var oh = (this.losingPopup.height / 2)-250;
 
     //Ok button brings you back to menu
-    var menuButton = this.make.sprite(-mw, mh, 'backButton');
+    var menuButton = this.make.sprite(ow, -oh, 'okButton');
+    menuButton.scale.setTo(0.8, 0.8);
     menuButton.inputEnabled = true;
     menuButton.input.priorityID = 1;
     menuButton.input.useHandCursor = true;
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
-    var losingText = this.make.text(-200, -100, 'You lost!', { font: '36px Arial', fill: '#000' });
-
+    var losingText = this.make.text(-81, -170, 'You lost!', { font: '36px Arial', fill: '#000' });
+    
     //Add the buttons to the popup window image
     this.losingPopup.addChild(menuButton);
     this.losingPopup.addChild(losingText);

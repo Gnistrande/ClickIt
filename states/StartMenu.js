@@ -19,6 +19,7 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('nextButton_symbol', 'assets/buttons/nextButton_symbol.png', 70, 39);
     this.load.spritesheet('nextButton_text', 'assets/buttons/nextButton_text1.png', 204, 68);
     this.load.spritesheet('menuButton', 'assets/buttons/menuButton.png', 204, 68);
+    this.load.spritesheet('okButton', 'assets/buttons/okButton.png', 240, 80);
 
     this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
 
