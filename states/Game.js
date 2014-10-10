@@ -45,9 +45,6 @@ ClickIt.Game.prototype = {
 		this.buttonBack.scale.setTo(0.5, 0.5);
 
 		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
-
-		this.moves = this.add.text(120, 50, 'Moves: 0', { font: '20px Arial', fill: '#000' });
-		this.removedColor = this.add.text(510, 50, 'Pink: 0', { font: '20px Arial', fill: '#000' });
 		
 		this.createButtons();
 
@@ -60,12 +57,9 @@ ClickIt.Game.prototype = {
 		this.numberOfDots = this.dotsOfLevel();
 
 		this.createLevel(this.levelGameColor);
-		
-		this.moves = this.add.text(10, 70, 'Moves: 0', { font: '24px Arial', fill: '#000' });
-		this.removedColor = this.add.text(50, 115, ': 0/' + this.numberOfDots, { font: '28px Arial', fill: '#000' });
 
-    	//var overlay = this.add.image(150, 0, 'arrowLeft');
-    	//var overlay = this.add.image(150, 0, 'logo');
+		this.moves = this.add.text(120, 50, 'Moves: 0', { font: '20px Arial', fill: '#000' });
+		this.removedColor = this.add.text(510, 50, 'Pink: 0', { font: '20px Arial', fill: '#000' });
 
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);
