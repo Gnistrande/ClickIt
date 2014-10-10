@@ -379,7 +379,7 @@ ClickIt.Game.prototype = {
 	    			var counterTrue = 1;
 
 	    			for(var i = row-1; i >= 0; i-- ){
-	    				if ( this.chainMatrix[col][i] === true){
+	    				if ( this.chainMatrix[col][i] === true || this.buttons[col][i].key === 'stone'){
 	    					counterTrue++;
 	    				}
 	    				else{
@@ -392,9 +392,9 @@ ClickIt.Game.prototype = {
 	    					//this.buttons[col][i].visible = false;
 
 	    					//Call tweenButton
-	    					var temp_y = this.buttons[col][row].y;
+	    					/*var temp_y = this.buttons[col][row].y;
 	    					var temp_x = this.buttons[col][row].x
-	    					this.tweenButton( this.buttons[col][i], 0, 0);
+	    					this.tweenButton( this.buttons[col][i], 0, 0);*/
 
 	    					//Check for the levels color
 	    					if(this.buttons[col][i+counterTrue].key==this.levelColor){
@@ -402,9 +402,11 @@ ClickIt.Game.prototype = {
 	    					}
 
 	    					//Flytta ner färger enligt counterTrue
-	    					var newColor = this.buttons[col][ i ].key;
-	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
-	    					this.chainMatrix[col][ i + counterTrue ] = false;
+	    					if(this.buttons[col][i+counterTrue].key != 'stone'){
+	    						var newColor = this.buttons[col][ i ].key;
+		    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
+		    					this.chainMatrix[col][ i + counterTrue ] = false;
+	    					}
 	    				}
 	    			}
 	    			counterTrue--;
