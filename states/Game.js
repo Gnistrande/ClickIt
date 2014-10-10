@@ -401,12 +401,16 @@ ClickIt.Game.prototype = {
 	    						this.removedDotsOfLevelColor++;
 	    					}
 
-	    					//Flytta ner färger enligt counterTrue
-	    					if(this.buttons[col][i+counterTrue].key != 'stone'){
-	    						var newColor = this.buttons[col][ i ].key;
-		    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
-		    					this.chainMatrix[col][ i + counterTrue ] = false;
+	    					//Check that it isn't a stone
+	    					while(this.buttons[col][i + counterTrue].key === 'stone') {
+	    						counterTrue--;
+	    						console.log("sten!");
 	    					}
+
+	    					//Flytta ner färger enligt counterTrue
+    						var newColor = this.buttons[col][ i ].key;
+	    					this.buttons[col][ i + counterTrue ].loadTexture(newColor);
+	    					this.chainMatrix[col][ i + counterTrue ] = false;
 	    				}
 	    			}
 	    			counterTrue--;
@@ -420,8 +424,9 @@ ClickIt.Game.prototype = {
 	    						this.removedDotsOfLevelColor++;
 	    				}
 
-	    				this.buttons[col][counterTrue].loadTexture(image);
-	    				this.chainMatrix[col][counterTrue] = false;
+    					this.buttons[col][counterTrue].loadTexture(image);
+    					this.chainMatrix[col][counterTrue] = false;
+	    						
 	    				counterTrue--;
 	    			}
 	    			row = -1;

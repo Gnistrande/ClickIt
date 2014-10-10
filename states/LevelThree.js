@@ -32,6 +32,39 @@ ClickIt.LevelThree.prototype.dotsOfLevel = function() {
 ClickIt.LevelThree.prototype.createLevel = function(color) {
 	//Add dot with the color to collect for this level
     this.colorDot = this.add.image(1, 109, color);
+
+    //Change buttons to blocks
+    this.buttons[0][0].inputEnabled = false;
+    this.buttons[0][1].inputEnabled = false;
+    this.buttons[1][0].inputEnabled = false;
+
+    this.buttons[0][7].inputEnabled = false;
+    this.buttons[1][7].inputEnabled = false;
+    this.buttons[0][6].inputEnabled = false;
+
+    this.buttons[7][0].inputEnabled = false;
+    this.buttons[6][0].inputEnabled = false;
+    this.buttons[7][1].inputEnabled = false;
+
+    this.buttons[7][7].inputEnabled = false;
+    this.buttons[7][6].inputEnabled = false;
+    this.buttons[6][7].inputEnabled = false;
+
+    this.buttons[0][0].loadTexture('stone');
+    this.buttons[0][1].loadTexture('stone');
+    this.buttons[1][0].loadTexture('stone');
+
+    this.buttons[0][7].loadTexture('stone');
+    this.buttons[1][7].loadTexture('stone');
+    this.buttons[0][6].loadTexture('stone');
+
+    this.buttons[7][0].loadTexture('stone');
+    this.buttons[6][0].loadTexture('stone');
+    this.buttons[7][1].loadTexture('stone');
+
+    this.buttons[7][7].loadTexture('stone');
+    this.buttons[7][6].loadTexture('stone');
+    this.buttons[6][7].loadTexture('stone');
 };
 
 //Sends you to the next level

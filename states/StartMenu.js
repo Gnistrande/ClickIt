@@ -41,13 +41,10 @@ ClickIt.StartMenu.prototype = {
     buttonStart.scale.setTo(0.8, 0.8);
     buttonLevelOne = this.add.button(this.world.centerX-110, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
     buttonLevelOne.scale.setTo(0.8, 0.8);
-    //buttonLevelOne.inputEnabled = false;
     buttonLevelTwo = this.add.button(this.world.centerX-110, 360, 'levelTwoImage', this.startGame, this, 1, 0, 2);
     buttonLevelTwo.scale.setTo(0.8, 0.8);
-    //buttonLevelTwo.inputEnabled = false;
     buttonLevelThree = this.add.button(this.world.centerX-110, 420, 'levelThreeImage', this.startGame, this, 1, 0, 2);
     buttonLevelThree.scale.setTo(0.8, 0.8);
-    //buttonLevelThree.inputEnabled = false;
 
     buttonLevelFour = this.add.button(this.world.centerX-110, 480, 'levelFourImage', this.startGame, this, 1, 0, 2);
     buttonLevelFour.scale.setTo(0.8, 0.8);
