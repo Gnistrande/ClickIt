@@ -19,13 +19,10 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('nextButton', 'assets/nextButton_symbol.png', 70, 39);
 
     this.load.image('colorOrderI', 'assets/orderofcolors.png');
-
     this.load.image('stone', 'assets/stone5.png');
     this.load.image('agnes', 'assets/agnes.jpg');
 
     this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-
-    //this.load.script('gray', '../phaser/filters/Gray.js');
 
     this.load.image('popup', 'assets/greyOverlay1.png');
 
@@ -38,13 +35,10 @@ ClickIt.StartMenu.prototype = {
     buttonStart.scale.setTo(0.8, 0.8);
     buttonLevelOne = this.add.button(this.world.centerX-110, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
     buttonLevelOne.scale.setTo(0.8, 0.8);
-    //buttonLevelOne.inputEnabled = false;
     buttonLevelTwo = this.add.button(this.world.centerX-110, 360, 'levelTwoImage', this.startGame, this, 1, 0, 2);
     buttonLevelTwo.scale.setTo(0.8, 0.8);
-    //buttonLevelTwo.inputEnabled = false;
     buttonLevelThree = this.add.button(this.world.centerX-110, 420, 'levelThreeImage', this.startGame, this, 1, 0, 2);
     buttonLevelThree.scale.setTo(0.8, 0.8);
-    //buttonLevelThree.inputEnabled = false;
 
     buttonLevelFour = this.add.button(this.world.centerX-110, 480, 'levelFourImage', this.startGame, this, 1, 0, 2);
     buttonLevelFour.scale.setTo(0.8, 0.8);
