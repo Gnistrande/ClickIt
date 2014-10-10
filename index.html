@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-	<title>ClickIt</title>
+	<title>ClickIt!</title>
 	<script type="text/javascript" src="../phaser/build/phaser.min.js"></script>
     <script src="states/Boot.js"></script>
     <script src="states/Preloader.js"></script>
@@ -17,28 +17,34 @@
         body {
             margin: 0;
         }
-        #header{
-            margin: auto;
-            margin-top: 10px;
-            height: 100px;
-            background: url('assets/orderofcolors.png') no-repeat top center;
-        }
+        
         canvas {
         	display: block;
         	margin: auto;
-        	margin-top: 10px;
+        	margin-top: 20px;
+            border:1px solid black;
         }
+        #gameContainer{
+            display: block;
+            margin: auto;
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="header"></div>
-    <div id="content"></div>
+    <!-- 
+        Behövs gameContainer över huvudtaget?
+    -->
     <div id="gameContainer"></div>
+
 
     <script type="text/javascript">
         window.onload = function() {
-            var game = new Phaser.Game(700, 550, Phaser.AUTO, 'gameContainer');
+
+            
+
+            var game = new Phaser.Game(700, 570, Phaser.AUTO, 'gameContainer');
             game.state.add('Boot', ClickIt.Boot);
             game.state.add('Preloader', ClickIt.Preloader);
             game.state.add('StartMenu', ClickIt.StartMenu);
@@ -50,6 +56,7 @@
              
             game.state.start('Boot');
         }
-    </script>
+        </script>
+    
 </body>
 </html>

@@ -10,6 +10,7 @@ ClickIt.InGameTutoring.prototype = Object.create(ClickIt.Game.prototype);
 ClickIt.InGameTutoring.prototype.constructor = ClickIt.InGameTutoring;
 
 ClickIt.InGameTutoring.prototype.createLevel = function() {
+
     console.log("InGameTutoring a.k.a level 0");
 };
 
@@ -70,7 +71,7 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     nextLevelButton.events.onInputDown.add(this.nextLevel, this);
 
     //Menu button
-    var menuButton = this.make.sprite(-mw, mh, 'backButton');
+    var menuButton = this.make.sprite(-mw, mh, 'backButton_symbol');
     menuButton.inputEnabled = true;
     menuButton.input.priorityID = 1;
     menuButton.input.useHandCursor = true;

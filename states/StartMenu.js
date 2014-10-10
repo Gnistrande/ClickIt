@@ -8,13 +8,17 @@ ClickIt.StartMenu = function(game) {
 ClickIt.StartMenu.prototype = {
   preload: function() {
     this.load.image('arrowLeft', 'assets/arrowLeft.png');
+
     this.load.spritesheet('pink', 'assets/dot_pink.png', 54, 44);
     this.load.spritesheet('green', 'assets/dot_green.png', 54, 44);
     this.load.spritesheet('blue', 'assets/dot_blue.png', 54, 44);
     this.load.spritesheet('yellow', 'assets/dot_yellow.png', 54, 44);
 
-    this.load.spritesheet('backButton', 'assets/backButton_symbol.png', 70, 39);
+    this.load.spritesheet('backButton_symbol', 'assets/backButton_symbol.png', 70, 39);
+    this.load.spritesheet('backButton_text', 'assets/backButton_text.png', 240, 80);
     this.load.spritesheet('nextButton', 'assets/nextButton_symbol.png', 70, 39);
+
+    this.load.image('colorOrderI', 'assets/orderofcolors.png');
 
     this.load.image('stone', 'assets/stone5.png');
     this.load.image('agnes', 'assets/agnes.jpg');
