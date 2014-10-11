@@ -31,7 +31,7 @@ ClickIt.LevelThree.prototype.dotsOfLevel = function() {
 //Creates the set up for this level
 ClickIt.LevelThree.prototype.createLevel = function(color) {
 	//Add dot with the color to collect for this level
-    this.colorDot = this.add.image(1, 109, color);
+    this.colorDot = this.add.image(490, 45, color);
 
     //Change buttons to blocks
     this.buttons[0][0].inputEnabled = false;
