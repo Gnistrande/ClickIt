@@ -31,17 +31,21 @@ ClickIt.Game.prototype = {
 		this.chainMatrix = [];
 		this.chainText = [];
 
+		//For positioning the buttons
 		this.delta = 60;
 		this.moveX = 110;
 		this.moveY = 150;
 
+
 		this.removedDotsOfLevelColor = 0;
 
+		//To make sure that update doesn't open more than one popup
 		this.winningBol = false;
 		this.losingBol = false;
 
 		this.buttonBack = this.add.button(5, 10, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
 
+		//Image for order of colors
 		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
 		
 		this.createButtons();
@@ -56,14 +60,17 @@ ClickIt.Game.prototype = {
 
 		this.createLevel(this.levelGameColor);
 
+		//Text in the game
 		this.moves = this.add.text(115, 50, 'Moves: 0', { font: '20px Chalkboard', fill: '#000' });
 		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });
 
+		//The dude
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);
     	
 	},
 
+	//Creates the buttons for the board
 	createButtons: function() {
 		//  Here we'll create 8 times 8 of buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
@@ -73,9 +80,7 @@ ClickIt.Game.prototype = {
 	    	for (var j = 0; j < 8; j++){
 	    		//Assign random values to a 8X8 matrix
 	    		var number = Math.floor((Math.random() * 4) + 1);
-
 	    		var image = this.assignFirstColor(number);
-	    		//var image = 'green';
 
 	    		//  Create a button inside of the 'game' group, with the image decided above.
 	    		this.buttons[i][j] = this.add.sprite(image);
@@ -88,7 +93,7 @@ ClickIt.Game.prototype = {
     	}
 	},
 
-	//Assign color from number
+	//Assign the first color from a random number
 	assignFirstColor: function(number) {
 		var image;
 		if(number == 1){
@@ -127,6 +132,7 @@ ClickIt.Game.prototype = {
 	    return image;
 	},
 
+	//The function that is called when a dot is clicked
 	actionOnClick: function(clickedButton) {
 		//Check for position I and J in buttons
 		var numberI = (clickedButton.x-this.moveX)/this.delta;
