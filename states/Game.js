@@ -392,9 +392,9 @@ ClickIt.Game.prototype = {
 	    					//this.buttons[col][i].visible = false;
 
 	    					//Call tweenButton
-	    					/*var temp_y = this.buttons[col][row].y;
-	    					var temp_x = this.buttons[col][row].x
-	    					this.tweenButton( this.buttons[col][i], 0, 0);*/
+	    					//var temp_y = this.buttons[col][row].y;
+	    					//var temp_x = this.buttons[col][row].x
+	    					this.tweenButton( this.buttons[col][i], 0, 0);
 
 	    					//Check for the levels color
 	    					if(this.buttons[col][i+counterTrue].key==this.levelColor){
@@ -531,10 +531,6 @@ ClickIt.Game.prototype = {
 			color = blue;
 		}
 
-		//Detta är en kommentar!
-		//Vilken fin kommentar!
-
-
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
     	tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
@@ -546,8 +542,10 @@ ClickIt.Game.prototype = {
 		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
 
 		// tween buttons frame to frame 3
-		// works but I'd rather  get animation to work.
-		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 50, 5);
+		// works but I'd rather get animation to work.
+		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
+		.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
+		.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
 
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
