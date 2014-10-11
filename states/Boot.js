@@ -7,7 +7,6 @@ ClickIt.Boot.prototype = {
 		//this.load.image('titleImage', 'assets/agnes.jpg');
 		this.load.image('preloaderBar', 'assets/loader_bar.png');
 	},
-	//Random saker från tutorial
 	create: function() {
 		// masPointers är för att tex dubbelklick inte ska vara möjligt. Endast ETT klick i taget.
 		this.input.maxPointers = 1;
