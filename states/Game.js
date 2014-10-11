@@ -404,7 +404,6 @@ ClickIt.Game.prototype = {
 	    					//Check that it isn't a stone
 	    					while(this.buttons[col][i + counterTrue].key === 'stone') {
 	    						counterTrue--;
-	    						console.log("sten!");
 	    					}
 
 	    					//Flytta ner färger enligt counterTrue
@@ -458,10 +457,10 @@ ClickIt.Game.prototype = {
 			console.log("hej hej på dig");
 
 			player.animations.play('left');
-			this.buttons[0][0].animations.play('explode');
+			//this.buttons[0][0].animations.play('explode');
 		}
 		else{
-			this.buttons[0][0].animations.stop('explode');
+			//this.buttons[0][0].animations.stop('explode');
         	player.frame = 4;
         	//this.buttons[0][0].frame = 0;
 		}

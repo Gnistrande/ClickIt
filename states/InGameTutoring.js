@@ -19,7 +19,7 @@ ClickIt.InGameTutoring.prototype.colorOfLevel = function() {
 
 //The number of moves you have for this level
 ClickIt.InGameTutoring.prototype.movesOfLevel = function() {
-	this.numberOfMoves = 2;
+	this.numberOfMoves = 20;
 	return this.numberOfMoves;
 };
 

@@ -1,78 +1,57 @@
 ClickIt.LevelThree = function(game) {
-	this.levelColor;
-	this.numberOfMoves;
-	this.numberOfDots;
-	this.popup;
-	this.tween;
-	this.colorDot;
+    this.levelColor;
+    this.numberOfMoves;
+    this.numberOfDots;
+    this.popup;
+    this.tween;
+    this.colorDot;
 };
 
 ClickIt.LevelThree.prototype = Object.create(ClickIt.Game.prototype);
-ClickIt.LevelThree.prototype.constructor = ClickIt.LevelThree;
+ClickIt.LevelThree.prototype.constructor = ClickIt.LevelTwo;
 
 //The color you have to collect for this level
 ClickIt.LevelThree.prototype.colorOfLevel = function() {
-	this.levelColor = 'blue';
-	return this.levelColor;
+    this.levelColor = 'blue';
+    return this.levelColor;
 };
 
 //The number of moves you have for this level
 ClickIt.LevelThree.prototype.movesOfLevel = function() {
-	this.numberOfMoves = 20;
-	return this.numberOfMoves;
+    this.numberOfMoves = 20;
+    return this.numberOfMoves;
 };
 
 //The number of dots you have to collect for this level
 ClickIt.LevelThree.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 5;
-	return this.numberOfDots;
+    this.numberOfDots = 5;
+    return this.numberOfDots;
 };
 
 //Creates the set up for this level
 ClickIt.LevelThree.prototype.createLevel = function(color) {
-	//Add dot with the color to collect for this level
+    //Add dot with the color to collect for this level
     this.colorDot = this.add.image(490, 45, color);
+    this.colorDot.scale.setTo(0.8, 0.8);
 
     //Change buttons to blocks
-    this.buttons[0][0].inputEnabled = false;
-    this.buttons[0][1].inputEnabled = false;
-    this.buttons[1][0].inputEnabled = false;
+    this.buttons[3][3].inputEnabled = false;
+    this.buttons[3][4].inputEnabled = false;
+    this.buttons[4][3].inputEnabled = false;
+    this.buttons[4][4].inputEnabled = false;
 
-    this.buttons[0][7].inputEnabled = false;
-    this.buttons[1][7].inputEnabled = false;
-    this.buttons[0][6].inputEnabled = false;
-
-    this.buttons[7][0].inputEnabled = false;
-    this.buttons[6][0].inputEnabled = false;
-    this.buttons[7][1].inputEnabled = false;
-
-    this.buttons[7][7].inputEnabled = false;
-    this.buttons[7][6].inputEnabled = false;
-    this.buttons[6][7].inputEnabled = false;
-
-    this.buttons[0][0].loadTexture('stone');
-    this.buttons[0][1].loadTexture('stone');
-    this.buttons[1][0].loadTexture('stone');
-
-    this.buttons[0][7].loadTexture('stone');
-    this.buttons[1][7].loadTexture('stone');
-    this.buttons[0][6].loadTexture('stone');
-
-    this.buttons[7][0].loadTexture('stone');
-    this.buttons[6][0].loadTexture('stone');
-    this.buttons[7][1].loadTexture('stone');
-
-    this.buttons[7][7].loadTexture('stone');
-    this.buttons[7][6].loadTexture('stone');
-    this.buttons[6][7].loadTexture('stone');
+    this.buttons[3][3].loadTexture('stone');
+    this.buttons[3][4].loadTexture('stone');
+    this.buttons[4][3].loadTexture('stone');
+    this.buttons[4][4].loadTexture('stone');
 };
 
 //Sends you to the next level
 ClickIt.LevelThree.prototype.nextLevel = function() {
     //Close popup
-	this.tween = this.add.tween(this.popup.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Elastic.In, true);
-    //Start next level, though in this case you go back to the menu
-	this.state.start('StartMenu');
+    this.tween = this.add.tween(this.popup.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Elastic.In, true);
+    //Start next level
+    this.state.start('StartMenu');
 };
 
 //Sends you to the menu
@@ -85,7 +64,7 @@ ClickIt.LevelThree.prototype.backToMenu = function() {
 
 ClickIt.LevelThree.prototype.winning = function(removedDots) {
     //Create popup window
-	this.popup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
+    this.popup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
     this.popup.alpha = 0.8;
     this.popup.anchor.set(0.5);
     this.popup.inputEnabled = true;
@@ -125,7 +104,7 @@ ClickIt.LevelThree.prototype.winning = function(removedDots) {
     this.popup.scale.set(0);
 
     //Open popup
-	this.tween = this.add.tween(this.popup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
+    this.tween = this.add.tween(this.popup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
 };
 
 ClickIt.LevelThree.prototype.losing = function() {
@@ -135,7 +114,7 @@ ClickIt.LevelThree.prototype.losing = function() {
     this.losingPopup.anchor.set(0.5);
     this.losingPopup.inputEnabled = true;
 
-    //The position of the ok button
+    ///The position of the ok button
     var ow = (this.losingPopup.width / 2)-450;
     var oh = (this.losingPopup.height / 2)-250;
 

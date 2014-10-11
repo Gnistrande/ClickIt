@@ -24,7 +24,7 @@ ClickIt.LevelTwo.prototype.movesOfLevel = function() {
 
 //The number of dots you have to collect for this level
 ClickIt.LevelTwo.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 5;
+	this.numberOfDots = 15;
 	return this.numberOfDots;
 };
 
@@ -32,6 +32,7 @@ ClickIt.LevelTwo.prototype.dotsOfLevel = function() {
 ClickIt.LevelTwo.prototype.createLevel = function(color) {
 	//Add dot with the color to collect for this level
     this.colorDot = this.add.image(490, 45, color);
+    this.colorDot.scale.setTo(0.8, 0.8);
 
     //Change buttons to blocks
     this.buttons[0][3].inputEnabled = false;
