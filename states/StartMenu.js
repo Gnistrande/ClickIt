@@ -44,16 +44,16 @@ ClickIt.StartMenu.prototype = {
     clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7);  
 
-    buttonStart = this.add.button(this.world.centerX-110, 240, 'startButton', this.startGame, this, 1, 0, 2);
+    buttonStart = this.add.button(this.world.centerX-110, 260, 'startButton', this.startGame, this, 1, 0, 2);
     buttonStart.scale.setTo(0.8, 0.8);
-    buttonLevelOne = this.add.button(this.world.centerX-110, 300, 'levelOneImage', this.startGame, this, 1, 0, 2);
+    buttonLevelOne = this.add.button(this.world.centerX-110, 320, 'levelOneImage', this.startGame, this, 1, 0, 2);
     buttonLevelOne.scale.setTo(0.8, 0.8);
-    buttonLevelTwo = this.add.button(this.world.centerX-110, 360, 'levelTwoImage', this.startGame, this, 1, 0, 2);
+    buttonLevelTwo = this.add.button(this.world.centerX-110, 380, 'levelTwoImage', this.startGame, this, 1, 0, 2);
     buttonLevelTwo.scale.setTo(0.8, 0.8);
-    buttonLevelThree = this.add.button(this.world.centerX-110, 420, 'levelThreeImage', this.startGame, this, 1, 0, 2);
+    buttonLevelThree = this.add.button(this.world.centerX-110, 440, 'levelThreeImage', this.startGame, this, 1, 0, 2);
     buttonLevelThree.scale.setTo(0.8, 0.8);
 
-    buttonLevelFour = this.add.button(this.world.centerX-110, 480, 'levelFourImage', this.startGame, this, 1, 0, 2);
+    buttonLevelFour = this.add.button(this.world.centerX-110, 500, 'levelFourImage', this.startGame, this, 1, 0, 2);
     buttonLevelFour.scale.setTo(0.8, 0.8);
 
     // Do not do anything if button is clicked
