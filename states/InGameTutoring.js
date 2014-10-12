@@ -52,6 +52,47 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.state.start('StartMenu');
 };
 
+ClickIt.InGameTutoring.prototype.tutoringOne = function(tutoringBol) {
+    console.log("In function tutoring");
+
+    //this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
+
+    var clickText = this.add.sprite(250, 260, 'backButton_text', 3);
+    clickText.scale.set(0.8);
+    clickText.visible = false;
+    anim = clickText.animations.add();
+
+    if(tutoringBol == true){
+        clickText.visible = true;
+        //anim.play(5, true);
+    }
+    else{
+        //Stop the animation please!
+        clickText.visible = false;
+    }
+    
+
+
+    //var ani = this.animations.add('backButton_text');
+    //this.animation.play(ani, 3, true);
+};
+
+ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
+    console.log("In function tutoring");
+
+    //this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
+
+    var clickText = this.add.sprite(250, 360, 'backButton_text', 3);
+    clickText.scale.set(0.8);
+    anim = clickText.animations.add('walk');
+
+    anim.play(5, true);
+
+
+    //var ani = this.animations.add('backButton_text');
+    //this.animation.play(ani, 3, true);
+};
+
 ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     //Create popup window
 	this.popup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
