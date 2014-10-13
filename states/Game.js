@@ -60,9 +60,10 @@ ClickIt.Game.prototype = {
 		this.numberOfDots = this.dotsOfLevel();
 
 		this.createLevel(this.levelGameColor);
+
 		if(this.state.current == 'InGameTutoring'){
-			this.tutoringBol = true;
-			this.tutoringOne(this.tutoringBol);
+			//this.tutoringBol = true;
+			this.tutoringOne();
 		}
 
 		//Text in the game
@@ -142,9 +143,8 @@ ClickIt.Game.prototype = {
 		//Check if state InGameTutoring is started
 		if(this.state.current == 'InGameTutoring'){
 			console.log("InGameTutoring is current state!");
-			this.tutoringBol = false;
-			this.tutoringOne(this.tutoringBol);
-			this.tutoringTwo();
+			//this.tutoringBol = false;
+			//this.tutoringTwo();
 		}
 
 		//Check for position I and J in buttons
@@ -456,7 +456,7 @@ ClickIt.Game.prototype = {
 		//this.buttons[0][0].frame = 3;
 		
 		if( this.input.activePointer.isDown ){
-			console.log("hej hej på dig");
+			//console.log("hej hej på dig");
 
 			player.animations.play('left');
 			//this.buttons[0][0].animations.play('explode');

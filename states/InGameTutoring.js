@@ -6,6 +6,8 @@ ClickIt.InGameTutoring = function(game) {
     this.losingPopup;
 	this.tween;
     this.colorDot;
+    this.clickText;
+    this.orderOfTutorial;
 };
 
 ClickIt.InGameTutoring.prototype = Object.create(ClickIt.Game.prototype);
@@ -52,45 +54,61 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.state.start('StartMenu');
 };
 
-ClickIt.InGameTutoring.prototype.tutoringOne = function(tutoringBol) {
-    console.log("In function tutoring");
+ClickIt.InGameTutoring.prototype.tutoringOne = function() {
+    console.log("In function tutoring1");
+
+    this.orderOfTutorial = 1;
 
     //this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
 
-    var clickText = this.add.sprite(250, 260, 'backButton_text', 3);
-    clickText.scale.set(0.8);
-    clickText.visible = false;
-    anim = clickText.animations.add();
+    this.clickText = this.add.sprite(250, 260, 'backButton_text', 3);
+    this.clickText.scale.set(0.8);
+    this.clickText.animations.add('first', [0,1,2], 10, true);
 
-    if(tutoringBol == true){
-        clickText.visible = true;
-        //anim.play(5, true);
-    }
-    else{
-        //Stop the animation please!
-        clickText.visible = false;
-    }
-    
+    this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
+    this.orderText.scale.set(0.8);
+    this.orderText.animations.add('second', [0,1,2], 10, true);
+    this.orderText.visible = false;
 
+    this.input.onDown.add(this.destroySprite, this);
 
-    //var ani = this.animations.add('backButton_text');
-    //this.animation.play(ani, 3, true);
+    console.log("start first!");
+
+    this.clickText.animations.play('first');
+
+    if(this.orderOfTutorial === 2){
+        this.orderText.visible = true;
+        this.orderText.animations.play('second');
+    }          
 };
 
-ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
-    console.log("In function tutoring");
+/*ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
+    console.log("In function tutoring2");
 
-    //this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
+    this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
+    this.orderText.scale.set(0.8);
+    this.orderText.animations.add('second', [0,1,2], 10, true);
 
-    var clickText = this.add.sprite(250, 360, 'backButton_text', 3);
-    clickText.scale.set(0.8);
-    anim = clickText.animations.add('walk');
+    this.orderText.inputEnabled = true;
+    this.orderText.input.useHandCursor = true;
+    this.orderText.events.onInputDown.add(this.destroySprite, this);
 
-    anim.play(5, true);
+    console.log("start second!");
+    this.orderText.animations.play('second');
+};*/
 
+ClickIt.InGameTutoring.prototype.destroySprite = function() {
+    console.log("destroySprite");
 
-    //var ani = this.animations.add('backButton_text');
-    //this.animation.play(ani, 3, true);
+    //this.clickText.animations.stop('first');
+    if(this.orderOfTutorial === 1){
+        this.clickText.destroy();
+        this.orderOfTutorial = 2;
+        this.tutoringOne();
+    }
+    else if(this.orderOfTutorial === 2){
+        this.orderText.destroy();
+    }
 };
 
 ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
