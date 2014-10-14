@@ -140,13 +140,6 @@ ClickIt.Game.prototype = {
 
 	//The function that is called when a dot is clicked
 	actionOnClick: function(clickedButton) {
-		//Check if state InGameTutoring is started
-		if(this.state.current == 'InGameTutoring'){
-			console.log("InGameTutoring is current state!");
-			//this.tutoringBol = false;
-			//this.tutoringTwo();
-		}
-
 		//Check for position I and J in buttons
 		var numberI = (clickedButton.x-this.moveX)/this.delta;
 	    var numberJ = (clickedButton.y-this.moveY)/this.delta;

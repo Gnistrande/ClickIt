@@ -54,61 +54,41 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.state.start('StartMenu');
 };
 
+//The first popup for in game tutoring
 ClickIt.InGameTutoring.prototype.tutoringOne = function() {
-    console.log("In function tutoring1");
-
-    this.orderOfTutorial = 1;
-
-    //this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
-
+    //Create sprite for first popup
     this.clickText = this.add.sprite(250, 260, 'backButton_text', 3);
     this.clickText.scale.set(0.8);
     this.clickText.animations.add('first', [0,1,2], 10, true);
 
-    this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
-    this.orderText.scale.set(0.8);
-    this.orderText.animations.add('second', [0,1,2], 10, true);
-    this.orderText.visible = false;
-
-    this.input.onDown.add(this.destroySprite, this);
-
-    console.log("start first!");
-
-    this.clickText.animations.play('first');
-
-    if(this.orderOfTutorial === 2){
-        this.orderText.visible = true;
-        this.orderText.animations.play('second');
-    }          
+    //Goes to function tutoringTwo when mouse is clicked
+    this.input.onDown.add(this.tutoringTwo, this);
+    //Start animation
+    this.clickText.animations.play('first');         
 };
 
-/*ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
-    console.log("In function tutoring2");
+//The second popup for in game tutoring
+ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
+    //Destroys first popup
+    this.clickText.destroy();
+    this.input.onDown.remove(this.tutoringTwo, this);
 
+    //Create sprite for second popup
     this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
     this.orderText.scale.set(0.8);
     this.orderText.animations.add('second', [0,1,2], 10, true);
 
-    this.orderText.inputEnabled = true;
-    this.orderText.input.useHandCursor = true;
-    this.orderText.events.onInputDown.add(this.destroySprite, this);
+    //Goes to function destroySprite when mouse is clicked
+    this.input.onDown.add(this.destroySprite, this);
+    //Start animation
+    this.orderText.animations.play('second');      
+};
 
-    console.log("start second!");
-    this.orderText.animations.play('second');
-};*/
-
+//Destroys the second popup
 ClickIt.InGameTutoring.prototype.destroySprite = function() {
-    console.log("destroySprite");
-
-    //this.clickText.animations.stop('first');
-    if(this.orderOfTutorial === 1){
-        this.clickText.destroy();
-        this.orderOfTutorial = 2;
-        this.tutoringOne();
-    }
-    else if(this.orderOfTutorial === 2){
-        this.orderText.destroy();
-    }
+    //Destroys second popup
+    this.input.onDown.remove(this.destroySprite, this);
+    this.orderText.destroy();
 };
 
 ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
