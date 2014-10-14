@@ -21,6 +21,10 @@ ClickIt.Game = function(game) {
 	this.winningBol;
 	this.losingBol;
 
+	this.tweenOnChain;
+
+	this.chainAnims;
+
 };
 
 ClickIt.Game.prototype = {
@@ -61,6 +65,9 @@ ClickIt.Game.prototype = {
 
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);
+
+    	this.tweenOnChain = this.add.group();
+    	this.chainAnims = this.add.group();
     	
 	},
 
@@ -176,8 +183,35 @@ ClickIt.Game.prototype = {
 	        this.buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
 	        this.buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
 	    }
+
+	    // MÅSTE egentligen ligga i update?
+	    if( this.tweenOnChain != null ){
+	    	//this.tweenOnChain.removeAll();
+
+	    	//this.tweenOnChain.forEachAlive(function(tC) { 
+     		//	tC.kill();
+     		//} , this);
+
+	    }
+
 	    this.findChainInRow();
 	    this.findChainInCol();
+
+	    //this.tweenOnChain = this.make.tween(this.buttons[0][0])
+		//.to({frame: 3}, 100, Phaser.Easing.Linear.None, false, 100);
+
+		//this.tweenOnChain.add.onComplete(this.rearrangeButtons, this);
+
+	    if( this.tweenOnChain != null ){
+	    	//this.tweenOnChain.add.onComplete(this.rearrangeButtons, this);
+	    	//this.add.tween.start();
+	    }
+
+	    
+
+	    //while( this.tweenOnChain === null || this.tweenOnChain.isRunning === false){
+		//	this.rearrangeButtons();
+		//}
 
 	    //this.rearrangeButtons();
 	},
@@ -199,6 +233,7 @@ ClickIt.Game.prototype = {
 	    return colorInt;
 	},
 
+	// Kallar också på tweenChain() för att animera en chain
 	findChainInRow: function() {
 	    // 1. För varje rad
 	    for(var row = 0; row < 8; row++){
@@ -246,6 +281,11 @@ ClickIt.Game.prototype = {
 	            this.chainMatrix[1][row] = true;
 	            this.chainMatrix[2][row] = true;
 	            this.chainMatrix[3][row] = true;
+
+	            this.tweenChain(0, row);
+	            this.tweenChain(1, row);
+	            this.tweenChain(2, row);
+	            this.tweenChain(3, row);
 	        }
 	        //We have a right chain (pos 4, 5, 6, 7 have same color)
 	        if( right_chain > 3 ){
@@ -256,6 +296,11 @@ ClickIt.Game.prototype = {
 	            this.chainMatrix[5][row] = true;
 	            this.chainMatrix[6][row] = true;
 	            this.chainMatrix[7][row] = true;
+
+	            this.tweenChain(4, row);
+	            this.tweenChain(5, row);
+	            this.tweenChain(6, row);
+	            this.tweenChain(7, row);
 	        }
 	        //We have a chain somewhere in the middle, possibly entire row.
 	        if( middle_chain > 3 ){
@@ -263,6 +308,9 @@ ClickIt.Game.prototype = {
 
 	            this.chainMatrix[3][row] = true;
 	            this.chainMatrix[4][row] = true;
+
+	            this.tweenChain(3, row);
+	            this.tweenChain(4, row);
 
 	            //Adjust both variables since while-loops above changes them one too much.
 	            left_k++;
@@ -272,17 +320,20 @@ ClickIt.Game.prototype = {
 	            // First to the left from left_k (can be 0, 1, 2) -> 2
 	            while(left_k != 3){
 	                this.chainMatrix[left_k][row] = true;
+	                this.tweenChain(left_k, row);
 	                left_k++;
 	            }
 	            // And then to the right from right_k (can be 7, 6, 5) -> 5
 	            while(right_k != 4){
 	                this.chainMatrix[right_k][row] = true;
+	                this.tweenChain(right_k, row);
 	                right_k--;
 	            }
 	        }
 	    }
 	},
 
+	// Kallar också på tweenChain() för att animera en chain
 	findChainInCol: function() {
 	    // 1. För varje rad
 	    for(var col = 0; col < 8; col++){
@@ -326,6 +377,10 @@ ClickIt.Game.prototype = {
 	        if( middle_chain > 3){
 	            this.chainMatrix[col][3] = true;
 	            this.chainMatrix[col][4] = true;
+
+	            this.tweenChain(col, 3);
+	            this.tweenChain(col, 4);
+
 	            //Adjust both variables since while-loops above changes them one too much.
 	            bottom_k--;
 	            top_k++;
@@ -334,11 +389,13 @@ ClickIt.Game.prototype = {
 	            // First up from top_k (can be 0, 1, 2) -> 2
 	            while(top_k != 3){
 	                this.chainMatrix[col][top_k] = true;
+	                this.tweenChain(col, top_k);
 	                top_k++;
 	            }
 	            // And then down from bottom_k (can be 7, 6, 5) -> 5
 	            while(bottom_k != 4){
 	                this.chainMatrix[col][bottom_k] = true;
+	                this.tweenChain(col, bottom_k);
 	                bottom_k--;
 	            }
 	        }
@@ -347,12 +404,22 @@ ClickIt.Game.prototype = {
 	            this.chainMatrix[col][1] = true;
 	            this.chainMatrix[col][2] = true;
 	            this.chainMatrix[col][3] = true;
+
+	            this.tweenChain(col, 0);
+	            this.tweenChain(col, 1);
+	            this.tweenChain(col, 2);
+	            this.tweenChain(col, 3);
 	        }
 	        if( bottom_chain > 3){
 	            this.chainMatrix[col][4] = true;
 	            this.chainMatrix[col][5] = true;
 	            this.chainMatrix[col][6] = true;
 	            this.chainMatrix[col][7] = true;
+
+	            this.tweenChain(col, 4);
+	            this.tweenChain(col, 5);
+	            this.tweenChain(col, 6);
+	            this.tweenChain(col, 7);
 	        }
 	    }
 	},
@@ -368,7 +435,7 @@ ClickIt.Game.prototype = {
 	//Använda sig av assignFirstColor eller changeColorInGame?
 	//Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
 	rearrangeButtons: function() {
-	    //console.log("\nrearrangeButtons() ! ");
+	    console.log("\nrearrangeButtons() ! ");
 
 	    var col = 7;
 	    while( col >= 0){
@@ -382,18 +449,14 @@ ClickIt.Game.prototype = {
 	    				if ( this.chainMatrix[col][i] === true || this.buttons[col][i].key === 'stone'){
 	    					counterTrue++;
 	    				}
-	    				else{
-	    					// Animate the chain by changing dot to frame 4 for a little while
-							//this.add.tween( this.buttons[col][row] ).to( {this.buttons[col][row].key: 3}, 500);
-							// onComplete
-							// chain()
-
+	    				else{							
 	    					//Make buttons invisible
-	    					//this.buttons[col][i].visible = false;
+	    					this.buttons[col][i].visible = false;
 
 	    					//Call tweenButton
-	    					//var temp_y = this.buttons[col][row].y;
-	    					//var temp_x = this.buttons[col][row].x
+	    					// Vet inte varför måste kalla med 0 0
+	    					var temp_y = this.buttons[col][row].y;
+	    					var temp_x = this.buttons[col][row].x
 	    					this.tweenButton( this.buttons[col][i], 0, 0);
 
 	    					//Check for the levels color
@@ -438,76 +501,43 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
-	printChainMatrix: function(){
-		for(var row = 0; row < 8; row ++){
-        	for(var col = 0; col < 8; col++){
-            //Update chainText
-            this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
-        	}
-    	}
-	},
 
-	update: function() {
-		//this.findChainInRow();
-		//this.findChainInCol();
+	tweenChain: function (col, row) {
+		console.log("tween chain! col: " + col + " row: " + row);
 
-		//this.buttons[0][0].frame = 3;
-		
-		if( this.input.activePointer.isDown ){
-			console.log("hej hej på dig");
+		var tempT = this.add.tween(this.buttons[col][row])
+		.to({frame: 3}, 100, Phaser.Easing.Linear.None, false, 100)
+		.to({frame: 4}, 100, Phaser.Easing.Linear.None, false, 100)
+		.to({frame: 5}, 100, Phaser.Easing.Linear.None, false, 100)
+		.start();
 
-			player.animations.play('left');
-			//this.buttons[0][0].animations.play('explode');
+		tempT.add.onChainComplete(this.rearrangeButtons, this);
+
+/*
+		if( this.tweenOnChain === null){
+			this.tweenOnChain = this.make.tween(this.buttons[col][row])
+			.to({frame: 3}, 100, Phaser.Easing.Linear.None, false, 100)
+			.to({frame: 4}, 100, Phaser.Easing.Linear.None, false, 100)
+			.to({frame: 5}, 100, Phaser.Easing.Linear.None, false, 100);
 		}
 		else{
-			//this.buttons[0][0].animations.stop('explode');
-        	player.frame = 4;
-        	//this.buttons[0][0].frame = 0;
+			this.tweenOnChain = this.make.tween(this.buttons[col][row])
+			.to({frame: 3}, 100, Phaser.Easing.Linear.None, false, 100)
+			.to({frame: 4}, 100, Phaser.Easing.Linear.None, false, 100)
+			.to({frame: 5}, 100, Phaser.Easing.Linear.None, false, 100);
 		}
+*/
 
-		if( this.input.mousePointer.onTap){
-			console.log("down");
-		}
-
-		if( this.input.mousePointer.justReleased() ){
-			//console.log("mousepointer just released!");
-		}
-
-		if( this.chainMatrix[0][0] === true){
-			//console.log("heeeeej");
-			//this.buttons[0][0].visible = (false);
-		}
-
-
-		this.rearrangeButtons();
-
-		//Update number of moves and removed dots of the right color
-		this.moves.text = 'Moves: ' + this.numberOfMoves;
-		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
-
-		//this.printChainMatrix();
-
-		if(this.losingBol == false){
-			//Check if you have any moves left
-			if(this.numberOfMoves<=0){
-				this.losing();
-				this.losingBol = true;
-			}
-		}
-
-		if(this.winningBol == false){
-			//Check if you have removed enough dots i the right color
-			if(this.removedDotsOfLevelColor>=this.numberOfDots){
-				this.winning(this.removedDotsOfLevelColor);
-				this.winningBol = true;
-			}
-		}
 	},
+
 
 	// Function for animation of dots
 	// button - the dots to be moved down
 	// newPos - to where it should be moved
+	// Draws a temporary circle that acts as animation and falls down. This circle is then removed.
 	tweenButton: function (button, newPosX, newPosY) {
+
+		console.log("Tweening Button!");
 		var tempCircle;
 
 		var green = 0xB6FFDB;
@@ -540,14 +570,64 @@ ClickIt.Game.prototype = {
 		// tween circle to new position
 		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
 
-		// tween buttons frame to frame 3
-		// works but I'd rather get animation to work.
-		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
-
 		// make button visible again after the circle has been moved?
-		//button.visible = true;
-	} 
+		button.visible = true;
+		button.alpha = 0.5;
+
+		tempCircle.kill();
+	},
+
+
+	printChainMatrix: function(){
+		for(var row = 0; row < 8; row ++){
+        	for(var col = 0; col < 8; col++){
+            //Update chainText
+            this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
+        	}
+    	}
+	},
+
+
+	update: function() {
+		//this.findChainInRow();
+		//this.findChainInCol();
+
+		//this.tweenOnChain.onComplete.add(this.rearrangeButtons, this);
+
+		//while( this.tweenOnChain === null || this.tweenOnChain.isRunning === false){
+		//	this.rearrangeButtons();
+		//}
+
+		
+		if( this.input.activePointer.isDown ){
+			player.animations.play('left');
+		}
+		else{
+        	player.frame = 4;
+		}
+
+
+		//Update number of moves and removed dots of the right color
+		this.moves.text = 'Moves: ' + this.numberOfMoves;
+		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
+
+		//this.printChainMatrix();
+
+		if(this.losingBol == false){
+			//Check if you have any moves left
+			if(this.numberOfMoves<=0){
+				this.losing();
+				this.losingBol = true;
+			}
+		}
+
+		if(this.winningBol == false){
+			//Check if you have removed enough dots i the right color
+			if(this.removedDotsOfLevelColor>=this.numberOfDots){
+				this.winning(this.removedDotsOfLevelColor);
+				this.winningBol = true;
+			}
+		}
+	}
 };
 
