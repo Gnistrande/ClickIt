@@ -20,6 +20,7 @@ ClickIt.Game = function(game) {
 	this.removedColor;
 	this.winningBol;
 	this.losingBol;
+	this.tutoringBol;
 
 	this.tweenOnChain;
 
@@ -35,17 +36,21 @@ ClickIt.Game.prototype = {
 		this.chainMatrix = [];
 		this.chainText = [];
 
+		//For positioning the buttons
 		this.delta = 60;
 		this.moveX = 110;
 		this.moveY = 150;
 
+
 		this.removedDotsOfLevelColor = 0;
 
+		//To make sure that update doesn't open more than one popup
 		this.winningBol = false;
 		this.losingBol = false;
 
 		this.buttonBack = this.add.button(5, 10, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
 
+		//Image for order of colors
 		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
 		
 		this.createButtons();
@@ -60,9 +65,16 @@ ClickIt.Game.prototype = {
 
 		this.createLevel(this.levelGameColor);
 
+		if(this.state.current == 'InGameTutoring'){
+			//this.tutoringBol = true;
+			this.tutoringOne();
+		}
+
+		//Text in the game
 		this.moves = this.add.text(115, 50, 'Moves: 0', { font: '20px Chalkboard', fill: '#000' });
 		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });
 
+		//The dude
     	player = this.add.sprite(32, this.world.height - 350, 'dude');
     	player.animations.add('left', [0, 1, 2, 3], 10, true);
 
@@ -71,6 +83,7 @@ ClickIt.Game.prototype = {
     	
 	},
 
+	//Creates the buttons for the board
 	createButtons: function() {
 		//  Here we'll create 8 times 8 of buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
@@ -80,9 +93,7 @@ ClickIt.Game.prototype = {
 	    	for (var j = 0; j < 8; j++){
 	    		//Assign random values to a 8X8 matrix
 	    		var number = Math.floor((Math.random() * 4) + 1);
-
 	    		var image = this.assignFirstColor(number);
-	    		//var image = 'green';
 
 	    		//  Create a button inside of the 'game' group, with the image decided above.
 	    		this.buttons[i][j] = this.add.sprite(image);
@@ -95,7 +106,7 @@ ClickIt.Game.prototype = {
     	}
 	},
 
-	//Assign color from number
+	//Assign the first color from a random number
 	assignFirstColor: function(number) {
 		var image;
 		if(number == 1){
@@ -134,6 +145,7 @@ ClickIt.Game.prototype = {
 	    return image;
 	},
 
+	//The function that is called when a dot is clicked
 	actionOnClick: function(clickedButton) {
 		//Check for position I and J in buttons
 		var numberI = (clickedButton.x-this.moveX)/this.delta;
@@ -216,26 +228,10 @@ ClickIt.Game.prototype = {
 	    //this.rearrangeButtons();
 	},
 
-	getColorInt: function(colorString) {
-		var colorInt;
-		if(colorString == 'pink'){
-	        colorInt = 1;
-	    }
-	    else if(colorString == 'green'){
-	    	colorInt = 2;
-	    }
-	    else if(colorString == 'blue'){
-	    	colorInt = 3;
-	    }
-	    else if(colorString == 'yellow'){
-	    	colorInt = 4;
-	    }
-	    return colorInt;
-	},
 
 	// Kallar också på tweenChain() för att animera en chain
 	findChainInRow: function() {
-	    // 1. För varje rad
+	    //För varje rad
 	    for(var row = 0; row < 8; row++){
 	        var middle_chain = 2;
 	        var left_chain = 1;
@@ -245,16 +241,16 @@ ClickIt.Game.prototype = {
 	        var right_k = 5;
 
 	        // Hämta mitten-färgerna. 
-	        var color_3 = this.getColorInt(this.buttons[3][row].key);
-	        var color_4 = this.getColorInt(this.buttons[4][row].key);
+	        var color_3 = this.buttons[3][row].key;
+	        var color_4 = this.buttons[4][row].key;
 
 	        //Om samma kolla åt vänster och höger med while-loop
 	        if(color_3 === color_4){
-	            while(left_k != -1 && this.getColorInt(this.buttons[left_k][row].key) == color_3){
+	            while(left_k != -1 && this.buttons[left_k][row].key == color_3){
 	                left_k--;
 	                middle_chain++;
 	            }
-	            while(right_k != 8 && this.getColorInt(this.buttons[right_k][row].key) == color_3){
+	            while(right_k != 8 && this.buttons[right_k][row].key == color_3){
 	                right_k++;
 	                middle_chain++;
 	            }
@@ -262,12 +258,12 @@ ClickIt.Game.prototype = {
 	        //Om olika
 	        else{
 	            //hämta först vänster färg och while-loopa
-	            while(left_k >= 0 && this.getColorInt(this.buttons[left_k][row].key) == color_3){
+	            while(left_k >= 0 && this.buttons[left_k][row].key == color_3){
 	                left_k--;
 	                left_chain++;
 	            }
 	            //och sen högra
-	            while(right_k < 8 && this.getColorInt(this.buttons[right_k][row].key) == color_4){
+	            while(right_k < 8 && this.buttons[right_k][row].key == color_4){
 	                right_k++;
 	                right_chain++;
 	            }
@@ -335,7 +331,7 @@ ClickIt.Game.prototype = {
 
 	// Kallar också på tweenChain() för att animera en chain
 	findChainInCol: function() {
-	    // 1. För varje rad
+	    //För varje rad
 	    for(var col = 0; col < 8; col++){
 
 	        var middle_chain = 2;
@@ -346,16 +342,16 @@ ClickIt.Game.prototype = {
 	        var bottom_k = 5;
 
 	        // Hämta mitten-färgerna. 
-	        var color_3 = this.getColorInt(this.buttons[col][3].key);
-	        var color_4 = this.getColorInt(this.buttons[col][4].key);
+	        var color_3 = this.buttons[col][3].key;
+	        var color_4 = this.buttons[col][4].key;
 
 	        //Om samma kolla uppåt och neråt med while-loop
 	        if(color_3 === color_4){
-	            while(top_k != -1 && this.getColorInt(this.buttons[col][top_k].key) == color_3){
+	            while(top_k != -1 && this.buttons[col][top_k].key == color_3){
 	                top_k--;
 	                middle_chain++;
 	            }
-	            while(bottom_k != 8 && this.getColorInt(this.buttons[col][bottom_k].key) == color_3){
+	            while(bottom_k != 8 && this.buttons[col][bottom_k].key == color_3){
 	                bottom_k++;
 	                middle_chain++;
 	            }
@@ -363,12 +359,12 @@ ClickIt.Game.prototype = {
 	        //Om olika
 	        else{
 	            //hämta först färgen över och while-loopa uppåt
-	            while(top_k >= 0 && this.getColorInt(this.buttons[col][top_k].key) == color_3){
+	            while(top_k >= 0 && this.buttons[col][top_k].key == color_3){
 	                top_k--;
 	                top_chain++;
 	            }
 	            //och sen färgen under och while-loopa neråt
-	            while(bottom_k < 8 && this.getColorInt(this.buttons[col][bottom_k].key) == color_4){
+	            while(bottom_k < 8 && this.buttons[col][bottom_k].key == color_4){
 	                bottom_k++;
 	                bottom_chain++;
 	            }
@@ -504,14 +500,15 @@ ClickIt.Game.prototype = {
 
 	tweenChain: function (col, row) {
 		console.log("tween chain! col: " + col + " row: " + row);
-
+		
 		var tempT = this.add.tween(this.buttons[col][row])
 		.to({frame: 3}, 100, Phaser.Easing.Linear.None, false, 100)
 		.to({frame: 4}, 100, Phaser.Easing.Linear.None, false, 100)
 		.to({frame: 5}, 100, Phaser.Easing.Linear.None, false, 100)
 		.start();
 
-		tempT.add.onChainComplete(this.rearrangeButtons, this);
+		// onChainComplete har jag skrivit och fungerar ej av någon anledning
+		//tempT.add.onChainComplete(this.rearrangeButtons, this);
 
 /*
 		if( this.tweenOnChain === null){

@@ -4,7 +4,12 @@
 	<meta charset="UTF-8" />
 	<title>ClickIt!</title>
 	<script type="text/javascript" src="../phaser/build/phaser.min.js"></script>
+<<<<<<< HEAD
     <script type="text/javascript" src="/phaser-ext.js"></script>
+=======
+
+    <!--Add the scripts-->
+>>>>>>> 96894f57890340b83254e6963703acf700d52583
     <script src="states/Boot.js"></script>
     <script src="states/Preloader.js"></script>
     <script src="states/StartMenu.js"></script>
@@ -18,7 +23,6 @@
         body {
             margin: 0;
         }
-        
         canvas {
         	display: block;
         	margin: auto;
@@ -29,23 +33,14 @@
             display: block;
             margin: auto;
         }
-
     </style>
 </head>
 <body>
-
-    <!-- 
-        Behövs gameContainer över huvudtaget?
-    -->
-    <div id="gameContainer"></div>
-
-
     <script type="text/javascript">
         window.onload = function() {
-
-            
-
-            var game = new Phaser.Game(700, 650, Phaser.AUTO, 'gameContainer');
+            //Create game
+            var game = new Phaser.Game(700, 650, Phaser.AUTO);
+            //Add all the states to game
             game.state.add('Boot', ClickIt.Boot);
             game.state.add('Preloader', ClickIt.Preloader);
             game.state.add('StartMenu', ClickIt.StartMenu);
@@ -54,10 +49,9 @@
             game.state.add('LevelTwo', ClickIt.LevelTwo);
             game.state.add('LevelThree', ClickIt.LevelThree);
             game.state.add('InGameTutoring', ClickIt.InGameTutoring);
-             
+            //Start first state
             game.state.start('Boot');
         }
         </script>
-    
 </body>
 </html>

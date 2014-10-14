@@ -6,6 +6,8 @@ ClickIt.InGameTutoring = function(game) {
     this.losingPopup;
 	this.tween;
     this.colorDot;
+    this.clickText;
+    this.orderOfTutorial;
 };
 
 ClickIt.InGameTutoring.prototype = Object.create(ClickIt.Game.prototype);
@@ -19,13 +21,13 @@ ClickIt.InGameTutoring.prototype.colorOfLevel = function() {
 
 //The number of moves you have for this level
 ClickIt.InGameTutoring.prototype.movesOfLevel = function() {
-	this.numberOfMoves = 20;
+	this.numberOfMoves = 10;
 	return this.numberOfMoves;
 };
 
 //The number of dots you have to collect for this level
 ClickIt.InGameTutoring.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 15;
+	this.numberOfDots = 20;
 	return this.numberOfDots;
 };
 
@@ -50,6 +52,43 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.ready = false;
     this.move = 0;
     this.state.start('StartMenu');
+};
+
+//The first popup for in game tutoring
+ClickIt.InGameTutoring.prototype.tutoringOne = function() {
+    //Create sprite for first popup
+    this.clickText = this.add.sprite(250, 260, 'backButton_text', 3);
+    this.clickText.scale.set(0.8);
+    this.clickText.animations.add('first', [0,1,2], 10, true);
+
+    //Goes to function tutoringTwo when mouse is clicked
+    this.input.onDown.add(this.tutoringTwo, this);
+    //Start animation
+    this.clickText.animations.play('first');         
+};
+
+//The second popup for in game tutoring
+ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
+    //Destroys first popup
+    this.clickText.destroy();
+    this.input.onDown.remove(this.tutoringTwo, this);
+
+    //Create sprite for second popup
+    this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
+    this.orderText.scale.set(0.8);
+    this.orderText.animations.add('second', [0,1,2], 10, true);
+
+    //Goes to function destroySprite when mouse is clicked
+    this.input.onDown.add(this.destroySprite, this);
+    //Start animation
+    this.orderText.animations.play('second');      
+};
+
+//Destroys the second popup
+ClickIt.InGameTutoring.prototype.destroySprite = function() {
+    //Destroys second popup
+    this.input.onDown.remove(this.destroySprite, this);
+    this.orderText.destroy();
 };
 
 ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
