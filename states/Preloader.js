@@ -7,6 +7,7 @@ ClickIt.Preloader.prototype = {
     this.preloadBar = null;
   	this.preloadBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');
     this.preloadBar.anchor.setTo(0.5, 0.5);
+    //setPreloadSprite - crops width or height based on percentage loaded.
     this.load.setPreloadSprite(this.preloadBar);
 
     this.load.image('logo', 'assets/ClickIt_with_dots.png');
@@ -20,5 +21,5 @@ ClickIt.Preloader.prototype = {
 
   create: function() {
     this.state.start('StartMenu');
-  },
+  }
 };

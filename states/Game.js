@@ -11,7 +11,6 @@ ClickIt.Game = function(game) {
 	this.moveY;
 
 	this.graph;
-	this.player;
 
 	this.levelGameColor;
 	this.numberOfMoves;
@@ -21,7 +20,6 @@ ClickIt.Game = function(game) {
 	this.winningBol;
 	this.losingBol;
 	this.tutoringBol;
-
 };
 
 ClickIt.Game.prototype = {
@@ -490,9 +488,8 @@ ClickIt.Game.prototype = {
 
 		this.rearrangeButtons();
 
+		//this.printChainMatrix();
 
-		//this.printChainMatrix()
-		
 
 
 		//Update number of moves and removed dots of the right color
