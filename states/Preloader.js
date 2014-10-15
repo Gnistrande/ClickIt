@@ -1,17 +1,16 @@
 ClickIt.Preloader = function(game) {
-  this.preloadBar = null;
-  this.ready = false;
-
+  this.preloadBar;
 };
 
 ClickIt.Preloader.prototype = {
   preload: function() {
-    //Lägg in att ladda bilder här till startmenu
+    this.preloadBar = null;
   	this.preloadBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');
     this.preloadBar.anchor.setTo(0.5, 0.5);
     this.load.setPreloadSprite(this.preloadBar);
-    this.load.image('logo', 'assets/ClickIt_with_dots.png');
 
+    this.load.image('logo', 'assets/ClickIt_with_dots.png');
+    //Load spritesheets, arguments 3 and 4 tells you how big every image is in the sprite
     this.load.spritesheet('startButton', 'assets/buttons/level_button_play.png', 240, 80);
     this.load.spritesheet('levelOneImage', 'assets/buttons/level_button_one.png', 240, 80);
     this.load.spritesheet('levelTwoImage', 'assets/buttons/level_button_two.png', 240, 80);
@@ -20,13 +19,6 @@ ClickIt.Preloader.prototype = {
   },
 
   create: function() {
-  	this.preloadBar.cropEnabled = false;
+    this.state.start('StartMenu');
   },
-
-  update: function() {
-    if(this.ready == false) {
-      this.ready = true;
-      this.state.start('StartMenu');
-    }
-  }
 };

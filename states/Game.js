@@ -68,12 +68,7 @@ ClickIt.Game.prototype = {
 
 		//Text in the game
 		this.moves = this.add.text(115, 50, 'Moves: 0', { font: '20px Chalkboard', fill: '#000' });
-		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });
-
-		//The dude
-    	player = this.add.sprite(32, this.world.height - 350, 'dude');
-    	player.animations.add('left', [0, 1, 2, 3], 10, true);
-    	
+		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });    	
 	},
 
 	//Creates the buttons for the board
@@ -496,17 +491,7 @@ ClickIt.Game.prototype = {
 		this.rearrangeButtons();
 
 
-		//this.printChainMatrix();
-
-
-
-		
-		if( this.input.activePointer.isDown ){
-			player.animations.play('left');
-		}
-		else{
-        	player.frame = 4;
-		}
+		//this.printChainMatrix()
 		
 
 

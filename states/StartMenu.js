@@ -7,43 +7,30 @@ ClickIt.StartMenu = function(game) {
 
 ClickIt.StartMenu.prototype = {
   preload: function() {
-    this.load.image('arrowLeft', 'assets/arrowLeft.png');
-
-    //this.load.spritesheet('pink', 'assets/dots/dot_pink.png', 54, 44);
-    //this.load.spritesheet('green', 'assets/dots/dot_green.png', 54, 44);
-    //this.load.spritesheet('blue', 'assets/dots/dot_blue.png', 54, 44);
-    //this.load.spritesheet('yellow', 'assets/dots/dot_yellow.png', 54, 44);
-
+    //Load dots
     this.load.spritesheet('pink', 'assets/dots/pinkSlice.png', 54, 44);
     this.load.spritesheet('green', 'assets/dots/greenSlice.png', 54, 44);
     this.load.spritesheet('blue', 'assets/dots/blueSlice.png', 54, 44);
     this.load.spritesheet('yellow', 'assets/dots/yellowSlice.png', 54, 44);
     this.load.spritesheet('lila', 'assets/dots/lilaSlice.png', 54, 44);
-
+    //Load buttons
     this.load.spritesheet('backButton_symbol', 'assets/buttons/backButton_symbol.png', 70, 39);
     this.load.spritesheet('backButton_text', 'assets/buttons/backButton_text.png', 240, 80);
     this.load.spritesheet('nextButton_symbol', 'assets/buttons/nextButton_symbol.png', 70, 39);
     this.load.spritesheet('nextButton_text', 'assets/buttons/nextButton_text1.png', 204, 68);
     this.load.spritesheet('menuButton', 'assets/buttons/menuButton.png', 204, 68);
     this.load.spritesheet('okButton', 'assets/buttons/okButton.png', 240, 80);
-
+    //Load images
     this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
-
     this.load.image('stone', 'assets/stone5.png');
-    this.load.image('agnes', 'assets/agnes.jpg');
-
-    this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-
-    //this.load.script('gray', '../phaser/filters/Gray.js');
-
-    //this.load.image('popup', 'assets/greyOverlay1.png');
     this.load.image('popup', 'assets/Rectangle_1.png');
 
   },
   create: function() {
-    clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');
+    clickItLogo = this.add.image(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7);  
 
+    //Pos 1 - Hover. Pos 2 - Normal. Pos 3 - Click.
     buttonStart = this.add.button(this.world.centerX-110, 260, 'startButton', this.startGame, this, 1, 0, 2);
     buttonStart.scale.setTo(0.8, 0.8);
     buttonLevelOne = this.add.button(this.world.centerX-110, 320, 'levelOneImage', this.startGame, this, 1, 0, 2);
@@ -55,16 +42,15 @@ ClickIt.StartMenu.prototype = {
 
     buttonLevelFour = this.add.button(this.world.centerX-110, 500, 'levelFourImage', this.startGame, this, 1, 0, 2);
     buttonLevelFour.scale.setTo(0.8, 0.8);
-
     // Do not do anything if button is clicked
     buttonLevelFour.inputEnabled = false;
     // Set low opacity to indicate button is not clickable
     buttonLevelFour.alpha = 0.5;
     // Set hover, normal and click to same frame
     buttonLevelFour.setFrames(0, 0, 0, 0);
-
   },
 
+  //Pointer tells wich state to start
   startGame: function(pointer) {
     if(pointer==buttonStart) {
       this.state.start('InGameTutoring');
