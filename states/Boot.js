@@ -2,20 +2,17 @@ var ClickIt = {};
 
 ClickIt.Boot = function(game){};
 
+//Add properties and methods to object Boot
 ClickIt.Boot.prototype = {
 	preload: function() {
-		//this.load.image('titleImage', 'assets/agnes.jpg');
 		this.load.image('preloaderBar', 'assets/loader_bar.png');
 	},
 	create: function() {
-		// masPointers är för att tex dubbelklick inte ska vara möjligt. Endast ETT klick i taget.
+		// maxPointers set to one click at a time, no double clicks.
 		this.input.maxPointers = 1;
-		this.stage.disableVisibilityChange = false;
 		this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
-		this.input.addPointer();
-
 		this.stage.backgroundColor = '#ffffff';
 
 		this.state.start('Preloader');
 	}
-}
+};
