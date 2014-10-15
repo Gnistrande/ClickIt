@@ -24,7 +24,6 @@ ClickIt.Game = function(game) {
 
 ClickIt.Game.prototype = {
 	create: function() {
-		//colorOrderImage = this.add.image(250, 0, 'colorOrderI');
 
 		this.buttons = [];
 		this.chainMatrix = [];
@@ -34,7 +33,6 @@ ClickIt.Game.prototype = {
 		this.delta = 60;
 		this.moveX = 110;
 		this.moveY = 150;
-
 
 		this.removedDotsOfLevelColor = 0;
 
@@ -57,10 +55,9 @@ ClickIt.Game.prototype = {
 		this.numberOfMoves = this.movesOfLevel();
 		this.numberOfDots = this.dotsOfLevel();
 
-		this.createLevel(this.levelGameColor);
+		this.createLevel();
 
 		if(this.state.current == 'InGameTutoring'){
-			//this.tutoringBol = true;
 			this.tutoringOne();
 		}
 
@@ -71,11 +68,11 @@ ClickIt.Game.prototype = {
 
 	//Creates the buttons for the board
 	createButtons: function() {
-		//  Here we'll create 8 times 8 of buttons evenly spaced apart
+		//  Here we'll create 8 times 8 buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
 	        this.buttons[i] = [];
 	        this.chainMatrix[i] = [];
-        	this.chainText[i] = [];
+        	//this.chainText[i] = [];
 	    	for (var j = 0; j < 8; j++){
 	    		//Assign random values to a 8X8 matrix
 	    		var number = Math.floor((Math.random() * 4) + 1);
@@ -84,7 +81,6 @@ ClickIt.Game.prototype = {
 	    		//  Create a button inside of the 'game' group, with the image decided above.
 	    		this.buttons[i][j] = this.add.sprite(image);
 	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this, 1, 0, 2);
-				this.buttons[i][j].animations.add('explode', [1, 2, 3], 5, true);
 
 	        	this.chainMatrix[i][j] = false;
             	//this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
@@ -110,7 +106,8 @@ ClickIt.Game.prototype = {
 		return image;
 	},
 
-	//Change color from string
+	// Returns next color in the order of colors.
+	// If stone, stone is returned.
 	changeColorInGame: function(key) {
 		var image;
 	    if(key == 'yellow'){
@@ -479,6 +476,7 @@ ClickIt.Game.prototype = {
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
 	},
+
 
 
 	update: function() {
