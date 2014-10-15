@@ -24,8 +24,6 @@ ClickIt.Game = function(game) {
 
 ClickIt.Game.prototype = {
 	create: function() {
-		//colorOrderImage = this.add.image(250, 0, 'colorOrderI');
-
 		this.buttons = [];
 		this.chainMatrix = [];
 		this.chainText = [];
@@ -35,7 +33,7 @@ ClickIt.Game.prototype = {
 		this.moveX = 110;
 		this.moveY = 150;
 
-
+		//The counter for the goal
 		this.removedDotsOfLevelColor = 0;
 
 		//To make sure that update doesn't open more than one popup
@@ -51,16 +49,17 @@ ClickIt.Game.prototype = {
 
 		this.graph = this.add.graphics(0, 0);
 
-		//Gives the color of dots to collect, number of moves 
-		//and number of dots to collect for the level
+		//The color of dots to collect
 		this.levelGameColor = this.colorOfLevel();
+		//Number of moves 
 		this.numberOfMoves = this.movesOfLevel();
+		//Number of dots to collect for the level
 		this.numberOfDots = this.dotsOfLevel();
-
+		//Create level with blocks
 		this.createLevel(this.levelGameColor);
 
+		//Check for current state, if true start InGameTutoring
 		if(this.state.current == 'InGameTutoring'){
-			//this.tutoringBol = true;
 			this.tutoringOne();
 		}
 
@@ -75,7 +74,7 @@ ClickIt.Game.prototype = {
 		for (var i = 0; i < 8; i++){
 	        this.buttons[i] = [];
 	        this.chainMatrix[i] = [];
-        	this.chainText[i] = [];
+        	//this.chainText[i] = [];
 	    	for (var j = 0; j < 8; j++){
 	    		//Assign random values to a 8X8 matrix
 	    		var number = Math.floor((Math.random() * 4) + 1);
@@ -84,7 +83,6 @@ ClickIt.Game.prototype = {
 	    		//  Create a button inside of the 'game' group, with the image decided above.
 	    		this.buttons[i][j] = this.add.sprite(image);
 	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this, 1, 0, 2);
-				this.buttons[i][j].animations.add('explode', [1, 2, 3], 5, true);
 
 	        	this.chainMatrix[i][j] = false;
             	//this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
