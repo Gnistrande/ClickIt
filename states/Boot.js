@@ -1,4 +1,6 @@
+// ClickIt - a global variable, containing all functions.
 var ClickIt = {};
+
 
 ClickIt.Boot = function(game){};
 
@@ -10,12 +12,12 @@ ClickIt.Boot.prototype = {
 	create: function() {
 		// masPointers är för att tex dubbelklick inte ska vara möjligt. Endast ETT klick i taget.
 		this.input.maxPointers = 1;
-		this.stage.disableVisibilityChange = false;
+
+		// game is not to be scalew when window size changes.
 		this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
-		this.input.addPointer();
 
 		this.stage.backgroundColor = '#ffffff';
 
 		this.state.start('Preloader');
 	}
-}
+};

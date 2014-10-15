@@ -25,17 +25,15 @@
         	margin-top: 30px;
             border:1px solid black;
         }
-        #gameContainer{
-            display: block;
-            margin: auto;
-        }
     </style>
 </head>
 <body>
     <script type="text/javascript">
         window.onload = function() {
             //Create game
+            //Phaser.AUTO is the rendering context. It automatically tries to use WebGL but if it isn't supported it'll fall back on canvas.
             var game = new Phaser.Game(700, 650, Phaser.AUTO);
+
             //Add all the states to game
             game.state.add('Boot', ClickIt.Boot);
             game.state.add('Preloader', ClickIt.Preloader);
@@ -45,6 +43,7 @@
             game.state.add('LevelTwo', ClickIt.LevelTwo);
             game.state.add('LevelThree', ClickIt.LevelThree);
             game.state.add('InGameTutoring', ClickIt.InGameTutoring);
+            
             //Start first state
             game.state.start('Boot');
         }
