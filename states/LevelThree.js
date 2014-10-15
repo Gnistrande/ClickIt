@@ -29,9 +29,9 @@ ClickIt.LevelThree.prototype.dotsOfLevel = function() {
 };
 
 //Creates the set up for this level
-ClickIt.LevelThree.prototype.createLevel = function(color) {
+ClickIt.LevelThree.prototype.createLevel = function() {
     //Add dot with the color to collect for this level
-    this.colorDot = this.add.image(490, 45, color);
+    this.colorDot = this.add.image(490, 45, this.levelColor);
     this.colorDot.scale.setTo(0.8, 0.8);
 
     //Change buttons to blocks

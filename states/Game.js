@@ -56,7 +56,7 @@ ClickIt.Game.prototype = {
 		//Number of dots to collect for the level
 		this.numberOfDots = this.dotsOfLevel();
 		//Create level with blocks
-		this.createLevel(this.levelGameColor);
+		this.createLevel();
 
 		//Check for current state, if true start InGameTutoring
 		if(this.state.current == 'InGameTutoring'){
@@ -70,7 +70,7 @@ ClickIt.Game.prototype = {
 
 	//Creates the buttons for the board
 	createButtons: function() {
-		//  Here we'll create 8 times 8 of buttons evenly spaced apart
+		//  Here we'll create 8 times 8 buttons evenly spaced apart
 		for (var i = 0; i < 8; i++){
 	        this.buttons[i] = [];
 	        this.chainMatrix[i] = [];
@@ -108,7 +108,8 @@ ClickIt.Game.prototype = {
 		return image;
 	},
 
-	//Change color from string
+	// Returns next color in the order of colors.
+	// If stone, stone is returned.
 	changeColorInGame: function(key) {
 		var image;
 	    if(key == 'yellow'){
@@ -477,6 +478,7 @@ ClickIt.Game.prototype = {
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
 	},
+
 
 
 	update: function() {
