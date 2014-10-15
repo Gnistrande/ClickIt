@@ -18,13 +18,13 @@ ClickIt.LevelTwo.prototype.colorOfLevel = function() {
 
 //The number of moves you have for this level
 ClickIt.LevelTwo.prototype.movesOfLevel = function() {
-	this.numberOfMoves = 20;
+	this.numberOfMoves = 15;
 	return this.numberOfMoves;
 };
 
 //The number of dots you have to collect for this level
 ClickIt.LevelTwo.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 15;
+	this.numberOfDots = 40;
 	return this.numberOfDots;
 };
 
