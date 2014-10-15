@@ -7,12 +7,6 @@ ClickIt.StartMenu = function(game) {
 
 ClickIt.StartMenu.prototype = {
   preload: function() {
-    this.load.image('arrowLeft', 'assets/arrowLeft.png');
-
-    //this.load.spritesheet('pink', 'assets/dots/dot_pink.png', 54, 44);
-    //this.load.spritesheet('green', 'assets/dots/dot_green.png', 54, 44);
-    //this.load.spritesheet('blue', 'assets/dots/dot_blue.png', 54, 44);
-    //this.load.spritesheet('yellow', 'assets/dots/dot_yellow.png', 54, 44);
 
     this.load.spritesheet('pink', 'assets/dots/pinkSlice.png', 54, 44);
     this.load.spritesheet('green', 'assets/dots/greenSlice.png', 54, 44);
@@ -28,20 +22,12 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('okButton', 'assets/buttons/okButton.png', 240, 80);
 
     this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
-
     this.load.image('stone', 'assets/stone5.png');
-    this.load.image('agnes', 'assets/agnes.jpg');
-
-    this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-
-    //this.load.script('gray', '../phaser/filters/Gray.js');
-
-    //this.load.image('popup', 'assets/greyOverlay1.png');
     this.load.image('popup', 'assets/Rectangle_1.png');
 
   },
   create: function() {
-    clickItLogo = this.add.sprite(this.world.centerX-135, 15, 'logo');
+    clickItLogo = this.add.image(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7);  
 
     buttonStart = this.add.button(this.world.centerX-110, 260, 'startButton', this.startGame, this, 1, 0, 2);
