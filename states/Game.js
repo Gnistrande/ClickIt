@@ -383,10 +383,8 @@ ClickIt.Game.prototype = {
 	    					counterTrue++;
 	    				}
 	    				else{
-	    					// Animate the chain by changing dot to frame 4 for a little while
-							//this.add.tween( this.buttons[col][row] ).to( {this.buttons[col][row].key: 3}, 500);
-							// onComplete
-							// chain()
+	    					// Tween the chain by changing dot to frame 4 for a little while
+							//this.add.tween( this.buttons[col][row] ).to( {frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200 );
 
 	    					//Make buttons invisible
 	    					//this.buttons[col][i].visible = false;
@@ -447,62 +445,7 @@ ClickIt.Game.prototype = {
     	}
 	},
 
-	update: function() {
-		//this.findChainInRow();
-		//this.findChainInCol();
 
-		//this.buttons[0][0].frame = 3;
-		
-		if( this.input.activePointer.isDown ){
-			console.log("hej hej på dig");
-
-			player.animations.play('left');
-			//this.buttons[0][0].animations.play('explode');
-		}
-		else{
-			//this.buttons[0][0].animations.stop('explode');
-        	player.frame = 4;
-        	//this.buttons[0][0].frame = 0;
-		}
-
-		if( this.input.mousePointer.onTap){
-			console.log("down");
-		}
-
-		if( this.input.mousePointer.justReleased() ){
-			//console.log("mousepointer just released!");
-		}
-
-		if( this.chainMatrix[0][0] === true){
-			//console.log("heeeeej");
-			//this.buttons[0][0].visible = (false);
-		}
-
-
-		this.rearrangeButtons();
-
-		//Update number of moves and removed dots of the right color
-		this.moves.text = 'Moves: ' + this.numberOfMoves;
-		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
-
-		//this.printChainMatrix();
-
-		if(this.losingBol == false){
-			//Check if you have any moves left
-			if(this.numberOfMoves<=0){
-				this.losing();
-				this.losingBol = true;
-			}
-		}
-
-		if(this.winningBol == false){
-			//Check if you have removed enough dots i the right color
-			if(this.removedDotsOfLevelColor>=this.numberOfDots){
-				this.winning(this.removedDotsOfLevelColor);
-				this.winningBol = true;
-			}
-		}
-	},
 
 	// Function for animation of dots
 	// button - the dots to be moved down
@@ -548,6 +491,54 @@ ClickIt.Game.prototype = {
 
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
-	} 
+	},
+
+
+	update: function() {
+		//this.findChainInRow();
+		//this.findChainInCol();
+
+
+		this.rearrangeButtons();
+
+
+		//this.printChainMatrix();
+
+
+
+		
+		if( this.input.activePointer.isDown ){
+			player.animations.play('left');
+		}
+		else{
+        	player.frame = 4;
+		}
+		
+
+
+		//Update number of moves and removed dots of the right color
+		this.moves.text = 'Moves: ' + this.numberOfMoves;
+		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
+
+		
+
+		if(this.losingBol == false){
+			//Check if you have any moves left
+			if(this.numberOfMoves<=0){
+				this.losing();
+				this.losingBol = true;
+			}
+		}
+
+		if(this.winningBol == false){
+			//Check if you have removed enough dots i the right color
+			if(this.removedDotsOfLevelColor>=this.numberOfDots){
+				this.winning(this.removedDotsOfLevelColor);
+				this.winningBol = true;
+			}
+		}
+	}
+
+
 };
 
