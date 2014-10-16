@@ -453,6 +453,24 @@ ClickIt.Game.prototype = {
 			color = blue;
 		}
 
+/*
+		var tempEmitter = this.add.emitter( 400, 400, 300);
+		tempEmitter.makeParticles("bubble");
+    	tempEmitter.maxParticleScale = 0.09;
+    	tempEmitter.minParticleScale = 0.03;
+    	tempEmitter.setYSpeed(-2, -4);
+    	tempEmitter.setXSpeed(-3, -5);
+    	tempEmitter.gravity = 0;
+    	tempEmitter.width = 200;
+    	tempEmitter.minRotation = -40;
+    	tempEmitter.maxRotation = 40;
+    	//tempEmitter.explode(0, 10);
+    	tempEmitter.flow(15000, 1000);
+*/
+    	//this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+
+
+
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
     	tempCircle = this.graph.drawCircle(button.x+27, button.y+22, 20);
@@ -461,7 +479,7 @@ ClickIt.Game.prototype = {
 		button.visible = false;
 
 		// tween circle to new position
-		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
+		//this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
 
 		// tween buttons frame to frame 3
 		// works but I'd rather get animation to work.

@@ -25,10 +25,32 @@ ClickIt.StartMenu.prototype = {
     this.load.image('stone', 'assets/stone.png');
     this.load.image('popup', 'assets/Rectangle_1.png');
 
+    this.load.spritesheet('clickMe', 'clickMe.png', 542, 165);
+    this.load.image('andWe', 'andWe11.png');
+    this.load.image('bubble', 'bubble_png.png');
+
   },
   create: function() {
+/*
+    var bubblesEmitter = this.add.emitter(350, 650, 100);
+    bubblesEmitter.makeParticles("bubble");
+    bubblesEmitter.maxParticleScale = 0.09;
+    bubblesEmitter.minParticleScale = 0.03;
+    bubblesEmitter.setYSpeed(-40, -80);
+    bubblesEmitter.setXSpeed(-3, -5);
+    bubblesEmitter.gravity = 0;
+    bubblesEmitter.width = 700;
+    bubblesEmitter.minRotation = -40;
+    bubblesEmitter.maxRotation = 40;
+    bubblesEmitter.flow(15000, 1000);
+    //bubblesEmitter.explode(0, 10);
+
+    //this.add.tween(bubblesEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+*/
+
+
     clickItLogo = this.add.image(this.world.centerX-135, 15, 'logo');
-    clickItLogo.scale.setTo(0.7, 0.7);  
+    clickItLogo.scale.setTo(0.7, 0.7); 
 
     //Pos 1 - Hover. Pos 2 - Normal. Pos 3 - Click.
     buttonStart = this.add.button(this.world.centerX-110, 260, 'startButton', this.startGame, this, 1, 0, 2);

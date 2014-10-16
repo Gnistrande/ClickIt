@@ -57,9 +57,9 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
 //The first "popup" for in game tutoring
 ClickIt.InGameTutoring.prototype.tutoringOne = function() {
     //Create sprite for first popup
-    this.clickText = this.add.sprite(250, 260, 'backButton_text', 3);
-    this.clickText.scale.set(0.8);
-    this.clickText.animations.add('first', [0,1,2], 10, true);
+    this.clickText = this.add.sprite(247, 260, 'clickMe', 3);
+    this.clickText.scale.set(0.6);
+    this.clickText.animations.add('first', [0,1,2], 1, true);
 
     //Goes to function tutoringTwo when mouse is clicked
     this.input.onDown.add(this.tutoringTwo, this);
@@ -74,7 +74,7 @@ ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
     this.input.onDown.remove(this.tutoringTwo, this);
 
     //Create sprite for second popup
-    this.orderText = this.add.sprite(250, 360, 'backButton_text', 3);
+    this.orderText = this.add.sprite(246, 265, 'andWe', 3);
     this.orderText.scale.set(0.8);
     this.orderText.animations.add('second', [0,1,2], 10, true);
 
