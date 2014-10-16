@@ -132,7 +132,7 @@ ClickIt.Game.prototype = {
 
 	//The function that is called when a dot is clicked
 	actionOnClick: function(clickedButton) {
-		//Check for position I and J in buttons
+		//Check for position I and J in matrix buttons
 		var numberI = (clickedButton.x-this.moveX)/this.delta;
 	    var numberJ = (clickedButton.y-this.moveY)/this.delta;
 
@@ -186,8 +186,9 @@ ClickIt.Game.prototype = {
 	    //this.rearrangeButtons();
 	},
 
+	//Find 4 or more in a row
 	findChainInRow: function() {
-	    //För varje rad
+	    //For every row
 	    for(var row = 0; row < 8; row++){
 	        var middle_chain = 2;
 	        var left_chain = 1;
@@ -196,11 +197,11 @@ ClickIt.Game.prototype = {
 	        var left_k = 2
 	        var right_k = 5;
 
-	        // Hämta mitten-färgerna. 
+	        //Get color for the buttons in the middle 
 	        var color_3 = this.buttons[3][row].key;
 	        var color_4 = this.buttons[4][row].key;
 
-	        //Om samma kolla åt vänster och höger med while-loop
+	        //If they are the same, check to the left and right in a while-loop
 	        if(color_3 === color_4){
 	            while(left_k != -1 && this.buttons[left_k][row].key == color_3){
 	                left_k--;
@@ -211,23 +212,22 @@ ClickIt.Game.prototype = {
 	                middle_chain++;
 	            }
 	        }
-	        //Om olika
+	        //If different
 	        else{
-	            //hämta först vänster färg och while-loopa
+	            //Left color
 	            while(left_k >= 0 && this.buttons[left_k][row].key == color_3){
 	                left_k--;
 	                left_chain++;
 	            }
-	            //och sen högra
+	            //Right color
 	            while(right_k < 8 && this.buttons[right_k][row].key == color_4){
 	                right_k++;
 	                right_chain++;
 	            }
 	        }
+
 	        //We have a left chain (pos 0, 1, 2, 3 have same color)
 	        if( left_chain > 3 ){
-	            //console.log("We have a left_chain! Row = " + row)
-
 	            //Add chain to chainMatrix[][].
 	            this.chainMatrix[0][row] = true;
 	            this.chainMatrix[1][row] = true;
@@ -236,8 +236,6 @@ ClickIt.Game.prototype = {
 	        }
 	        //We have a right chain (pos 4, 5, 6, 7 have same color)
 	        if( right_chain > 3 ){
-	            //console.log("We have a right_chain! Row = " + row);
-
 	            //Add chain to chainMatrix[][].
 	            this.chainMatrix[4][row] = true;
 	            this.chainMatrix[5][row] = true;
@@ -246,8 +244,6 @@ ClickIt.Game.prototype = {
 	        }
 	        //We have a chain somewhere in the middle, possibly entire row.
 	        if( middle_chain > 3 ){
-	            //console.log("We have a middle_chain! Row = " + row);
-
 	            this.chainMatrix[3][row] = true;
 	            this.chainMatrix[4][row] = true;
 
@@ -255,13 +251,13 @@ ClickIt.Game.prototype = {
 	            left_k++;
 	            right_k--;
 
-	            // Add chain to chainMatrix[][]
-	            // First to the left from left_k (can be 0, 1, 2) -> 2
+	            //Add chain to chainMatrix[][]
+	            //First to the left from left_k (can be 0, 1, 2) -> 2
 	            while(left_k != 3){
 	                this.chainMatrix[left_k][row] = true;
 	                left_k++;
 	            }
-	            // And then to the right from right_k (can be 7, 6, 5) -> 5
+	            //And then to the right from right_k (can be 7, 6, 5) -> 5
 	            while(right_k != 4){
 	                this.chainMatrix[right_k][row] = true;
 	                right_k--;
@@ -270,22 +266,22 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
+	//Find 4 or more in a col
 	findChainInCol: function() {
-	    //För varje rad
+	    //For every col
 	    for(var col = 0; col < 8; col++){
-
 	        var middle_chain = 2;
-	        var top_chain = 1; // top
-	        var bottom_chain = 1; // bottom
+	        var top_chain = 1;
+	        var bottom_chain = 1;
 
 	        var top_k = 2
 	        var bottom_k = 5;
 
-	        // Hämta mitten-färgerna. 
+	        //Get color for the buttons in the middle  
 	        var color_3 = this.buttons[col][3].key;
 	        var color_4 = this.buttons[col][4].key;
 
-	        //Om samma kolla uppåt och neråt med while-loop
+	        //If they are the same, check to the top and bottom in a while-loop
 	        if(color_3 === color_4){
 	            while(top_k != -1 && this.buttons[col][top_k].key == color_3){
 	                top_k--;
@@ -296,23 +292,25 @@ ClickIt.Game.prototype = {
 	                middle_chain++;
 	            }
 	        }
-	        //Om olika
+	        //If different
 	        else{
-	            //hämta först färgen över och while-loopa uppåt
+	            //Top color
 	            while(top_k >= 0 && this.buttons[col][top_k].key == color_3){
 	                top_k--;
 	                top_chain++;
 	            }
-	            //och sen färgen under och while-loopa neråt
+	            //Bottom color
 	            while(bottom_k < 8 && this.buttons[col][bottom_k].key == color_4){
 	                bottom_k++;
 	                bottom_chain++;
 	            }
 	        }
 
+	        //We have a chain somewhere in the middle, possibly entire col.
 	        if( middle_chain > 3){
 	            this.chainMatrix[col][3] = true;
 	            this.chainMatrix[col][4] = true;
+
 	            //Adjust both variables since while-loops above changes them one too much.
 	            bottom_k--;
 	            top_k++;
@@ -329,12 +327,14 @@ ClickIt.Game.prototype = {
 	                bottom_k--;
 	            }
 	        }
+	        //We have a top chain (pos 0, 1, 2, 3 have same color)
 	        if( top_chain > 3){
 	            this.chainMatrix[col][0] = true;
 	            this.chainMatrix[col][1] = true;
 	            this.chainMatrix[col][2] = true;
 	            this.chainMatrix[col][3] = true;
 	        }
+	        //We have a bottom chain (pos 4, 5, 6, 7 have same color)
 	        if( bottom_chain > 3){
 	            this.chainMatrix[col][4] = true;
 	            this.chainMatrix[col][5] = true;
@@ -344,6 +344,7 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
+	//Send you back to menu if button is pressed
 	backToMenu: function() {
 		this.preloadBar = null;
 		this.ready = false;
@@ -351,12 +352,11 @@ ClickIt.Game.prototype = {
 		this.state.start('StartMenu');
 	},
 
-	// Utifrån chain(s) ska vissa knappar disablas och vissa ska arrangeras om. Buttons ovan (om det finns) ska ramla ner.
+	// Utifrån chain(s) ska vissa knappar disablas och vissa ska arrangeras om. Buttons ovan (om det finns) 
+	//ska ramla ner.
 	//Använda sig av assignFirstColor eller changeColorInGame?
 	//Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
 	rearrangeButtons: function() {
-	    //console.log("\nrearrangeButtons() ! ");
-
 	    var col = 7;
 	    while( col >= 0){
 	    	var row = 7;
@@ -423,15 +423,14 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
-	printChainMatrix: function(){
+	/*printChainMatrix: function(){
 		for(var row = 0; row < 8; row ++){
         	for(var col = 0; col < 8; col++){
             //Update chainText
             this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
         	}
     	}
-	},
-
+	},*/
 
 	// Function for animation of dots
 	// button - the dots to be moved down
@@ -471,32 +470,24 @@ ClickIt.Game.prototype = {
 
 		// tween buttons frame to frame 3
 		// works but I'd rather get animation to work.
-		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
+		//this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
+		//.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
+		//.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
 
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
 	},
 
-
-
 	update: function() {
 		//this.findChainInRow();
 		//this.findChainInCol();
 
-
 		this.rearrangeButtons();
-
 		//this.printChainMatrix();
-
-
 
 		//Update number of moves and removed dots of the right color
 		this.moves.text = 'Moves: ' + this.numberOfMoves;
 		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
-
-		
 
 		if(this.losingBol == false){
 			//Check if you have any moves left
@@ -514,7 +505,4 @@ ClickIt.Game.prototype = {
 			}
 		}
 	}
-
-
 };
-

@@ -8,8 +8,6 @@ ClickIt.LevelOne = function(game) {
 };
 
 ClickIt.LevelOne.prototype = Object.create(ClickIt.Game.prototype);
-
-//Kolla upp detta!
 ClickIt.LevelOne.prototype.constructor = ClickIt.LevelOne;
 
 //The color you have to collect for this level

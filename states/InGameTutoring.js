@@ -54,7 +54,7 @@ ClickIt.InGameTutoring.prototype.backToMenu = function() {
     this.state.start('StartMenu');
 };
 
-//The first popup for in game tutoring
+//The first "popup" for in game tutoring
 ClickIt.InGameTutoring.prototype.tutoringOne = function() {
     //Create sprite for first popup
     this.clickText = this.add.sprite(250, 260, 'backButton_text', 3);
@@ -67,7 +67,7 @@ ClickIt.InGameTutoring.prototype.tutoringOne = function() {
     this.clickText.animations.play('first');         
 };
 
-//The second popup for in game tutoring
+//The second "popup" for in game tutoring
 ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
     //Destroys first popup
     this.clickText.destroy();
@@ -86,11 +86,11 @@ ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
 
 //Destroys the second popup
 ClickIt.InGameTutoring.prototype.destroySprite = function() {
-    //Destroys second popup
     this.input.onDown.remove(this.destroySprite, this);
     this.orderText.destroy();
 };
 
+//Function for what happens when you win
 ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     //Create popup window
 	this.popup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
@@ -122,9 +122,10 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     menuButton.input.useHandCursor = true;
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
+    //Text for popup window
     var winningText = this.make.text(-200, -100, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
 
-    //Add the buttons to the popup window image
+    //Add text and   buttons to the popup window image
     this.popup.addChild(nextLevelButton);
     this.popup.addChild(menuButton);
     this.popup.addChild(winningText);
@@ -136,6 +137,7 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
 	this.tween = this.add.tween(this.popup.scale).to( { x: 1, y: 1 }, 1000, Phaser.Easing.Elastic.Out, true);
 };
 
+//Function for what happens when you lose
 ClickIt.InGameTutoring.prototype.losing = function() {
     //Create popup window
     this.losingPopup = this.add.sprite(this.world.centerX, this.world.centerY, 'popup');
@@ -155,6 +157,7 @@ ClickIt.InGameTutoring.prototype.losing = function() {
     menuButton.input.useHandCursor = true;
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
+    //Text for popup window
     var losingText = this.make.text(-81, -170, 'You lost!', { font: '36px Arial', fill: '#000' });
 
     //Add the buttons to the popup window image
