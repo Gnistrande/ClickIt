@@ -22,7 +22,7 @@ ClickIt.StartMenu.prototype = {
     this.load.spritesheet('okButton', 'assets/buttons/okButton.png', 240, 80);
     //Load images
     this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
-    this.load.image('stone', 'assets/stone5.png');
+    this.load.image('stone', 'assets/louises_stone.png');
     this.load.image('popup', 'assets/Rectangle_1.png');
 
     this.load.spritesheet('clickMe', 'clickMe.png', 542, 165);
