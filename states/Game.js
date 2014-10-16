@@ -459,21 +459,39 @@ ClickIt.Game.prototype = {
 			color = blue;
 		}
 
+/*
+		var tempEmitter = this.add.emitter( 400, 400, 300);
+		tempEmitter.makeParticles("bubble");
+    	tempEmitter.maxParticleScale = 0.09;
+    	tempEmitter.minParticleScale = 0.03;
+    	tempEmitter.setYSpeed(-2, -4);
+    	tempEmitter.setXSpeed(-3, -5);
+    	tempEmitter.gravity = 0;
+    	tempEmitter.width = 200;
+    	tempEmitter.minRotation = -40;
+    	tempEmitter.maxRotation = 40;
+    	//tempEmitter.explode(0, 10);
+    	tempEmitter.flow(15000, 1000);
+*/
+    	//this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+
+
+
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
-    	tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
+    	//tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
 
     	// make button under the circle invisible
 		button.visible = false;
 
 		// tween circle to new position
-		this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
+		//this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
 
 		// tween buttons frame to frame 3
 		// works but I'd rather get animation to work.
-		this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
-		.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
+		//this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
+		//.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
+		//.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
 
 		// make button visible again after the circle has been moved?
 		//button.visible = true;
