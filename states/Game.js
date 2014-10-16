@@ -352,10 +352,7 @@ ClickIt.Game.prototype = {
 		this.state.start('StartMenu');
 	},
 
-	// Utifrån chain(s) ska vissa knappar disablas och vissa ska arrangeras om. Buttons ovan (om det finns) 
-	//ska ramla ner.
-	//Använda sig av assignFirstColor eller changeColorInGame?
-	//Använda bubbelSort för att swapa ner raden ovanför. Sätta dem till true och chain-raden till false.
+	//
 	rearrangeButtons: function() {
 	    var col = 7;
 	    while( col >= 0){
@@ -370,9 +367,6 @@ ClickIt.Game.prototype = {
 	    					counterTrue++;
 	    				}
 	    				else{
-	    					// Tween the chain by changing dot to frame 4 for a little while
-							//this.add.tween( this.buttons[col][row] ).to( {frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200 );
-
 	    					//Make buttons invisible
 	    					//this.buttons[col][i].visible = false;
 
@@ -398,16 +392,17 @@ ClickIt.Game.prototype = {
 	    				}
 	    			}
 	    			counterTrue--;
+	    			//Assign color to buttons to make it seem like new dots
 	    			while( counterTrue >= 0){
+	    				//Get random color
 	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
 	    				var image = this.assignFirstColor(randomNumber);
-	    				//var image = 'agnes';
 
 	    				//Check for the levels color
 	    				if(this.chainMatrix[col][counterTrue]==true && this.buttons[col][counterTrue].key==this.levelColor){
 	    						this.removedDotsOfLevelColor++;
 	    				}
-
+	    				//Load texture to button and set to false
     					this.buttons[col][counterTrue].loadTexture(image);
     					this.chainMatrix[col][counterTrue] = false;
 	    						
@@ -460,7 +455,7 @@ ClickIt.Game.prototype = {
 
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
-    	tempCircle = this.graph.drawCircle(button.x+20, button.y+20, 15);
+    	tempCircle = this.graph.drawCircle(button.x+27, button.y+22, 20);
 
     	// make button under the circle invisible
 		button.visible = false;
@@ -481,10 +476,10 @@ ClickIt.Game.prototype = {
 	update: function() {
 		//this.findChainInRow();
 		//this.findChainInCol();
-
-		this.rearrangeButtons();
 		//this.printChainMatrix();
 
+		this.rearrangeButtons();
+		
 		//Update number of moves and removed dots of the right color
 		this.moves.text = 'Moves: ' + this.numberOfMoves;
 		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
