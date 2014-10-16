@@ -26,7 +26,7 @@ ClickIt.StartMenu.prototype = {
     this.load.image('popup', 'assets/Rectangle_1.png');
 
     this.load.spritesheet('clickMe', 'clickMe.png', 542, 165);
-    this.load.image('andWe', 'andWe11.png');
+    this.load.image('andWe', 'andWe.png');
     this.load.image('bubble', 'bubble_png.png');
 
   },

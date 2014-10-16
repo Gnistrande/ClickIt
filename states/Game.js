@@ -181,8 +181,8 @@ ClickIt.Game.prototype = {
 	        this.buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
 	        this.buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
 	    }
-	    this.findChainInRow();
-	    this.findChainInCol();
+	    //this.findChainInRow();
+	    //this.findChainInCol();
 
 	    //this.rearrangeButtons();
 	},
@@ -355,6 +355,7 @@ ClickIt.Game.prototype = {
 
 	//
 	rearrangeButtons: function() {
+		console.log("rearrangeButtons");
 	    var col = 7;
 	    while( col >= 0){
 	    	var row = 7;
@@ -494,8 +495,8 @@ ClickIt.Game.prototype = {
 	},
 
 	update: function() {
-		//this.findChainInRow();
-		//this.findChainInCol();
+		this.findChainInRow();
+		this.findChainInCol();
 		//this.printChainMatrix();
 
 		this.rearrangeButtons();
