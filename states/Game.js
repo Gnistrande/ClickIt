@@ -11,6 +11,7 @@ ClickIt.Game = function(game) {
 	this.moveY;
 
 	this.graph;
+	this.enTween;
 
 	this.levelGameColor;
 	this.numberOfMoves;
@@ -373,7 +374,9 @@ ClickIt.Game.prototype = {
 	    					//Call tweenButton
 	    					//var temp_y = this.buttons[col][row].y;
 	    					//var temp_x = this.buttons[col][row].x
-	    					this.tweenButton( this.buttons[col][i], 0, 0);
+	    					//this.buttons[col][i].visible = false;
+	    					//this.tweenButton( this.buttons[col][i], 0, 0);
+	    					//this.buttons[col][i].visible = true;
 
 	    					//Check for the levels color
 	    					if(this.buttons[col][i+counterTrue].key==this.levelColor){
@@ -469,18 +472,17 @@ ClickIt.Game.prototype = {
 */
     	//this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
 
-
-
 		// draw a circle
 		tempCircle = this.graph.beginFill(color, 1);
     	tempCircle = this.graph.drawCircle(button.x+27, button.y+22, 20);
 
     	// make button under the circle invisible
-		button.visible = false;
+		//button.visible = false;
 
 		// tween circle to new position
-		//this.add.tween(tempCircle).to({x: newPosY, y: newPosX + this.delta}, 500, Phaser.Easing.Linear.None, true);
-
+		this.enTween = this.add.tween(tempCircle).to({x: newPosX, y: newPosY + this.delta}, 500, Phaser.Easing.Linear.None, true);
+		this.enTween.remove.all();
+		//this.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 100, Phaser.Easing.Linear.None, true); 
 		// tween buttons frame to frame 3
 		// works but I'd rather get animation to work.
 		//this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)

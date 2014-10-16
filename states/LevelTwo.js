@@ -24,7 +24,7 @@ ClickIt.LevelTwo.prototype.movesOfLevel = function() {
 
 //The number of dots you have to collect for this level
 ClickIt.LevelTwo.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 40;
+	this.numberOfDots = 20;
 	return this.numberOfDots;
 };
 
