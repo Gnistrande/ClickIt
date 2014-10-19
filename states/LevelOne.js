@@ -18,7 +18,7 @@ ClickIt.LevelOne.prototype.colorOfLevel = function() {
 
 //The number of moves you have for this level
 ClickIt.LevelOne.prototype.movesOfLevel = function() {
-	this.numberOfMoves = 8;
+	this.numberOfMoves = 20;
 	return this.numberOfMoves;
 };
 
