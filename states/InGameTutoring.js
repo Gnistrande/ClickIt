@@ -27,7 +27,7 @@ ClickIt.InGameTutoring.prototype.movesOfLevel = function() {
 
 //The number of dots you have to collect for this level
 ClickIt.InGameTutoring.prototype.dotsOfLevel = function() {
-	this.numberOfDots = 20;
+	this.numberOfDots = 10;
 	return this.numberOfDots;
 };
 
