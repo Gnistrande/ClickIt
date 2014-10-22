@@ -16,23 +16,33 @@
     <script src="states/InGameTutoring.js"></script>
 
     <style type="text/css">
-        body {
-            margin: 0;
-        }
-        canvas {
+        #container {
         	display: block;
         	margin: auto;
-        	margin-top: 30px;
+        	margin-top: 20px;
             border:1px solid black;
+            height:650px;
+            width:700px;
+        }
+        #footer {
+            display:block;
+            margin:auto;
+            height: 30px;
+            width:700px;
+            text-align:center; 
+            line-height: 30px;
         }
     </style>
 </head>
 <body>
+
+    <div id="container"></div>
+
     <script type="text/javascript">
         window.onload = function() {
             //Create game
             //Phaser.AUTO is the rendering context. It automatically tries to use WebGL but if it isn't supported it'll fall back on canvas.
-            var game = new Phaser.Game(700, 650, Phaser.AUTO);
+            var game = new Phaser.Game(700, 650, Phaser.AUTO, 'container');
 
             //Add all the states to game
             game.state.add('Boot', ClickIt.Boot);
@@ -47,6 +57,11 @@
             //Start first state
             game.state.start('Boot');
         }
-        </script>
+    </script>
+    
+    <div id="footer">
+        Created by Louise Carlström & Linnea Malcherek
+    </div>
+
 </body>
 </html>

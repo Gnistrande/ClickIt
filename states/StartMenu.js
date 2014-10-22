@@ -31,24 +31,6 @@ ClickIt.StartMenu.prototype = {
 
   },
   create: function() {
-/*
-    var bubblesEmitter = this.add.emitter(350, 650, 100);
-    bubblesEmitter.makeParticles("bubble");
-    bubblesEmitter.maxParticleScale = 0.09;
-    bubblesEmitter.minParticleScale = 0.03;
-    bubblesEmitter.setYSpeed(-40, -80);
-    bubblesEmitter.setXSpeed(-3, -5);
-    bubblesEmitter.gravity = 0;
-    bubblesEmitter.width = 700;
-    bubblesEmitter.minRotation = -40;
-    bubblesEmitter.maxRotation = 40;
-    bubblesEmitter.flow(15000, 1000);
-    //bubblesEmitter.explode(0, 10);
-
-    //this.add.tween(bubblesEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-*/
-
-
     clickItLogo = this.add.image(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7); 
 
