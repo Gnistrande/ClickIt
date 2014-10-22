@@ -73,7 +73,7 @@ ClickIt.Game.prototype = {
 		this.moves1 = this.add.text(115, 55, 'Moves: ', { font: '15px Chalkboard', fill: '#000' });
 		this.moves2 = this.add.text(165, 50, '0', { font: '23px Chalkboard', fill: '#000' });
 		this.removedColor1 = this.add.text(530, 50, '0', { font: '23px Chalkboard', fill: '#000' });
-		this.removedColor2 = this.add.text(560, 55, '/' + this.numberOfDots, { font: '15px Chalkboard', fill: '#000' });    	
+		this.removedColor2 = this.add.text(567, 55, '/' + this.numberOfDots, { font: '15px Chalkboard', fill: '#000' });    	
 	},
 
 	//Creates the buttons for the board
