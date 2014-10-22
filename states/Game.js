@@ -359,7 +359,6 @@ ClickIt.Game.prototype = {
 
 	//
 	rearrangeButtons: function() {
-		console.log("rearrangeButtons");
 	    var col = 7;
 	    while( col >= 0){
 	    	var row = 7;
@@ -367,10 +366,12 @@ ClickIt.Game.prototype = {
 
 	    		if( this.chainMatrix[col][row] === true){
 	    			var counterTrue = 1;
+	    			this.animateExplosion(col, row);
 
 	    			for(var i = row-1; i >= 0; i-- ){
 	    				if ( this.chainMatrix[col][i] === true || this.buttons[col][i].key === 'stone'){
 	    					counterTrue++;
+	    					this.animateExplosion(col, i);
 	    				}
 	    				else{
 	    					//Check for the levels color
@@ -384,7 +385,6 @@ ClickIt.Game.prototype = {
 	    					}
 
 	    					//Call tweenButton after checking for stone
-	    					this.buttons[col][i+counterTrue].visible = false;
 	    					this.tweenButton(col, i, counterTrue);
 
 	    					//Flytta ner färger enligt counterTrue
@@ -397,7 +397,6 @@ ClickIt.Game.prototype = {
 	    			//Assign color to buttons to make it seem like new dots
 	    			while( counterTrue >= 0){
 	    				
-
 	    				//Get random color
 	    				var randomNumber = Math.floor((Math.random() * 4) + 1);
 	    				var image = this.assignFirstColor(randomNumber);
@@ -412,7 +411,6 @@ ClickIt.Game.prototype = {
     					this.chainMatrix[col][counterTrue] = false;
 
     					//Tween button
-	    				this.buttons[col][counterTrue].visible = false;
 	    				this.tweenNewButton(col, counterTrue);
 	    						
 	    				counterTrue--;
@@ -436,45 +434,13 @@ ClickIt.Game.prototype = {
     	}
 	},*/
 
-	//Tweens the buttons that gets a new color assigned to them in rearrangeButtons
-	tweenNewButton: function (col, counterTrue) {
-		var temp_x = this.buttons[col][counterTrue].x;
-	    var temp_y = this.buttons[col][counterTrue].y;
 
-	    console.log(counterTrue);
-
-	    var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-(counterTrue+1)*this.delta, this.buttons[col][counterTrue].key, 0);
-	    //var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-this.delta, this.buttons[col][counterTrue].key, 0);
-	    //dot.scale.set(0.7);
-
-	    dot.alpha = 0;
-
-		// tween sprite to new position
-		this.newTween = this.add.tween(dot).to({x: temp_x, y: temp_y, alpha: 1}, 2000, Phaser.Easing.Linear.None, true, 2000/counterTrue);
-
-		this.newTween.onComplete.add(function() {
-			dot.destroy();
-			this.buttons[col][counterTrue].visible = true;
-			console.log("Done");
-		}, this);
-	},
-
-	// Function for animation of dots
-	// button - the dots to be moved down
-	// newPos - to where it should be moved
-	tweenButton: function (col, i, counterTrue) {
-
-		var temp_x = this.buttons[col][i+counterTrue].x;
-	    var temp_y = this.buttons[col][i+counterTrue].y;
-
-
+	animateExplosion: function(col, row){
+		var temp_x = this.buttons[col][row].x;
+	    var temp_y = this.buttons[col][row].y;
 
 		// create explosion
-		// arg1 = x-coord, arg 2 = y-coord.
-		console.log("newPosX = " + temp_x + " newposY = " + temp_y);
-
 		var tempEmitter = this.add.emitter(temp_x+25, temp_y+25);
-		//var tempEmitter = this.add.emitter( 300, 200);
 		tempEmitter.makeParticles("bubble");
 		tempEmitter.maxParticleScale = 0.09;
 		tempEmitter.minParticleScale = 0.03;
@@ -483,31 +449,62 @@ ClickIt.Game.prototype = {
 		tempEmitter.gravity = 0;
 		tempEmitter.width = 30;
 		tempEmitter.height = 30;
-		//tempEmitter.minRotation = -40;
-		//tempEmitter.maxRotation = 40;
 		tempEmitter.explode(0, 5);
 
-		this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true)
+		this.add.tween(tempEmitter).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true)
 		.onComplete.add( function() {
 			tempEmitter.destroy();
 		});
+	},
+
+	//Tweens the buttons that gets a new color assigned to them in rearrangeButtons
+	tweenNewButton: function (col, counterTrue) {
+		var temp_x = this.buttons[col][counterTrue].x;
+	    var temp_y = this.buttons[col][counterTrue].y;
+
+	    //console.log(counterTrue);
+
+	    this.buttons[col][counterTrue].visible = false;
+
+	    var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-(counterTrue+1)*this.delta, this.buttons[col][counterTrue].key, 0);
+	    //var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-this.delta, this.buttons[col][counterTrue].key, 0);
+	    //dot.scale.set(0.7);
+
+	    dot.alpha = 0;
+
+		// tween sprite to new position
+		this.newTween = this.add.tween(dot).to({x: temp_x, y: temp_y, alpha: 1}, 1000, Phaser.Easing.Bounce.Out, true, 1000/(counterTrue+1));
+
+		this.newTween.onComplete.add(function() {
+			this.buttons[col][counterTrue].visible = true;
+			dot.destroy();
+		}, this);
+	},
+
+	// Function for animation of dots
+	// col, i - the position the dots are to be moved down to
+	// counterTrue - how many steps it should be moved
+	tweenButton: function (col, i, counterTrue) {
+
+		var temp_x = this.buttons[col][i+counterTrue].x;
+	    var temp_y = this.buttons[col][i+counterTrue].y;
+
 
 		//A sprite for the temporary circle
     	var dot = this.add.sprite(this.buttons[col][i].x, this.buttons[col][i].y, this.buttons[col][i].key, 0);
-    	//dot.scale.set(0.8);
 
-    	// make button under the circle invisible
+    	// Button under the circle is made invisible
 		this.buttons[col][i].visible = false;
+		this.buttons[col][i+counterTrue].visible = false;
 
 		// tween sprite to new position
-		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 2000, Phaser.Easing.Linear.None, true);
+		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 1000, Phaser.Easing.Bounce.Out, true);
 		//this.enTween = this.add.tween(tempCircle).to({x: 0, y: 0 + this.delta * this.tweenCounter}, 1000, Phaser.Easing.Linear.None, true);
 
 		this.enTween.onComplete.add(function() {
-			dot.destroy();
-			this.buttons[col][i].visible = true;
 			this.buttons[col][i+counterTrue].visible = true;
-			console.log("Done");
+			dot.destroy();
+			//this.buttons[col][i].visible = true;
 		}, this);
 	},
 
@@ -515,6 +512,8 @@ ClickIt.Game.prototype = {
 		this.findChainInRow();
 		this.findChainInCol();
 		//this.printChainMatrix();
+
+
 
 		this.rearrangeButtons();
 		
