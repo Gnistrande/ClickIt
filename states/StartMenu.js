@@ -24,13 +24,13 @@ ClickIt.StartMenu.prototype = {
     this.load.image('colorOrderI', 'assets/orderofcolors_2.png');
     this.load.image('stone', 'assets/louises_stone.png');
     this.load.image('popup', 'assets/Rectangle_1.png');
-
     this.load.spritesheet('clickMe', 'clickMe.png', 542, 165);
     this.load.image('andWe', 'andWe.png');
     this.load.image('bubble', 'bubble-md.png');
 
   },
-  create: function() {
+  create: function() {  
+
     clickItLogo = this.add.image(this.world.centerX-135, 15, 'logo');
     clickItLogo.scale.setTo(0.7, 0.7); 
 

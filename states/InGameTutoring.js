@@ -97,6 +97,7 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     this.popup.alpha = 0.8;
     this.popup.anchor.set(0.5);
     this.popup.inputEnabled = true;
+    this.popup.z = 0;
 
     //The position of next level button
     var nlw = (this.popup.width / 2) - 170;
@@ -123,7 +124,7 @@ ClickIt.InGameTutoring.prototype.winning = function(removedDots) {
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
     //Text for popup window
-    var winningText = this.make.text(-200, -100, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
+    var winningText = this.make.text(-190, -150, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
 
     //Add text and   buttons to the popup window image
     this.popup.addChild(nextLevelButton);
@@ -147,7 +148,7 @@ ClickIt.InGameTutoring.prototype.losing = function() {
 
     //The position of the ok button
     var ow = (this.losingPopup.width / 2)-450;
-    var oh = (this.losingPopup.height / 2)-250;
+    var oh = (this.losingPopup.height / 2)-500;
 
     //Ok button brings you back to menu
     var menuButton = this.make.sprite(ow, -oh, 'okButton');
@@ -158,7 +159,7 @@ ClickIt.InGameTutoring.prototype.losing = function() {
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
     //Text for popup window
-    var losingText = this.make.text(-81, -170, 'You lost!', { font: '36px Arial', fill: '#000' });
+    var losingText = this.make.text(-81, -150, 'You lost!', { font: '36px Arial', fill: '#000' });
 
     //Add the buttons to the popup window image
     this.losingPopup.addChild(menuButton);

@@ -69,36 +69,25 @@ ClickIt.LevelThree.prototype.winning = function(removedDots) {
     this.popup.anchor.set(0.5);
     this.popup.inputEnabled = true;
 
-    //The position of next level button
-    var nlw = (this.popup.width / 2) - 170;
-    var nlh = (this.popup.height / 2) - 60;
+    //The position of the ok button
+    var mw = (this.popup.width / 2) - 450;
+    var mh = (this.popup.height / 2) - 500;
 
-    //The position of the menu button
-    var mw = (this.popup.width / 2) - 30;
-    var mh = (this.popup.height / 2) - 60;
-
-    //Next level button
-    var nextLevelButton = this.make.sprite(nlw, nlh, 'nextButton_text');
-    nextLevelButton.scale.setTo(0.8, 0.8);
-    nextLevelButton.inputEnabled = true;
-    nextLevelButton.input.priorityID = 1;
-    nextLevelButton.input.useHandCursor = true;
-    nextLevelButton.events.onInputDown.add(this.nextLevel, this);
-
-    //Menu button
-    var menuButton = this.make.sprite(-mw, mh, 'menuButton');
+    //Ok button brings you back to menu
+    var menuButton = this.make.sprite(mw, -mh, 'okButton');
     menuButton.scale.setTo(0.8, 0.8);
     menuButton.inputEnabled = true;
     menuButton.input.priorityID = 1;
     menuButton.input.useHandCursor = true;
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
-    var winningText = this.make.text(-200, -100, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
+    var winningText = this.make.text(-190, -150, 'Congratulations! \nYou removed ' + removedDots + ' ' + this.levelColor + ' dots.', { font: '36px Arial', fill: '#000' });
 
+    var endOfLevels = this.make.text(-210, 50, 'Oops! The next level is not available. It seems like the \ndevelopers have lost it yet again. \n\nPlease check in again later.', { font: '20px Arial', fill: '#000' });
     //Add the buttons to the popup window image
-    this.popup.addChild(nextLevelButton);
     this.popup.addChild(menuButton);
     this.popup.addChild(winningText);
+    this.popup.addChild(endOfLevels);
 
     //Hide it awaiting a click
     this.popup.scale.set(0);
@@ -116,7 +105,7 @@ ClickIt.LevelThree.prototype.losing = function() {
 
     ///The position of the ok button
     var ow = (this.losingPopup.width / 2)-450;
-    var oh = (this.losingPopup.height / 2)-250;
+    var oh = (this.losingPopup.height / 2)-500;
 
     //Ok button brings you back to menu
     var menuButton = this.make.sprite(ow, -oh, 'okButton');
@@ -126,11 +115,13 @@ ClickIt.LevelThree.prototype.losing = function() {
     menuButton.input.useHandCursor = true;
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
-    var losingText = this.make.text(-81, -170, 'You lost!', { font: '36px Arial', fill: '#000' });
+    var losingText = this.make.text(-81, -150, 'You lost!', { font: '36px Arial', fill: '#000' });
+    var endOfLevels = this.make.text(-210, 50, 'Oops! The next level is not available. It seems like the \ndevelopers have lost it yet again! \n\nPlease check in again later.', { font: '20px Arial', fill: '#000' });
     
     //Add the buttons to the popup window image
     this.losingPopup.addChild(menuButton);
     this.losingPopup.addChild(losingText);
+    this.losingPopup.addChild(endOfLevels);
 
     //Hide it awaiting a click
     this.losingPopup.scale.set(0);

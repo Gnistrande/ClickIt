@@ -7,7 +7,6 @@ ClickIt.Game = function(game) {
 	this.moves2;
 	this.buttonBack;
 	this.chainMatrix;
-	this.chainText;
 	this.moveX;
 	this.moveY;
 
@@ -15,7 +14,6 @@ ClickIt.Game = function(game) {
 	this.enTween;
 	this.newTween;
 	this.dot;
-	//this.tempCircle;
 
 	this.levelGameColor;
 	this.numberOfMoves;
@@ -31,7 +29,6 @@ ClickIt.Game.prototype = {
 	create: function() {
 		this.buttons = [];
 		this.chainMatrix = [];
-		this.chainText = [];
 
 		//For positioning the buttons
 		this.delta = 60;
@@ -41,7 +38,7 @@ ClickIt.Game.prototype = {
 		//The counter for the goal
 		this.removedDotsOfLevelColor = 0;
 
-		//To make sure that update doesn't open more than one popup
+		//To make sure that update doesn't open more than one
 		this.winningBol = false;
 		this.losingBol = false;
 		this.tweenDone = false;
@@ -82,7 +79,6 @@ ClickIt.Game.prototype = {
 		for (var i = 0; i < 8; i++){
 	        this.buttons[i] = [];
 	        this.chainMatrix[i] = [];
-        	//this.chainText[i] = [];
 	    	for (var j = 0; j < 8; j++){
 	    		//Assign random values to a 8X8 matrix
 	    		var number = Math.floor((Math.random() * 4) + 1);
@@ -93,7 +89,6 @@ ClickIt.Game.prototype = {
 	        	this.buttons[i][j] = this.add.button(i * this.delta + this.moveX, j * this.delta + this.moveY, image, this.actionOnClick, this, 1, 0, 2);
 
 	        	this.chainMatrix[i][j] = false;
-            	//this.chainText[i][j] = this.add.text(i * this.delta + this.moveX, j * this.delta + this.moveY, 'Ch: F', { font: '12px Arial', fill: '#000' });
 	    	} 
     	}
 	},
@@ -138,7 +133,8 @@ ClickIt.Game.prototype = {
 	    return image;
 	},
 
-	//The function that is called when a dot is clicked
+	// Called whenever a dot is clicked
+	//
 	actionOnClick: function(clickedButton) {
 		//Check for position I and J in matrix buttons
 		var numberI = (clickedButton.x-this.moveX)/this.delta;
@@ -188,10 +184,6 @@ ClickIt.Game.prototype = {
 	        this.buttons[numberI][numberJ-1].loadTexture(newButtonTopImage);
 	        this.buttons[numberI][numberJ+1].loadTexture(newButtonBottomImage);
 	    }
-	    //this.findChainInRow();
-	    //this.findChainInCol();
-
-	    //this.rearrangeButtons();
 	},
 
 	//Find 4 or more in a row
@@ -255,7 +247,7 @@ ClickIt.Game.prototype = {
 	            this.chainMatrix[3][row] = true;
 	            this.chainMatrix[4][row] = true;
 
-	            //Adjust both variables since while-loops above changes them one too much.
+	            //Adjust both variables since while-loops above changes them 1 too much.
 	            left_k++;
 	            right_k--;
 
@@ -274,7 +266,7 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
-	//Find 4 or more in a col
+	//Find 4 or more in row in a column
 	findChainInCol: function() {
 	    //For every col
 	    for(var col = 0; col < 8; col++){
@@ -285,11 +277,11 @@ ClickIt.Game.prototype = {
 	        var top_k = 2
 	        var bottom_k = 5;
 
-	        //Get color for the buttons in the middle  
+	        //Get color for the two buttons in the middle of the column
 	        var color_3 = this.buttons[col][3].key;
 	        var color_4 = this.buttons[col][4].key;
 
-	        //If they are the same, check to the top and bottom in a while-loop
+	        //If their colors are the same, check up to the top and down to the bottom
 	        if(color_3 === color_4){
 	            while(top_k != -1 && this.buttons[col][top_k].key == color_3){
 	                top_k--;
@@ -352,7 +344,7 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
-	//Send you back to menu if button is pressed
+	// Redirects to game menu when button "back" is clicked
 	backToMenu: function() {
 		this.preloadBar = null;
 		this.ready = false;
@@ -411,8 +403,9 @@ ClickIt.Game.prototype = {
 	    						this.removedDotsOfLevelColor++;
 	    				}
 
-	    				//Load texture to button and set to false
+	    				// Load texture to button 
     					this.buttons[col][counterTrue].loadTexture(image);
+    					// Set chain to false
     					this.chainMatrix[col][counterTrue] = false;
 
     					//Tween button
@@ -457,13 +450,9 @@ ClickIt.Game.prototype = {
 		var temp_x = this.buttons[col][counterTrue].x;
 	    var temp_y = this.buttons[col][counterTrue].y;
 
-	    //console.log(counterTrue);
-
 	    this.buttons[col][counterTrue].visible = false;
 
 	    var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-(counterTrue+1)*this.delta, this.buttons[col][counterTrue].key, 0);
-	    //var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-this.delta, this.buttons[col][counterTrue].key, 0);
-	    //dot.scale.set(0.7);
 
 	    dot.alpha = 0;
 
@@ -484,7 +473,6 @@ ClickIt.Game.prototype = {
 		var temp_x = this.buttons[col][i+counterTrue].x;
 	    var temp_y = this.buttons[col][i+counterTrue].y;
 
-
 		//A sprite for the temporary circle
     	var dot = this.add.sprite(this.buttons[col][i].x, this.buttons[col][i].y, this.buttons[col][i].key, 0);
 
@@ -494,31 +482,26 @@ ClickIt.Game.prototype = {
 
 		// tween sprite to new position
 		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 1000, Phaser.Easing.Bounce.Out, true);
-		//this.enTween = this.add.tween(tempCircle).to({x: 0, y: 0 + this.delta * this.tweenCounter}, 1000, Phaser.Easing.Linear.None, true);
 
 		this.enTween.onComplete.add(function() {
 			this.buttons[col][i+counterTrue].visible = true;
 			dot.destroy();
-			//this.buttons[col][i].visible = true;
 		}, this);
 	},
 
 	update: function() {
 		this.findChainInRow();
 		this.findChainInCol();
-		//this.printChainMatrix();
-
-
 
 		this.rearrangeButtons();
 		
-		//Update number of moves and removed dots of the right color
+		//Update the text in the game with number of moves left and how many dots have been removed of the right color
 		this.moves2.text = this.numberOfMoves;
 		this.removedColor1.text = ': ' + this.removedDotsOfLevelColor;
 
 		if(this.losingBol == false){
 			//Check if you have any moves left
-			if(this.numberOfMoves<=0){
+			if(this.numberOfMoves <= 0){
 				this.losing();
 				this.losingBol = true;
 			}
@@ -526,8 +509,9 @@ ClickIt.Game.prototype = {
 
 		if(this.winningBol == false){
 			//Check if you have removed enough dots i the right color
-			if(this.removedDotsOfLevelColor>=this.numberOfDots){
-				this.winning(this.removedDotsOfLevelColor);
+			var temp = this.removedDotsOfLevelColor;
+			if(temp >= this.numberOfDots){
+				this.winning(temp);
 				this.winningBol = true;
 			}
 		}
