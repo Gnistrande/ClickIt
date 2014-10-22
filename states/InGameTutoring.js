@@ -62,7 +62,7 @@ ClickIt.InGameTutoring.prototype.tutoringOne = function() {
     this.clickText.animations.add('first', [0,1,2], 1, true);
 
     //Goes to function tutoringTwo when mouse is clicked
-    this.input.onDown.add(this.tutoringTwo, this);
+    this.input.onUp.add(this.tutoringTwo, this);
     //Start animation
     this.clickText.animations.play('first');         
 };
@@ -71,7 +71,7 @@ ClickIt.InGameTutoring.prototype.tutoringOne = function() {
 ClickIt.InGameTutoring.prototype.tutoringTwo = function() {
     //Destroys first popup
     this.clickText.destroy();
-    this.input.onDown.remove(this.tutoringTwo, this);
+    this.input.onUp.remove(this.tutoringTwo, this);
 
     //Create sprite for second popup
     this.orderText = this.add.sprite(246, 265, 'andWe', 3);
