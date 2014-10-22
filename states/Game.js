@@ -10,7 +10,6 @@ ClickIt.Game = function(game) {
 	this.moveX;
 	this.moveY;
 
-	this.graph;
 	this.enTween;
 	this.newTween;
 	this.dot;
@@ -49,8 +48,6 @@ ClickIt.Game.prototype = {
 		this.colorOrderImage = this.add.image(220, 15, 'colorOrderI');
 		
 		this.createButtons();
-
-		this.graph = this.add.graphics(0, 0);
 
 		//The color of dots to collect
 		this.levelGameColor = this.colorOfLevel();
@@ -347,7 +344,6 @@ ClickIt.Game.prototype = {
 	// Redirects to game menu when button "back" is clicked
 	backToMenu: function() {
 		this.preloadBar = null;
-		this.ready = false;
 		this.move=0;
 		this.state.start('StartMenu');
 	},

@@ -116,12 +116,10 @@ ClickIt.LevelThree.prototype.losing = function() {
     menuButton.events.onInputDown.add(this.backToMenu, this);
 
     var losingText = this.make.text(-81, -150, 'You lost!', { font: '36px Arial', fill: '#000' });
-    var endOfLevels = this.make.text(-210, 50, 'Oops! The next level is not available. It seems like the \ndevelopers have lost it yet again! \n\nPlease check in again later.', { font: '20px Arial', fill: '#000' });
     
     //Add the buttons to the popup window image
     this.losingPopup.addChild(menuButton);
     this.losingPopup.addChild(losingText);
-    this.losingPopup.addChild(endOfLevels);
 
     //Hide it awaiting a click
     this.losingPopup.scale.set(0);
