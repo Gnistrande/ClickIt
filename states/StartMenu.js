@@ -27,7 +27,7 @@ ClickIt.StartMenu.prototype = {
 
     this.load.spritesheet('clickMe', 'clickMe.png', 542, 165);
     this.load.image('andWe', 'andWe.png');
-    this.load.image('bubble', 'bubble_png.png');
+    this.load.image('bubble', 'bubble-md.png');
 
   },
   create: function() {

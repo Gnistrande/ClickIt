@@ -12,6 +12,9 @@ ClickIt.Game = function(game) {
 
 	this.graph;
 	this.enTween;
+	this.newTween;
+	this.dot;
+	//this.tempCircle;
 
 	this.levelGameColor;
 	this.numberOfMoves;
@@ -40,6 +43,7 @@ ClickIt.Game.prototype = {
 		//To make sure that update doesn't open more than one popup
 		this.winningBol = false;
 		this.losingBol = false;
+		this.tweenDone = false;
 
 		this.buttonBack = this.add.button(5, 10, 'backButton_symbol', this.backToMenu, this, 1, 0, 2);
 
@@ -369,16 +373,6 @@ ClickIt.Game.prototype = {
 	    					counterTrue++;
 	    				}
 	    				else{
-	    					//Make buttons invisible
-	    					//this.buttons[col][i].visible = false;
-
-	    					//Call tweenButton
-	    					//var temp_y = this.buttons[col][row].y;
-	    					//var temp_x = this.buttons[col][row].x
-	    					//this.buttons[col][i].visible = false;
-	    					//this.tweenButton( this.buttons[col][i], 0, 0);
-	    					//this.buttons[col][i].visible = true;
-
 	    					//Check for the levels color
 	    					if(this.buttons[col][i+counterTrue].key==this.levelColor){
 	    						this.removedDotsOfLevelColor++;
@@ -388,6 +382,10 @@ ClickIt.Game.prototype = {
 	    					while(this.buttons[col][i + counterTrue].key === 'stone') {
 	    						counterTrue--;
 	    					}
+
+	    					//Call tweenButton after checking for stone
+	    					this.buttons[col][i+counterTrue].visible = false;
+	    					this.tweenButton(col, i, counterTrue);
 
 	    					//Flytta ner färger enligt counterTrue
     						var newColor = this.buttons[col][ i ].key;
@@ -406,9 +404,14 @@ ClickIt.Game.prototype = {
 	    				if(this.chainMatrix[col][counterTrue]==true && this.buttons[col][counterTrue].key==this.levelColor){
 	    						this.removedDotsOfLevelColor++;
 	    				}
+
 	    				//Load texture to button and set to false
     					this.buttons[col][counterTrue].loadTexture(image);
     					this.chainMatrix[col][counterTrue] = false;
+
+    					//Tween button
+	    				this.buttons[col][counterTrue].visible = false;
+	    				this.tweenNewButton(col, counterTrue);
 	    						
 	    				counterTrue--;
 	    			}
@@ -431,67 +434,78 @@ ClickIt.Game.prototype = {
     	}
 	},*/
 
+	//Tweens the buttons that gets a new color assigned to them in rearrangeButtons
+	tweenNewButton: function (col, counterTrue) {
+		var temp_x = this.buttons[col][counterTrue].x;
+	    var temp_y = this.buttons[col][counterTrue].y;
+
+	    console.log(counterTrue);
+
+	    var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-(counterTrue+1)*this.delta, this.buttons[col][counterTrue].key, 0);
+	    //var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-this.delta, this.buttons[col][counterTrue].key, 0);
+	    //dot.scale.set(0.7);
+	    dot.alpha = 0;
+
+		// tween sprite to new position
+		this.newTween = this.add.tween(dot).to({x: temp_x, y: temp_y, alpha: 1}, 2000, Phaser.Easing.Linear.None, true, 2000/counterTrue);
+		
+		this.newTween.onComplete.add(function() {
+			dot.destroy();
+			this.buttons[col][counterTrue].visible = true;
+			console.log("Done");
+		}, this);
+	},
+
 	// Function for animation of dots
 	// button - the dots to be moved down
 	// newPos - to where it should be moved
-	tweenButton: function (button, newPosX, newPosY) {
-		var tempCircle;
+	tweenButton: function (col, i, counterTrue) {
 
-		var green = 0xB6FFDB;
-		var pink = 0xFDCCEA;
-		var yellow = 0xFDFD7D;
-		var blue = 0xB8DBFF;
+		var temp_x = this.buttons[col][i+counterTrue].x;
+	    var temp_y = this.buttons[col][i+counterTrue].y;
 
-		var color;
 
-		if(button.key == 'green'){
-			color = green;
-		}
-		else if(button.key == 'pink'){
-			color = pink;
-		}
-		else if(button.key == 'yellow'){
-			color = yellow;
-		}
-		else if(button.key == 'blue'){
-			color = blue;
-		}
 
-/*
-		var tempEmitter = this.add.emitter( 400, 400, 300);
-		tempEmitter.makeParticles("bubble");
-    	tempEmitter.maxParticleScale = 0.09;
-    	tempEmitter.minParticleScale = 0.03;
-    	tempEmitter.setYSpeed(-2, -4);
-    	tempEmitter.setXSpeed(-3, -5);
-    	tempEmitter.gravity = 0;
-    	tempEmitter.width = 200;
-    	tempEmitter.minRotation = -40;
-    	tempEmitter.maxRotation = 40;
-    	//tempEmitter.explode(0, 10);
-    	tempEmitter.flow(15000, 1000);
-*/
-    	//this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+// create explosion
+// arg1 = x-coord, arg 2 = y-coord.
+console.log("newPosX = " + temp_x + " newposY = " + temp_y);
 
-		// draw a circle
-		tempCircle = this.graph.beginFill(color, 1);
-    	tempCircle = this.graph.drawCircle(button.x+27, button.y+22, 20);
+var tempEmitter = this.add.emitter(temp_x+25, temp_y+25);
+//var tempEmitter = this.add.emitter( 300, 200);
+tempEmitter.makeParticles("bubble");
+tempEmitter.maxParticleScale = 0.09;
+tempEmitter.minParticleScale = 0.03;
+tempEmitter.setYSpeed(-10, 10);
+tempEmitter.setXSpeed(-10, 10);
+tempEmitter.gravity = 0;
+tempEmitter.width = 30;
+tempEmitter.height = 30;
+//tempEmitter.minRotation = -40;
+//tempEmitter.maxRotation = 40;
+tempEmitter.explode(0, 5);
+
+this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true)
+.onComplete.add( function() {
+	tempEmitter.destroy();
+});
+
+
+		//A sprite for the temporary circle
+    	var dot = this.add.sprite(this.buttons[col][i].x, this.buttons[col][i].y, this.buttons[col][i].key, 0);
+    	//dot.scale.set(0.8);
 
     	// make button under the circle invisible
-		//button.visible = false;
+		this.buttons[col][i].visible = false;
 
-		// tween circle to new position
-		this.enTween = this.add.tween(tempCircle).to({x: newPosX, y: newPosY + this.delta}, 500, Phaser.Easing.Linear.None, true);
-		this.enTween.remove.all();
-		//this.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 100, Phaser.Easing.Linear.None, true); 
-		// tween buttons frame to frame 3
-		// works but I'd rather get animation to work.
-		//this.add.tween(this.buttons[0][0]).to({frame: 3}, 1000, Phaser.Easing.Linear.None, true, 200)
-		//.to({frame: 4}, 1000, Phaser.Easing.Linear.None, true, 200)
-		//.to({frame: 5}, 1000, Phaser.Easing.Linear.None, true, 200);
-
-		// make button visible again after the circle has been moved?
-		//button.visible = true;
+		// tween sprite to new position
+		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 2000, Phaser.Easing.Linear.None, true);
+		//this.enTween = this.add.tween(tempCircle).to({x: 0, y: 0 + this.delta * this.tweenCounter}, 1000, Phaser.Easing.Linear.None, true);
+		this.enTween.onComplete.add(function() {
+			dot.destroy();
+			this.buttons[col][i].visible = true;
+			this.buttons[col][i+counterTrue].visible = true;
+			console.log("Done");
+		}, this);
 	},
 
 	update: function() {
