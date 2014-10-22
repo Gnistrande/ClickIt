@@ -412,7 +412,7 @@ ClickIt.Game.prototype = {
     					this.chainMatrix[col][counterTrue] = false;
 
     					//Tween button
-    					this.buttons[col][counterTrue].visible = false;
+	    				this.buttons[col][counterTrue].visible = false;
 	    				this.tweenNewButton(col, counterTrue);
 	    						
 	    				counterTrue--;
@@ -447,8 +447,11 @@ ClickIt.Game.prototype = {
 	    //var dot = this.add.sprite(this.buttons[col][counterTrue].x, this.buttons[col][counterTrue].y-this.delta, this.buttons[col][counterTrue].key, 0);
 	    //dot.scale.set(0.7);
 
+	    dot.alpha = 0;
+
 		// tween sprite to new position
-		this.newTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 500, Phaser.Easing.Linear.None, true);
+		this.newTween = this.add.tween(dot).to({x: temp_x, y: temp_y, alpha: 1}, 2000, Phaser.Easing.Linear.None, true, 2000/counterTrue);
+
 		this.newTween.onComplete.add(function() {
 			dot.destroy();
 			this.buttons[col][counterTrue].visible = true;
@@ -464,6 +467,31 @@ ClickIt.Game.prototype = {
 		var temp_x = this.buttons[col][i+counterTrue].x;
 	    var temp_y = this.buttons[col][i+counterTrue].y;
 
+
+
+		// create explosion
+		// arg1 = x-coord, arg 2 = y-coord.
+		console.log("newPosX = " + temp_x + " newposY = " + temp_y);
+
+		var tempEmitter = this.add.emitter(temp_x+25, temp_y+25);
+		//var tempEmitter = this.add.emitter( 300, 200);
+		tempEmitter.makeParticles("bubble");
+		tempEmitter.maxParticleScale = 0.09;
+		tempEmitter.minParticleScale = 0.03;
+		tempEmitter.setYSpeed(-10, 10);
+		tempEmitter.setXSpeed(-10, 10);
+		tempEmitter.gravity = 0;
+		tempEmitter.width = 30;
+		tempEmitter.height = 30;
+		//tempEmitter.minRotation = -40;
+		//tempEmitter.maxRotation = 40;
+		tempEmitter.explode(0, 5);
+
+		this.add.tween(tempEmitter).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true)
+		.onComplete.add( function() {
+			tempEmitter.destroy();
+		});
+
 		//A sprite for the temporary circle
     	var dot = this.add.sprite(this.buttons[col][i].x, this.buttons[col][i].y, this.buttons[col][i].key, 0);
     	//dot.scale.set(0.8);
@@ -472,7 +500,9 @@ ClickIt.Game.prototype = {
 		this.buttons[col][i].visible = false;
 
 		// tween sprite to new position
-		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 500, Phaser.Easing.Linear.None, true);
+		this.enTween = this.add.tween(dot).to({x: temp_x, y: temp_y}, 2000, Phaser.Easing.Linear.None, true);
+		//this.enTween = this.add.tween(tempCircle).to({x: 0, y: 0 + this.delta * this.tweenCounter}, 1000, Phaser.Easing.Linear.None, true);
+
 		this.enTween.onComplete.add(function() {
 			dot.destroy();
 			this.buttons[col][i].visible = true;
