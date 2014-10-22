@@ -371,7 +371,9 @@ ClickIt.Game.prototype = {
 	    			for(var i = row-1; i >= 0; i-- ){
 	    				if ( this.chainMatrix[col][i] === true || this.buttons[col][i].key === 'stone'){
 	    					counterTrue++;
-	    					this.animateExplosion(col, i);
+	    					if( this.buttons[col][i].key != 'stone'){
+	    						this.animateExplosion(col, i);
+	    					}
 	    				}
 	    				else{
 	    					//Check for the levels color
