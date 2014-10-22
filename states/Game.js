@@ -3,7 +3,8 @@ ClickIt.Game = function(game) {
 
 	this.buttons;
 	this.delta;
-	this.moves;
+	this.moves1;
+	this.moves2;
 	this.buttonBack;
 	this.chainMatrix;
 	this.chainText;
@@ -69,8 +70,10 @@ ClickIt.Game.prototype = {
 		}
 
 		//Text in the game
-		this.moves = this.add.text(115, 50, 'Moves: 0', { font: '20px Chalkboard', fill: '#000' });
-		this.removedColor = this.add.text(530, 50, 'Pink: 0', { font: '20px Chalkboard', fill: '#000' });    	
+		this.moves1 = this.add.text(115, 55, 'Moves: ', { font: '15px Chalkboard', fill: '#000' });
+		this.moves2 = this.add.text(165, 50, '0', { font: '23px Chalkboard', fill: '#000' });
+		this.removedColor1 = this.add.text(530, 50, '0', { font: '23px Chalkboard', fill: '#000' });
+		this.removedColor2 = this.add.text(560, 55, '/' + this.numberOfDots, { font: '15px Chalkboard', fill: '#000' });    	
 	},
 
 	//Creates the buttons for the board
@@ -425,16 +428,6 @@ ClickIt.Game.prototype = {
 	    }
 	},
 
-	/*printChainMatrix: function(){
-		for(var row = 0; row < 8; row ++){
-        	for(var col = 0; col < 8; col++){
-            //Update chainText
-            this.chainText[col][row].text = 'Ch: ' + this.chainMatrix[col][row];
-        	}
-    	}
-	},*/
-
-
 	animateExplosion: function(col, row){
 		var temp_x = this.buttons[col][row].x;
 	    var temp_y = this.buttons[col][row].y;
@@ -518,8 +511,8 @@ ClickIt.Game.prototype = {
 		this.rearrangeButtons();
 		
 		//Update number of moves and removed dots of the right color
-		this.moves.text = 'Moves: ' + this.numberOfMoves;
-		this.removedColor.text = ': ' + this.removedDotsOfLevelColor + '/' + this.numberOfDots;
+		this.moves2.text = this.numberOfMoves;
+		this.removedColor1.text = ': ' + this.removedDotsOfLevelColor;
 
 		if(this.losingBol == false){
 			//Check if you have any moves left
